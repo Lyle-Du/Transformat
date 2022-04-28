@@ -1,20 +1,24 @@
 PODS:
   - ffmpeg-kit-macos-full (4.5.1)
+  - RxSwift (6.5.0)
   - VLCKit (3.4.1b7)
 
 DEPENDENCIES:
   - ffmpeg-kit-macos-full (~> 4.5.1)
+  - RxSwift (~> 6.5.0)
   - VLCKit (~> 3.4.1b7)
 
 SPEC REPOS:
   trunk:
     - ffmpeg-kit-macos-full
+    - RxSwift
     - VLCKit
 
 SPEC CHECKSUMS:
   ffmpeg-kit-macos-full: 8bf0ab8d570a487f9da07d564f6e49bd6f008bac
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   VLCKit: 6ebb58c73bf6bc2a8377e63c1347d1f53d8bbfc4
 
-PODFILE CHECKSUM: e0e84944cc0d3b2a3a9a07b1e5e1adba78a22c09
+PODFILE CHECKSUM: e21f0e1a11785ab75c27d9a23371a6cd4b4bd161
 
 COCOAPODS: 1.11.3
