@@ -158,7 +158,6 @@
 				5C4BEBCF2B0F474FC1D6868A /* Pods-TransformatTests.debug.xcconfig */,
 				3CBE637FDD92C71D43192830 /* Pods-TransformatTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -624,7 +623,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5C4BEBCF2B0F474FC1D6868A /* Pods-TransformatTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -644,7 +642,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CBE637FDD92C71D43192830 /* Pods-TransformatTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -664,7 +661,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 08C02F16D1F8940C8E854D26 /* Pods-Transformat-TransformatUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P45J34CJYG;
@@ -682,7 +678,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 308EA28F49FE6053C09AAB58 /* Pods-Transformat-TransformatUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P45J34CJYG;
