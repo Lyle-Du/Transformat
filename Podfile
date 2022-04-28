@@ -7,6 +7,7 @@ target 'Transformat' do
 
   # Pods for Transformat
   pod 'ffmpeg-kit-macos-full', '~> 4.5.1'
+  pod 'VLCKit', '~> 3.4.1b7'
 
   target 'TransformatTests' do
     inherit! :search_paths
