@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E02AF9C2818089B00BE6FE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */; };
 		3E5E5595280C760F000C5435 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E5594280C760F000C5435 /* AppDelegate.swift */; };
 		3E5E5597280C760F000C5435 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E5596280C760F000C5435 /* ViewController.swift */; };
-		3E5E5599280C7610000C5435 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E5E5598280C7610000C5435 /* Assets.xcassets */; };
 		3E5E559C280C7610000C5435 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E5E559A280C7610000C5435 /* Main.storyboard */; };
 		3E5E55A7280C7610000C5435 /* TransformatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E55A6280C7610000C5435 /* TransformatTests.swift */; };
 		3E5E55B1280C7610000C5435 /* TransformatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E55B0280C7610000C5435 /* TransformatUITests.swift */; };
@@ -47,10 +47,10 @@
 		300A52991ECA8DE96DA0271F /* Pods_Transformat_TransformatUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Transformat_TransformatUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		308EA28F49FE6053C09AAB58 /* Pods-Transformat-TransformatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transformat-TransformatUITests.release.xcconfig"; path = "Target Support Files/Pods-Transformat-TransformatUITests/Pods-Transformat-TransformatUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3CBE637FDD92C71D43192830 /* Pods-TransformatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransformatTests.release.xcconfig"; path = "Target Support Files/Pods-TransformatTests/Pods-TransformatTests.release.xcconfig"; sourceTree = "<group>"; };
+		3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E5E5591280C760F000C5435 /* Transformat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transformat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E5E5594280C760F000C5435 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E5E5596280C760F000C5435 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		3E5E5598280C7610000C5435 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E5E559B280C7610000C5435 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3E5E559D280C7610000C5435 /* Transformat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Transformat.entitlements; sourceTree = "<group>"; };
 		3E5E55A2280C7610000C5435 /* TransformatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransformatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,7 +136,7 @@
 				3E73FD24281DA18B00143803 /* FFmpegComponents */,
 				3E5E5594280C760F000C5435 /* AppDelegate.swift */,
 				3E5E5596280C760F000C5435 /* ViewController.swift */,
-				3E5E5598280C7610000C5435 /* Assets.xcassets */,
+				3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */,
 				3E5E559A280C7610000C5435 /* Main.storyboard */,
 				3E5E559D280C7610000C5435 /* Transformat.entitlements */,
 			);
@@ -301,7 +301,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E5E5599280C7610000C5435 /* Assets.xcassets in Resources */,
+				3E02AF9C2818089B00BE6FE4 /* Assets.xcassets in Resources */,
 				3E5E559C280C7610000C5435 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
