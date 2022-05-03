@@ -14,6 +14,8 @@
 		3E5E55A7280C7610000C5435 /* TransformatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E55A6280C7610000C5435 /* TransformatTests.swift */; };
 		3E5E55B1280C7610000C5435 /* TransformatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E55B0280C7610000C5435 /* TransformatUITests.swift */; };
 		3E5E55B3280C7610000C5435 /* TransformatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E55B2280C7610000C5435 /* TransformatUITestsLaunchTests.swift */; };
+		3E73FD26281DA1AD00143803 /* FFprobe+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD25281DA1AD00143803 /* FFprobe+Extensions.swift */; };
+		3E73FD28281DAF2000143803 /* MediaDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD27281DAF2000143803 /* MediaDimension.swift */; };
 		3E73FD2F28204CE900143803 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD2E28204CE900143803 /* String+Extensions.swift */; };
 		3E73FD3128204D1300143803 /* TimeInvertal+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD3028204D1300143803 /* TimeInvertal+Extensions.swift */; };
 		3E73FD372820CF4100143803 /* Comparable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD362820CF4100143803 /* Comparable+Extensions.swift */; };
@@ -56,6 +58,8 @@
 		3E5E55AC280C7610000C5435 /* TransformatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransformatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E5E55B0280C7610000C5435 /* TransformatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformatUITests.swift; sourceTree = "<group>"; };
 		3E5E55B2280C7610000C5435 /* TransformatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3E73FD25281DA1AD00143803 /* FFprobe+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FFprobe+Extensions.swift"; sourceTree = "<group>"; };
+		3E73FD27281DAF2000143803 /* MediaDimension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDimension.swift; sourceTree = "<group>"; };
 		3E73FD2E28204CE900143803 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		3E73FD3028204D1300143803 /* TimeInvertal+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInvertal+Extensions.swift"; sourceTree = "<group>"; };
 		3E73FD362820CF4100143803 /* Comparable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Extensions.swift"; sourceTree = "<group>"; };
@@ -129,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				3E73FD2D28204CD500143803 /* Extensions */,
+				3E73FD24281DA18B00143803 /* FFmpegComponents */,
 				3E5E5594280C760F000C5435 /* AppDelegate.swift */,
 				3E5E5596280C760F000C5435 /* ViewController.swift */,
 				3E5E5598280C7610000C5435 /* Assets.xcassets */,
@@ -153,6 +158,15 @@
 				3E5E55B2280C7610000C5435 /* TransformatUITestsLaunchTests.swift */,
 			);
 			path = TransformatUITests;
+			sourceTree = "<group>";
+		};
+		3E73FD24281DA18B00143803 /* FFmpegComponents */ = {
+			isa = PBXGroup;
+			children = (
+				3E73FD25281DA1AD00143803 /* FFprobe+Extensions.swift */,
+				3E73FD27281DAF2000143803 /* MediaDimension.swift */,
+			);
+			path = FFmpegComponents;
 			sourceTree = "<group>";
 		};
 		3E73FD2D28204CD500143803 /* Extensions */ = {
@@ -416,9 +430,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E73FD28281DAF2000143803 /* MediaDimension.swift in Sources */,
 				3E73FD2F28204CE900143803 /* String+Extensions.swift in Sources */,
 				3E5E5597280C760F000C5435 /* ViewController.swift in Sources */,
 				3E5E5595280C760F000C5435 /* AppDelegate.swift in Sources */,
+				3E73FD26281DA1AD00143803 /* FFprobe+Extensions.swift in Sources */,
 				3E73FD3128204D1300143803 /* TimeInvertal+Extensions.swift in Sources */,
 				3E73FD372820CF4100143803 /* Comparable+Extensions.swift in Sources */,
 			);
