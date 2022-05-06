@@ -70,4 +70,19 @@ extension FFprobeKit {
         }
         return TimeInterval(startTime + duration)
     }
+     
+    static func audioTracks(media: VLCMedia) -> AudioTracks {
+        var audioTracks = AudioTracks()
+        let streamInfomationLists = FFprobeKit.streamsInfomation(media: media)
+        for streamInformation in streamInfomationLists where streamInformation.getType().equalsToIgnoreCase("audio") {
+            let index = Int(truncating: streamInformation.getIndex())
+            let tags = streamInformation.getTags()
+            let title = tags?["title"] as? String
+            let language = tags?["language"] as? String
+            let text = "Track \(index): " + [title, language].compactMap { $0 }.joined(separator: " - ")
+            audioTracks[index] = text
+        }
+        audioTracks[-1] = "Disabled"
+        return audioTracks
+    }
 }

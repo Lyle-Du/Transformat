@@ -7,18 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E02AF9A281704D000BE6FE4 /* ControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E02AF99281704D000BE6FE4 /* ControlPanel.swift */; };
 		3E02AF9C2818089B00BE6FE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */; };
 		3E5E5595280C760F000C5435 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E5594280C760F000C5435 /* AppDelegate.swift */; };
-		3E5E5597280C760F000C5435 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E5596280C760F000C5435 /* ViewController.swift */; };
+		3E5E5597280C760F000C5435 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E5596280C760F000C5435 /* MainViewController.swift */; };
 		3E5E559C280C7610000C5435 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E5E559A280C7610000C5435 /* Main.storyboard */; };
 		3E5E55A7280C7610000C5435 /* TransformatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E55A6280C7610000C5435 /* TransformatTests.swift */; };
 		3E5E55B1280C7610000C5435 /* TransformatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E55B0280C7610000C5435 /* TransformatUITests.swift */; };
 		3E5E55B3280C7610000C5435 /* TransformatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E55B2280C7610000C5435 /* TransformatUITestsLaunchTests.swift */; };
 		3E73FD26281DA1AD00143803 /* FFprobe+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD25281DA1AD00143803 /* FFprobe+Extensions.swift */; };
 		3E73FD28281DAF2000143803 /* MediaDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD27281DAF2000143803 /* MediaDimension.swift */; };
+		3E73FD2A28200C7700143803 /* FormatBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD2928200C7700143803 /* FormatBox.swift */; };
+		3E73FD2C28200CCC00143803 /* NSPopUpButton+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD2B28200CCC00143803 /* NSPopUpButton+Rx.swift */; };
 		3E73FD2F28204CE900143803 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD2E28204CE900143803 /* String+Extensions.swift */; };
 		3E73FD3128204D1300143803 /* TimeInvertal+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD3028204D1300143803 /* TimeInvertal+Extensions.swift */; };
+		3E73FD332820C9BE00143803 /* ControlPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD322820C9BE00143803 /* ControlPanelViewModel.swift */; };
 		3E73FD372820CF4100143803 /* Comparable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD362820CF4100143803 /* Comparable+Extensions.swift */; };
+		3E80634528150264005B9B3C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80634428150264005B9B3C /* Extensions.swift */; };
+		3EA1E83D281855E400CCCA5F /* PaddingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E83C281855E400CCCA5F /* PaddingButton.swift */; };
+		3EA1E846281AD19100CCCA5F /* MediaInfomationBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E845281AD19100CCCA5F /* MediaInfomationBox.swift */; };
+		3EA1E848281AD56500CCCA5F /* MediaPlayerDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */; };
+		3EDC73D82826451200D5673E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC73D72826451200D5673E /* MainViewModel.swift */; };
+		3EDDC453282552BD00086041 /* AudioTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDDC452282552BD00086041 /* AudioTracks.swift */; };
+		3EED6EEE282115DE00DDFAEA /* TrimControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EED6EED282115DE00DDFAEA /* TrimControlModel.swift */; };
+		3EED6EF228211E3D00DDFAEA /* TrimButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EED6EF128211E3D00DDFAEA /* TrimButton.swift */; };
+		3EEF90952823FEA200039BB1 /* MediaInfomationBoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF90942823FEA200039BB1 /* MediaInfomationBoxModel.swift */; };
+		3EFBBC392812A72E00A0A05C /* TrimControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFBBC382812A72E00A0A05C /* TrimControl.swift */; };
 		C328560C8C54865E78736815 /* Pods_Transformat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A89AA9A1145CC1D6C84C55 /* Pods_Transformat.framework */; };
 		C8137FAC295FAB210EBAF761 /* Pods_TransformatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 729855B7D0274EE712EA0AC9 /* Pods_TransformatTests.framework */; };
 		CFE40DC222D23D78627DC564 /* Pods_Transformat_TransformatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 300A52991ECA8DE96DA0271F /* Pods_Transformat_TransformatUITests.framework */; };
@@ -47,10 +61,11 @@
 		300A52991ECA8DE96DA0271F /* Pods_Transformat_TransformatUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Transformat_TransformatUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		308EA28F49FE6053C09AAB58 /* Pods-Transformat-TransformatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transformat-TransformatUITests.release.xcconfig"; path = "Target Support Files/Pods-Transformat-TransformatUITests/Pods-Transformat-TransformatUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3CBE637FDD92C71D43192830 /* Pods-TransformatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransformatTests.release.xcconfig"; path = "Target Support Files/Pods-TransformatTests/Pods-TransformatTests.release.xcconfig"; sourceTree = "<group>"; };
+		3E02AF99281704D000BE6FE4 /* ControlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanel.swift; sourceTree = "<group>"; };
 		3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E5E5591280C760F000C5435 /* Transformat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transformat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E5E5594280C760F000C5435 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3E5E5596280C760F000C5435 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3E5E5596280C760F000C5435 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		3E5E559B280C7610000C5435 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3E5E559D280C7610000C5435 /* Transformat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Transformat.entitlements; sourceTree = "<group>"; };
 		3E5E55A2280C7610000C5435 /* TransformatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransformatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,9 +75,22 @@
 		3E5E55B2280C7610000C5435 /* TransformatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformatUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3E73FD25281DA1AD00143803 /* FFprobe+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FFprobe+Extensions.swift"; sourceTree = "<group>"; };
 		3E73FD27281DAF2000143803 /* MediaDimension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDimension.swift; sourceTree = "<group>"; };
+		3E73FD2928200C7700143803 /* FormatBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatBox.swift; sourceTree = "<group>"; };
+		3E73FD2B28200CCC00143803 /* NSPopUpButton+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPopUpButton+Rx.swift"; sourceTree = "<group>"; };
 		3E73FD2E28204CE900143803 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		3E73FD3028204D1300143803 /* TimeInvertal+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInvertal+Extensions.swift"; sourceTree = "<group>"; };
+		3E73FD322820C9BE00143803 /* ControlPanelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanelViewModel.swift; sourceTree = "<group>"; };
 		3E73FD362820CF4100143803 /* Comparable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Extensions.swift"; sourceTree = "<group>"; };
+		3E80634428150264005B9B3C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		3EA1E83C281855E400CCCA5F /* PaddingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingButton.swift; sourceTree = "<group>"; };
+		3EA1E845281AD19100CCCA5F /* MediaInfomationBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInfomationBox.swift; sourceTree = "<group>"; };
+		3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerDelegator.swift; sourceTree = "<group>"; };
+		3EDC73D72826451200D5673E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		3EDDC452282552BD00086041 /* AudioTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTracks.swift; sourceTree = "<group>"; };
+		3EED6EED282115DE00DDFAEA /* TrimControlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimControlModel.swift; sourceTree = "<group>"; };
+		3EED6EF128211E3D00DDFAEA /* TrimButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimButton.swift; sourceTree = "<group>"; };
+		3EEF90942823FEA200039BB1 /* MediaInfomationBoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInfomationBoxModel.swift; sourceTree = "<group>"; };
+		3EFBBC382812A72E00A0A05C /* TrimControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimControl.swift; sourceTree = "<group>"; };
 		5C4BEBCF2B0F474FC1D6868A /* Pods-TransformatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransformatTests.debug.xcconfig"; path = "Target Support Files/Pods-TransformatTests/Pods-TransformatTests.debug.xcconfig"; sourceTree = "<group>"; };
 		729855B7D0274EE712EA0AC9 /* Pods_TransformatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransformatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFEA51FBF28065A1D2F46ABF /* Pods-Transformat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transformat.debug.xcconfig"; path = "Target Support Files/Pods-Transformat/Pods-Transformat.debug.xcconfig"; sourceTree = "<group>"; };
@@ -134,8 +162,9 @@
 			children = (
 				3E73FD2D28204CD500143803 /* Extensions */,
 				3E73FD24281DA18B00143803 /* FFmpegComponents */,
+				3EA1E83E2819A6C600CCCA5F /* VLCComponents */,
+				3EA1E83B2818558F00CCCA5F /* ViewComponents */,
 				3E5E5594280C760F000C5435 /* AppDelegate.swift */,
-				3E5E5596280C760F000C5435 /* ViewController.swift */,
 				3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */,
 				3E5E559A280C7610000C5435 /* Main.storyboard */,
 				3E5E559D280C7610000C5435 /* Transformat.entitlements */,
@@ -165,6 +194,7 @@
 			children = (
 				3E73FD25281DA1AD00143803 /* FFprobe+Extensions.swift */,
 				3E73FD27281DAF2000143803 /* MediaDimension.swift */,
+				3EDDC452282552BD00086041 /* AudioTracks.swift */,
 			);
 			path = FFmpegComponents;
 			sourceTree = "<group>";
@@ -177,6 +207,74 @@
 				3E73FD362820CF4100143803 /* Comparable+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3EA1E83B2818558F00CCCA5F /* ViewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				3EDC73D928264C7800D5673E /* MainView */,
+				3EEF90982824FBFA00039BB1 /* ViewHelpers */,
+				3EEF90932823FE8F00039BB1 /* MediaInfomationBox */,
+				3EEF90972824396100039BB1 /* ControlPanel */,
+				3E73FD2928200C7700143803 /* FormatBox.swift */,
+				3EED6EF32821377900DDFAEA /* TrimView */,
+			);
+			path = ViewComponents;
+			sourceTree = "<group>";
+		};
+		3EA1E83E2819A6C600CCCA5F /* VLCComponents */ = {
+			isa = PBXGroup;
+			children = (
+				3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */,
+			);
+			path = VLCComponents;
+			sourceTree = "<group>";
+		};
+		3EDC73D928264C7800D5673E /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				3E5E5596280C760F000C5435 /* MainViewController.swift */,
+				3EDC73D72826451200D5673E /* MainViewModel.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
+		3EED6EF32821377900DDFAEA /* TrimView */ = {
+			isa = PBXGroup;
+			children = (
+				3EED6EF128211E3D00DDFAEA /* TrimButton.swift */,
+				3EFBBC382812A72E00A0A05C /* TrimControl.swift */,
+				3EED6EED282115DE00DDFAEA /* TrimControlModel.swift */,
+			);
+			path = TrimView;
+			sourceTree = "<group>";
+		};
+		3EEF90932823FE8F00039BB1 /* MediaInfomationBox */ = {
+			isa = PBXGroup;
+			children = (
+				3EA1E845281AD19100CCCA5F /* MediaInfomationBox.swift */,
+				3EEF90942823FEA200039BB1 /* MediaInfomationBoxModel.swift */,
+			);
+			path = MediaInfomationBox;
+			sourceTree = "<group>";
+		};
+		3EEF90972824396100039BB1 /* ControlPanel */ = {
+			isa = PBXGroup;
+			children = (
+				3E02AF99281704D000BE6FE4 /* ControlPanel.swift */,
+				3E73FD322820C9BE00143803 /* ControlPanelViewModel.swift */,
+			);
+			path = ControlPanel;
+			sourceTree = "<group>";
+		};
+		3EEF90982824FBFA00039BB1 /* ViewHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				3E80634428150264005B9B3C /* Extensions.swift */,
+				3EA1E83C281855E400CCCA5F /* PaddingButton.swift */,
+				3E73FD2B28200CCC00143803 /* NSPopUpButton+Rx.swift */,
+			);
+			path = ViewHelpers;
 			sourceTree = "<group>";
 		};
 		7436038F57912ABBED71E86F /* Pods */ = {
@@ -431,12 +529,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E73FD28281DAF2000143803 /* MediaDimension.swift in Sources */,
+				3EA1E848281AD56500CCCA5F /* MediaPlayerDelegator.swift in Sources */,
+				3E73FD2A28200C7700143803 /* FormatBox.swift in Sources */,
+				3EED6EF228211E3D00DDFAEA /* TrimButton.swift in Sources */,
+				3E02AF9A281704D000BE6FE4 /* ControlPanel.swift in Sources */,
+				3EDDC453282552BD00086041 /* AudioTracks.swift in Sources */,
 				3E73FD2F28204CE900143803 /* String+Extensions.swift in Sources */,
-				3E5E5597280C760F000C5435 /* ViewController.swift in Sources */,
+				3E5E5597280C760F000C5435 /* MainViewController.swift in Sources */,
+				3E73FD2C28200CCC00143803 /* NSPopUpButton+Rx.swift in Sources */,
+				3E80634528150264005B9B3C /* Extensions.swift in Sources */,
+				3EFBBC392812A72E00A0A05C /* TrimControl.swift in Sources */,
 				3E5E5595280C760F000C5435 /* AppDelegate.swift in Sources */,
 				3E73FD26281DA1AD00143803 /* FFprobe+Extensions.swift in Sources */,
+				3EA1E846281AD19100CCCA5F /* MediaInfomationBox.swift in Sources */,
+				3EDC73D82826451200D5673E /* MainViewModel.swift in Sources */,
 				3E73FD3128204D1300143803 /* TimeInvertal+Extensions.swift in Sources */,
+				3EED6EEE282115DE00DDFAEA /* TrimControlModel.swift in Sources */,
 				3E73FD372820CF4100143803 /* Comparable+Extensions.swift in Sources */,
+				3E73FD332820C9BE00143803 /* ControlPanelViewModel.swift in Sources */,
+				3EEF90952823FEA200039BB1 /* MediaInfomationBoxModel.swift in Sources */,
+				3EA1E83D281855E400CCCA5F /* PaddingButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
