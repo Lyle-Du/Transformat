@@ -16,7 +16,9 @@ final class PaddingButton: NSButton {
     }
     
     override func draw(_ dirtyRect: NSRect) {
-        bounds = dirtyRect.insetBy(dx: padding, dy: padding)
+        if abs(padding * 2) <= dirtyRect.width {
+            bounds = dirtyRect.insetBy(dx: padding, dy: padding)
+        }
         super.draw(dirtyRect)
         bounds = dirtyRect
     }

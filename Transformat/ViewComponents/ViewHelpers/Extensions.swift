@@ -9,6 +9,10 @@ import Cocoa
 
 extension NSView {
     
+    // Making view acceptFirstResponder by default,
+    // This will enable NSViewController receive responder event dispatched into responder chain
+    open override var acceptsFirstResponder: Bool{ true }
+    
     func pinEdgesTo(view: NSView, padding: CGFloat = .zero) {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -31,5 +35,16 @@ extension NSImage {
         image.unlockFocus()
         image.isTemplate = false
         return image
+    }
+}
+
+extension NSTextField {
+    
+    static func makeLabel() -> NSTextField {
+        let field = NSTextField()
+        field.isBordered = false
+        field.isEditable = false
+        field.backgroundColor = .clear
+        return field
     }
 }

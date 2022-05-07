@@ -22,6 +22,12 @@ final class MediaInfomationBox: NSBox {
     
     private let disposeBag = DisposeBag()
     
+    private let gridView: NSGridView = {
+        let gridView = NSGridView()
+        gridView.translatesAutoresizingMaskIntoConstraints = false
+        return gridView
+    }()
+    
     fileprivate let startTimeTextField: NSTextField = {
         let textField = NSTextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -50,14 +56,6 @@ final class MediaInfomationBox: NSBox {
         return button
     }()
     
-    private let stackView: NSStackView = {
-        let view = NSStackView()
-        view.distribution = .fillEqually
-        view.orientation = .vertical
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         commonInit()
@@ -68,26 +66,71 @@ final class MediaInfomationBox: NSBox {
         commonInit()
     }
     
+    private let dimensionsLabel: NSTextField = {
+        let field = NSTextField.makeLabel()
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    private let audioTrackLabel: NSTextField = {
+        let field = NSTextField.makeLabel()
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    private let timeLabel: NSTextField = {
+        let field = NSTextField.makeLabel()
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    let timeFieldsContainer: NSStackView = {
+        let stackView = NSStackView()
+        stackView.orientation = .horizontal
+        stackView.distribution = .equalCentering
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        stackView.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+        return stackView
+    }()
+    
+    let timeDashLabel: NSTextField = {
+        let label = NSTextField.makeLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.stringValue = "-"
+        label.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        label.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+        return label
+    }()
+    
     private func commonInit() {
         titlePosition = .noTitle
-        addSubview(stackView)
         
-        stackView.addArrangedSubview(dimensionsPopUpButton)
-        stackView.addArrangedSubview(audioTrackPopUpButton)
+        addSubview(gridView)
         
-        stackView.addArrangedSubview(startTimeTextField)
-        stackView.addArrangedSubview(endTimeTextField)
+        timeFieldsContainer.addArrangedSubview(startTimeTextField)
+        timeFieldsContainer.addArrangedSubview(timeDashLabel)
+        timeFieldsContainer.addArrangedSubview(endTimeTextField)
         
-        let padding = CGFloat(12)
+        gridView.addRow(with: [dimensionsLabel, dimensionsPopUpButton])
+        gridView.addRow(with: [audioTrackLabel, audioTrackPopUpButton])
+        gridView.addRow(with: [timeLabel, timeFieldsContainer])
+        
+        gridView.pinEdgesTo(view: self, padding: 12)
+        
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -padding),
+            startTimeTextField.widthAnchor.constraint(greaterThanOrEqualToConstant: 120),
+            endTimeTextField.widthAnchor.constraint(greaterThanOrEqualToConstant: 120),
+            timeDashLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 10),
         ])
     }
     
+    
     private func bind() {
+        dimensionsLabel.stringValue = viewModel.dimensionsLabel
+        audioTrackLabel.stringValue = viewModel.audioTrackLabel
+        timeLabel.stringValue = viewModel.timeLabel
+        
         disposeBag.insert([
             
             viewModel.audioTrackNames.drive(onNext: { [weak self] in
@@ -105,10 +148,13 @@ final class MediaInfomationBox: NSBox {
             viewModel.endTimeTextDriver.drive(endTimeTextField.rx.stringValue),
             viewModel.endTimeTextPlaceholderDriver.drive(endTimeTextField.rx.placeholderString),
             
-            startTimeTextField.rx.controlEvent.withLatestFrom(startTimeTextField.rx.text).subscribe(viewModel.startTimeTextBinder),
-            endTimeTextField.rx.controlEvent.withLatestFrom(endTimeTextField.rx.text).subscribe(viewModel.endTimeTextBinder),
+            startTimeTextField.rx.didEndEditing.withLatestFrom(viewModel.startTimeTextDriver.mapToOptional()).subscribe(viewModel.startTimeTextBinder),
+            endTimeTextField.rx.didEndEditing.withLatestFrom(viewModel.endTimeTextDriver.mapToOptional()).subscribe(viewModel.endTimeTextBinder),
+            
             viewModel.currentAudioTrackIndex.drive(audioTrackPopUpButton.rx.selectedIndex),
+            viewModel.currentDimensionsIndex.drive(dimensionsPopUpButton.rx.selectedIndex),
             audioTrackPopUpButton.rx.selectedIndex.bind(to: viewModel.currentAudioTrackIndexBinder),
+            dimensionsPopUpButton.rx.selectedIndex.bind(to: viewModel.currentDimensionsIndexBinder),
         ])
     }
     

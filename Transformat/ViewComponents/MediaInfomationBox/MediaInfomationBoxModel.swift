@@ -14,6 +14,10 @@ final class MediaInfomationBoxModel {
     
     let mediaPlayer: VLCMediaPlayer
     
+    let dimensionsLabel = "Dimension:"
+    let audioTrackLabel = "Audio Track:"
+    let timeLabel = "Duration:"
+    
     let audioTrackNames: Driver<[String]>
     let dismensionNames: Driver<[String]>
     
@@ -25,6 +29,7 @@ final class MediaInfomationBoxModel {
     let endTimeTextDriver: Driver<String>
     let endTimeTextPlaceholderDriver: Driver<String?>
     let currentAudioTrackIndex: Driver<Int>
+    let currentDimensionsIndex: Driver<Int>
     
     fileprivate let startTimeLimitRelay = BehaviorRelay<TimeInterval>(value: .zero)
     fileprivate private(set) var endTimeLimitRelay = BehaviorRelay<TimeInterval>(value: .zero)
@@ -35,6 +40,7 @@ final class MediaInfomationBoxModel {
     fileprivate let endTimeTextPlaceholder: Driver<String?>
     
     private let currentAudioTrackIndexRelay: BehaviorRelay<Int>
+    private let currentDimensionsIndexRelay: BehaviorRelay<Int>
     
     fileprivate let startTimeTextRelay: BehaviorRelay<String> = BehaviorRelay(value: "0")
     private let startTimeTextPlaceholderRelay: BehaviorRelay<String?> = BehaviorRelay(value: nil)
@@ -57,6 +63,8 @@ final class MediaInfomationBoxModel {
         currentAudioTrackIndex = currentAudioTrackIndexRelay.asDriver()
         
         dismensionNamesRelay.accept(Self.dismensions(media: mediaPlayer.media).map { $0.description })
+        currentDimensionsIndexRelay = BehaviorRelay(value: 0)
+        currentDimensionsIndex = currentDimensionsIndexRelay.asDriver()
         
         startTimeText = startTimeLimitRelay.asDriver().map { $0.toString() ?? "" }.distinctUntilChanged()
         startTimeTextPlaceholder = startTimeLimitRelay.asDriver().map { $0.toString() ?? "" }.distinctUntilChanged()
@@ -135,6 +143,7 @@ final class MediaInfomationBoxModel {
         currentAudioTrackIndexRelay.accept(audioTrackNamesRelay.value.count > 1 ? 1 : 0)
         
         dismensionNamesRelay.accept(Self.dismensions(media: mediaPlayer.media).map { $0.description })
+        currentDimensionsIndexRelay.accept(0)
     }
 }
 
@@ -186,6 +195,7 @@ extension MediaInfomationBoxModel {
             guard
                 let startTimeIntervalLimit = target.startTimeTextRelay.value.toTimeInterval(),
                 let endTimeIntervalLimit = target.endTimeTextRelay.value.toTimeInterval(),
+                startTimeIntervalLimit <= endTimeIntervalLimit,
                 let startTimeInterval = startTimeText.toTimeInterval()?.clamped(to: startTimeIntervalLimit...endTimeIntervalLimit),
                 let startTimeText = startTimeInterval.toString() else
             {
@@ -261,5 +271,30 @@ extension MediaInfomationBoxModel {
         Binder(self) { target, index in
             target.currentAudioTrackIndexRelay.accept(index)
         }
+    }
+    
+    var currentDimensionsIndexBinder: Binder<Int> {
+        Binder(self) { target, index in
+            target.currentDimensionsIndexRelay.accept(index)
+        }
+    }
+}
+
+extension MediaInfomationBoxModel {
+    
+    var audioTrackIndex: Int {
+        currentAudioTrackIndexRelay.value
+    }
+    
+    var dimensions: MediaDimension {
+        Self.dismensions(media: mediaPlayer.media)[currentDimensionsIndexRelay.value]
+    }
+    
+    var startTime: String {
+        startTimeTextRelay.value
+    }
+    
+    var endTime: String {
+        endTimeTextRelay.value
     }
 }

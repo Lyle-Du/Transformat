@@ -23,6 +23,14 @@ final class MainViewController: NSViewController {
         return view
     }()
     
+    private let controlPanelContainer: NSVisualEffectView = {
+        let view = NSVisualEffectView()
+        view.blendingMode = .withinWindow
+        view.material = .ultraDark
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let controlPanel: ControlPanel = {
         let panel = ControlPanel()
         panel.translatesAutoresizingMaskIntoConstraints = false
@@ -72,13 +80,17 @@ final class MainViewController: NSViewController {
         exportButton.title = viewModel.exportButtonTitle
         controlPanel.viewModel = viewModel.controlPanelViewModel
         mediaInfomationBox.viewModel = viewModel.mediaInfomationBoxModel
+        formatBox.viewModel = viewModel.formatBoxModel
         
-        importButton.rx.tap
-            .asDriver()
-            .drive(onNext: { [weak self] in
-                self?.importButtonClicked()
-            })
-            .disposed(by: disposeBag)
+        disposeBag.insert([
+            importButton.rx.tap.subscribe(onNext: { [weak self] in
+                self?.viewModel.importButtonClicked()
+            }),
+            
+            exportButton.rx.tap.subscribe(onNext: { [weak self] in
+                self?.viewModel.exportButtonClicked()
+            }),
+        ])
         
         // Note: This is to fix incorrect video size
         viewModel.stateChangedDriver
@@ -107,15 +119,15 @@ final class MainViewController: NSViewController {
         }
     }
     
-    private func importButtonClicked() {
-        viewModel.importButtonClicked()
-    }
-    
     private func setupViews() {
         view.addSubview(importButton)
         view.addSubview(exportButton)
         view.addSubview(playerView)
-        view.addSubview(controlPanel)
+        
+        view.addSubview(controlPanelContainer)
+        controlPanelContainer.addSubview(controlPanel)
+        controlPanel.pinEdgesTo(view: controlPanelContainer, padding: 8)
+        
         view.addSubview(boxContainer)
         view.addSubview(mediaInfomationBox)
         view.addSubview(formatBox)
@@ -124,35 +136,36 @@ final class MainViewController: NSViewController {
         
         NSLayoutConstraint.activate([
             importButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-            importButton.trailingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: -12),
-            importButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
+            importButton.topAnchor.constraint(equalTo: boxContainer.topAnchor),
             importButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
-            importButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 150)
+            importButton.widthAnchor.constraint(equalToConstant: 120),
         ])
         
         NSLayoutConstraint.activate([
-            exportButton.leadingAnchor.constraint(equalTo: playerView.trailingAnchor, constant: 12),
             exportButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
-            exportButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
+            exportButton.topAnchor.constraint(equalTo: boxContainer.topAnchor),
             exportButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
-            exportButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 150),
+            exportButton.widthAnchor.constraint(equalToConstant: 120),
         ])
         
         NSLayoutConstraint.activate([
             playerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            playerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
-            playerView.widthAnchor.constraint(equalTo: playerView.heightAnchor, multiplier: 4 / 3),
-            playerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 500),
+            playerView.topAnchor.constraint(equalTo: view.topAnchor),
+            playerView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            playerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 300),
+            playerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 600),
             
-            controlPanel.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 12),
-            controlPanel.trailingAnchor.constraint(equalTo: playerView.trailingAnchor, constant: -12),
-            controlPanel.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -12),
-            controlPanel.heightAnchor.constraint(equalToConstant: 36),
+            controlPanelContainer.leadingAnchor.constraint(equalTo: playerView.leadingAnchor),
+            controlPanelContainer.trailingAnchor.constraint(equalTo: playerView.trailingAnchor),
+            controlPanelContainer.topAnchor.constraint(equalTo: playerView.bottomAnchor),
+            controlPanelContainer.heightAnchor.constraint(equalToConstant: 60),
             
-            boxContainer.leadingAnchor.constraint(equalTo: playerView.leadingAnchor),
-            boxContainer.trailingAnchor.constraint(equalTo: playerView.trailingAnchor),
-            boxContainer.topAnchor.constraint(equalTo: playerView.bottomAnchor, constant: 12),
+            boxContainer.leadingAnchor.constraint(equalTo: importButton.trailingAnchor, constant: 12),
+            boxContainer.trailingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: -12),
+            boxContainer.topAnchor.constraint(equalTo: controlPanelContainer.bottomAnchor, constant: 12),
             boxContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
+            
+            mediaInfomationBox.widthAnchor.constraint(equalTo: formatBox.widthAnchor),
         ])
     }
     

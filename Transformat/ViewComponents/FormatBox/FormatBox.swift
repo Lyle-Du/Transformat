@@ -7,20 +7,44 @@
 
 import Cocoa
 
+import ffmpegkit
 import RxCocoa
 import RxSwift
 import VLCKit
-import ffmpegkit
 
 final class FormatBox: NSBox {
     
+    var viewModel: FormatBoxModel! {
+        didSet {
+           bind()
+        }
+    }
+    
     private let disposeBag = DisposeBag()
     
-    private lazy var formatsPopUpBotton: NSPopUpButton = {
+    private let formatsPopUpBotton: NSPopUpButton = {
         let button = NSPopUpButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
         button.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        return button
+    }()
+    
+    private let outputPathTextField: NSTextField = {
+        let textField = NSTextField()
+        textField.isEditable = false
+        textField.isSelectable = true
+        textField.lineBreakMode = .byCharWrapping
+        textField.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        textField.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    private let outputPathButton: NSButton = {
+        let button = NSButton()
+        button.title = "location"
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -47,6 +71,8 @@ final class FormatBox: NSBox {
         addSubview(stackView)
         
         stackView.addArrangedSubview(formatsPopUpBotton)
+        stackView.addArrangedSubview(outputPathTextField)
+        stackView.addArrangedSubview(outputPathButton)
         
         let padding = CGFloat(12)
         NSLayoutConstraint.activate([
@@ -55,30 +81,21 @@ final class FormatBox: NSBox {
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -padding),
         ])
+    }
+    
+    func bind() {
         
+        formatsPopUpBotton.addItems(withTitles: viewModel.formatTitles)
         disposeBag.insert([
-            formatsPopUpBotton.rx.selectedIndex.bind(to: rx.currentFormatIndex),
+            outputPathButton.rx.tap
+                .subscribe(onNext: { [weak self] in
+                    self?.viewModel.setOutputPath()
+                }),
+            
+            viewModel.outputPath.drive(outputPathTextField.rx.text),
+            
+            viewModel.selectedFormatIndex.drive(formatsPopUpBotton.rx.selectedIndex),
+            formatsPopUpBotton.rx.selectedIndex.bind(to: viewModel.selectedIndexBinder),
         ])
-        
-        
-        formatsPopUpBotton.addItems(withTitles: ["gif", "mp4", "mov"])
-    }
-    
-    private func setupPopupButtoon(_ button: NSPopUpButton, _ names: [String], completion: (Int) -> Void) {
-        button.removeAllItems()
-        button.addItems(withTitles: names)
-        let index = 1.clamped(to: 0...(names.count-1))
-        button.selectItem(at: index)
-        completion(index)
-    }
-}
-
-private extension Reactive where Base: FormatBox {
-    
-    var currentFormatIndex: Binder<Int> {
-        Binder(base) { base, index in
-//            let currentIndex = index <= 0 ? -1 : Int32(index)
-//            base.mediaPlayer?.currentAudioTrackIndex = currentIndex
-        }
     }
 }
