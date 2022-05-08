@@ -193,10 +193,8 @@ extension MediaInfomationBoxModel {
             }
             
             guard
-                let startTimeIntervalLimit = target.startTimeTextRelay.value.toTimeInterval(),
                 let endTimeIntervalLimit = target.endTimeTextRelay.value.toTimeInterval(),
-                startTimeIntervalLimit <= endTimeIntervalLimit,
-                let startTimeInterval = startTimeText.toTimeInterval()?.clamped(to: startTimeIntervalLimit...endTimeIntervalLimit),
+                let startTimeInterval = startTimeText.toTimeInterval()?.clamped(to: target.startTimeLimitRelay.value...endTimeIntervalLimit),
                 let startTimeText = startTimeInterval.toString() else
             {
                 if let startTimeLimitText = target.startTimeLimitRelay.value.toString() {
@@ -221,8 +219,7 @@ extension MediaInfomationBoxModel {
             
             guard
                 let startTimeIntervalLimit = target.startTimeTextRelay.value.toTimeInterval(),
-                let endTimeIntervalLimit = target.endTimeTextRelay.value.toTimeInterval(),
-                let endTimeInterval = endTimeText.toTimeInterval()?.clamped(to: startTimeIntervalLimit...endTimeIntervalLimit),
+                let endTimeInterval = endTimeText.toTimeInterval()?.clamped(to: startTimeIntervalLimit...target.endTimeLimitRelay.value),
                 let endTimeText = endTimeInterval.toString() else
             {
                 if let endTimeLimitText = target.endTimeLimitRelay.value.toString() {

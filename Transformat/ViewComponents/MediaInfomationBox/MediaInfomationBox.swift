@@ -149,13 +149,14 @@ final class MediaInfomationBox: NSBox {
                 self.setupPopupButtoon(self.dimensionsPopUpButton, $0)
             }),
             
-            viewModel.startTimeTextDriver.drive(startTimeTextField.rx.stringValue),
+            viewModel.startTimeTextDriver.drive(startTimeTextField.rx.text),
+            viewModel.endTimeTextDriver.drive(endTimeTextField.rx.text),
+            
             viewModel.startTimeTextPlaceholderDriver.drive(startTimeTextField.rx.placeholderString),
-            viewModel.endTimeTextDriver.drive(endTimeTextField.rx.stringValue),
             viewModel.endTimeTextPlaceholderDriver.drive(endTimeTextField.rx.placeholderString),
             
-            startTimeTextField.rx.didEndEditing.withLatestFrom(viewModel.startTimeTextDriver.mapToOptional()).subscribe(viewModel.startTimeTextBinder),
-            endTimeTextField.rx.didEndEditing.withLatestFrom(viewModel.endTimeTextDriver.mapToOptional()).subscribe(viewModel.endTimeTextBinder),
+            startTimeTextField.rx.didEndEditing.withLatestFrom(startTimeTextField.rx.text).subscribe(viewModel.startTimeTextBinder),
+            endTimeTextField.rx.didEndEditing.withLatestFrom(endTimeTextField.rx.text).subscribe(viewModel.endTimeTextBinder),
             
             viewModel.currentAudioTrackIndex.drive(audioTrackPopUpButton.rx.selectedIndex),
             viewModel.currentDimensionsIndex.drive(dimensionsPopUpButton.rx.selectedIndex),
