@@ -13,6 +13,10 @@ import VLCKit
 
 final class FormatBoxModel {
     
+    let formatLabel = "Format:"
+    let outputPathLabel = "Save to:"
+    let outputPathButtonTitle = "Choose"
+    
     let outputPath: Driver<String>
     let selectedFormatIndex: Driver<Int>
     let formatTitles = ContainerFormat.allCases.map { $0.titleWithFileExtension }

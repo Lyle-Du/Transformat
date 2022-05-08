@@ -154,7 +154,7 @@ final class MainViewController: NSViewController {
             playerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             playerView.topAnchor.constraint(equalTo: view.topAnchor),
             playerView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            playerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 300),
+            playerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 400),
             playerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 600),
             
             controlPanelContainer.leadingAnchor.constraint(equalTo: playerView.leadingAnchor),

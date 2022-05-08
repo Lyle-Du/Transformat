@@ -40,6 +40,8 @@ final class MainViewModel {
         self.mediaPlayer = mediaPlayer
         self.mediaPlayerDelegator = MediaPlayerDelegator(mediaPlayer: self.mediaPlayer)
         
+        openPanel.allowedFileTypes = ContainerFormat.allCases.map(\.rawValue)
+        
         importButtonTitle = importButtonTitleRelay.asDriver()
         exportButtonTitle = exportButtonTitleRelay.asDriver()
         

@@ -22,6 +22,18 @@ final class FormatBox: NSBox {
     
     private let disposeBag = DisposeBag()
     
+    private let gridView: NSGridView = {
+        let gridView = NSGridView()
+        gridView.translatesAutoresizingMaskIntoConstraints = false
+        return gridView
+    }()
+    
+    private let formatLabel: NSTextField = {
+        let label = NSTextField.makeLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private let formatsPopUpBotton: NSPopUpButton = {
         let button = NSPopUpButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -41,19 +53,24 @@ final class FormatBox: NSBox {
         return textField
     }()
     
-    private let outputPathButton: NSButton = {
-        let button = NSButton()
-        button.title = "location"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    private let outputPathContainer: NSStackView = {
+        let statckView = NSStackView()
+        statckView.orientation = .horizontal
+        statckView.translatesAutoresizingMaskIntoConstraints = false
+        return statckView
     }()
     
-    private let stackView: NSStackView = {
-        let view = NSStackView()
-        view.distribution = .fillEqually
-        view.orientation = .vertical
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private let outputPathLabel: NSTextField = {
+        let label = NSTextField.makeLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let outputPathButton: NSButton = {
+        let button = NSButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.bezelStyle = .roundRect
+        return button
     }()
     
     override init(frame frameRect: NSRect) {
@@ -68,24 +85,29 @@ final class FormatBox: NSBox {
     
     private func commonInit() {
         titlePosition = .noTitle
-        addSubview(stackView)
         
-        stackView.addArrangedSubview(formatsPopUpBotton)
-        stackView.addArrangedSubview(outputPathTextField)
-        stackView.addArrangedSubview(outputPathButton)
+        outputPathContainer.addArrangedSubview(outputPathTextField)
+        outputPathContainer.addArrangedSubview(outputPathButton)
+        addSubview(gridView)
+        
+        gridView.addRow(with: [formatLabel, formatsPopUpBotton])
+        gridView.addRow(with: [outputPathLabel, outputPathContainer])
         
         let padding = CGFloat(12)
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -padding),
+            gridView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            gridView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            gridView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+            gridView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -padding),
         ])
     }
     
     func bind() {
-        
+        formatLabel.stringValue = viewModel.formatLabel
         formatsPopUpBotton.addItems(withTitles: viewModel.formatTitles)
+        outputPathLabel.stringValue = viewModel.outputPathLabel
+        outputPathButton.title = viewModel.outputPathButtonTitle
+        
         disposeBag.insert([
             outputPathButton.rx.tap
                 .subscribe(onNext: { [weak self] in

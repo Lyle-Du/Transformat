@@ -116,7 +116,13 @@ final class MediaInfomationBox: NSBox {
         gridView.addRow(with: [audioTrackLabel, audioTrackPopUpButton])
         gridView.addRow(with: [timeLabel, timeFieldsContainer])
         
-        gridView.pinEdgesTo(view: self, padding: 12)
+        let padding = CGFloat(12)
+        NSLayoutConstraint.activate([
+            gridView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            gridView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            gridView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+            gridView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -padding),
+        ])
         
         NSLayoutConstraint.activate([
             startTimeTextField.widthAnchor.constraint(greaterThanOrEqualToConstant: 120),
