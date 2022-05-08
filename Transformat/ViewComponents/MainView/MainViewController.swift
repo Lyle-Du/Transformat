@@ -76,13 +76,15 @@ final class MainViewController: NSViewController {
     }
     
     func bind() {
-        importButton.title = viewModel.importButtonTitle
-        exportButton.title = viewModel.exportButtonTitle
         controlPanel.viewModel = viewModel.controlPanelViewModel
         mediaInfomationBox.viewModel = viewModel.mediaInfomationBoxModel
         formatBox.viewModel = viewModel.formatBoxModel
         
         disposeBag.insert([
+            
+            viewModel.importButtonTitle.drive(importButton.rx.title),
+            viewModel.exportButtonTitle.drive(exportButton.rx.title),
+            
             importButton.rx.tap.subscribe(onNext: { [weak self] in
                 self?.viewModel.importButtonClicked()
             }),

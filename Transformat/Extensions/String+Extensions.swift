@@ -27,4 +27,8 @@ extension String {
     func equalsToIgnoreCase(_ string: String) -> Bool {
         lowercased() == string.lowercased()
     }
+    
+    func formatCString(_ string: String) -> String {
+        replacingOccurrences(of: "%s", with: string)
+    }
 }

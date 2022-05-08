@@ -16,14 +16,16 @@ final class MainViewModel {
     let mediaInfomationBoxModel: MediaInfomationBoxModel
     let formatBoxModel: FormatBoxModel
     
-    let importButtonTitle = "► Import ►"
-    let exportButtonTitle = "► Export ►"
+    let importButtonTitle: Driver<String>
+    let exportButtonTitle: Driver<String>
     
     let mediaPlayer: VLCMediaPlayer
     
     let stateChangedDriver: Driver<VLCMediaPlayer>
     
     private let disposeBag = DisposeBag()
+    private let importButtonTitleRelay = BehaviorRelay<String>(value: Constants.importTitle.formatCString(""))
+    private let exportButtonTitleRelay = BehaviorRelay<String>(value: Constants.exportTitle.formatCString(""))
     private let startTimeRelay = BehaviorRelay<TimeInterval>(value: .zero)
     private let endTimeRelay = BehaviorRelay<TimeInterval>(value: .zero)
     
@@ -37,6 +39,9 @@ final class MainViewModel {
         self.openPanel = openPanel
         self.mediaPlayer = mediaPlayer
         self.mediaPlayerDelegator = MediaPlayerDelegator(mediaPlayer: self.mediaPlayer)
+        
+        importButtonTitle = importButtonTitleRelay.asDriver()
+        exportButtonTitle = exportButtonTitleRelay.asDriver()
         
         controlPanelViewModel = ControlPanelViewModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
         mediaInfomationBoxModel = MediaInfomationBoxModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
@@ -109,5 +114,16 @@ final class MainViewModel {
         let media = VLCMedia(url: url)
         mediaPlayer.media = media
         mediaInfomationBoxModel.setMedia(media)
+        if let size = FFprobeKit.sizeInBytes(media: media) {
+            importButtonTitleRelay.accept(Constants.importTitle.formatCString(size))
+        }
+    }
+}
+
+private extension MainViewModel {
+    
+    struct Constants {
+        static let importTitle = "\n► Import ►\n%s"
+        static let exportTitle = "\n► Export ►\n%s"
     }
 }

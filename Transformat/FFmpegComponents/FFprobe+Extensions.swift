@@ -10,6 +10,31 @@ import VLCKit
 
 extension FFprobeKit {
     
+    static func sizeInBytes(media: VLCMedia) -> String? {
+        guard
+            let path = media.url?.path,
+            let bytesText = FFprobeKit.getMediaInformation(path).getMediaInformation().getSize(),
+            let bytes = Double(bytesText) else
+        {
+            return nil
+        }
+        
+        var mesurement = Measurement(value: bytes, unit: UnitStorage.bytes)
+        
+        for unit in UnitStorage.allCases {
+            mesurement = mesurement.converted(to: unit)
+            if mesurement.value > 1 {
+                break
+            }
+        }
+        
+        let formatter = MeasurementFormatter()
+        formatter.unitOptions = .providedUnit
+        formatter.numberFormatter.numberStyle = .decimal
+        formatter.numberFormatter.maximumFractionDigits = 2
+        return formatter.string(from: mesurement)
+    }
+    
     static func streamsInfomation(media: VLCMedia) -> [StreamInformation] {
         guard
             let path = media.url?.path,
