@@ -46,22 +46,20 @@ extension FFprobeKit {
         return streamInfomations
     }
     
-    static func codedDimension(media: VLCMedia) -> MediaDimension? {
+    static func resolution(media: VLCMedia) -> MediaResolution? {
         let streams = streamsInfomation(media: media)
-        
+
         for stream in streams {
-            let allProperties = stream.getAllProperties()
-            
             guard
-                let widthNumber = allProperties?["width"] as? NSNumber,
-                let heightNumber = allProperties?["height"] as? NSNumber,
+                let widthNumber = stream.getWidth(),
+                let heightNumber = stream.getHeight(),
                 let width = Int(exactly: widthNumber),
                 let height = Int(exactly: heightNumber) else
             {
                 continue
             }
-            
-            return MediaDimension(width: width, height: height)
+
+            return MediaResolution(width: width, height: height)
         }
         return nil
     }

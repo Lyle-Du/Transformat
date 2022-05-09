@@ -81,6 +81,7 @@ final class MainViewModel {
         }
         
         let arguments = [
+            "-nostdin",
             "-y",
             "-i",
             inputURL.path,
@@ -88,19 +89,20 @@ final class MainViewModel {
             mediaInfomationBoxModel.startTime,
             "-to",
             mediaInfomationBoxModel.endTime,
-            "-s",
-            "\(mediaInfomationBoxModel.dimensions.width)x\(mediaInfomationBoxModel.dimensions.height)",
+            "-vf",
+            "scale=\(mediaInfomationBoxModel.resolution.width):\(mediaInfomationBoxModel.resolution.height)",
             outputURL.path
         ]
         
+        print(arguments.joined(separator: " "))
         
-        FFmpegKit.execute(
+        
+        let sesson = FFmpegKit.execute(
             withArgumentsAsync: arguments,
             withCompleteCallback: { x in
                 print("\(x?.getLastReceivedStatistics())")
             },
             withLogCallback: { x in
-                print("\(x?.getMessage())")
                 print("\(x?.getMessage())")
             },
             withStatisticsCallback: { x in

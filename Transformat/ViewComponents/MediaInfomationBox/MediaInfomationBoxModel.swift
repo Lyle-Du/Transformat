@@ -14,12 +14,12 @@ final class MediaInfomationBoxModel {
     
     let mediaPlayer: VLCMediaPlayer
     
-    let dimensionsLabel = "Dimension:"
+    let resolutionLabel = "Resolution:"
     let audioTrackLabel = "Audio Track:"
     let timeLabel = "Duration:"
     
     let audioTrackNames: Driver<[String]>
-    let dismensionNames: Driver<[String]>
+    let resolutionNames: Driver<[String]>
     
     let startTimeRatio: Driver<CGFloat?>
     let endTimeRatio: Driver<CGFloat?>
@@ -29,7 +29,7 @@ final class MediaInfomationBoxModel {
     let endTimeTextDriver: Driver<String>
     let endTimeTextPlaceholderDriver: Driver<String?>
     let currentAudioTrackIndex: Driver<Int>
-    let currentDimensionsIndex: Driver<Int>
+    let currentResolutionIndex: Driver<Int>
     
     fileprivate let startTimeLimitRelay = BehaviorRelay<TimeInterval>(value: .zero)
     fileprivate private(set) var endTimeLimitRelay = BehaviorRelay<TimeInterval>(value: .zero)
@@ -40,7 +40,7 @@ final class MediaInfomationBoxModel {
     fileprivate let endTimeTextPlaceholder: Driver<String?>
     
     private let currentAudioTrackIndexRelay: BehaviorRelay<Int>
-    private let currentDimensionsIndexRelay: BehaviorRelay<Int>
+    private let currentResolutionIndexRelay: BehaviorRelay<Int>
     
     fileprivate let startTimeTextRelay: BehaviorRelay<String> = BehaviorRelay(value: "0")
     private let startTimeTextPlaceholderRelay: BehaviorRelay<String?> = BehaviorRelay(value: nil)
@@ -48,23 +48,23 @@ final class MediaInfomationBoxModel {
     private let endTimeTextPlaceholderRelay: BehaviorRelay<String?> = BehaviorRelay(value: nil)
     
     private let audioTrackNamesRelay = BehaviorRelay<[String]>(value: [])
-    private let dismensionNamesRelay = BehaviorRelay<[String]>(value: [])
+    private let resolutionNamesRelay = BehaviorRelay<[String]>(value: [])
     
     private let disposeBag = DisposeBag()
     
     init(mediaPlayer: VLCMediaPlayer, mediaPlayerDelegator: MediaPlayerDelegator) {
         self.mediaPlayer = mediaPlayer
         audioTrackNames = audioTrackNamesRelay.asDriver()
-        dismensionNames = dismensionNamesRelay.asDriver()
+        resolutionNames = resolutionNamesRelay.asDriver()
         
         let audioTracks = Self.audioTracks(media: mediaPlayer.media)
         audioTrackNamesRelay.accept(audioTracks.sorted(by: { $0.key < $1.key }).map { $0.value })
         currentAudioTrackIndexRelay = BehaviorRelay(value: audioTrackNamesRelay.value.count > 1 ? 1 : 0)
         currentAudioTrackIndex = currentAudioTrackIndexRelay.asDriver()
         
-        dismensionNamesRelay.accept(Self.dismensions(media: mediaPlayer.media).map { $0.description })
-        currentDimensionsIndexRelay = BehaviorRelay(value: 0)
-        currentDimensionsIndex = currentDimensionsIndexRelay.asDriver()
+        resolutionNamesRelay.accept(Self.dismensions(media: mediaPlayer.media).map { $0.description })
+        currentResolutionIndexRelay = BehaviorRelay(value: 0)
+        currentResolutionIndex = currentResolutionIndexRelay.asDriver()
         
         startTimeText = startTimeLimitRelay.asDriver().map { $0.toString() ?? "" }.distinctUntilChanged()
         startTimeTextPlaceholder = startTimeLimitRelay.asDriver().map { $0.toString() ?? "" }.distinctUntilChanged()
@@ -142,32 +142,32 @@ final class MediaInfomationBoxModel {
         audioTrackNamesRelay.accept(audioTracks.sorted(by: { $0.key < $1.key }).map { $0.value })
         currentAudioTrackIndexRelay.accept(audioTrackNamesRelay.value.count > 1 ? 1 : 0)
         
-        dismensionNamesRelay.accept(Self.dismensions(media: mediaPlayer.media).map { $0.description })
-        currentDimensionsIndexRelay.accept(0)
+        resolutionNamesRelay.accept(Self.dismensions(media: mediaPlayer.media).map { $0.description })
+        currentResolutionIndexRelay.accept(0)
     }
 }
 
 private extension MediaInfomationBoxModel {
     
-    static func dismensions(media: VLCMedia?) -> [MediaDimension] {
+    static func dismensions(media: VLCMedia?) -> [MediaResolution] {
         guard
             let media = media,
-            let dimension = FFprobeKit.codedDimension(media: media) else
+            let dimension = FFprobeKit.resolution(media: media) else
         {
             return []
         }
         
         return [
             dimension,
-            MediaDimension(mediaDimension: dimension, scaled: 0.9),
-            MediaDimension(mediaDimension: dimension, scaled: 0.8),
-            MediaDimension(mediaDimension: dimension, scaled: 0.7),
-            MediaDimension(mediaDimension: dimension, scaled: 0.6),
-            MediaDimension(mediaDimension: dimension, scaled: 0.5),
-            MediaDimension(mediaDimension: dimension, scaled: 0.4),
-            MediaDimension(mediaDimension: dimension, scaled: 0.3),
-            MediaDimension(mediaDimension: dimension, scaled: 0.2),
-            MediaDimension(mediaDimension: dimension, scaled: 0.1),
+            MediaResolution(mediaDimension: dimension, scaled: 0.9),
+            MediaResolution(mediaDimension: dimension, scaled: 0.8),
+            MediaResolution(mediaDimension: dimension, scaled: 0.7),
+            MediaResolution(mediaDimension: dimension, scaled: 0.6),
+            MediaResolution(mediaDimension: dimension, scaled: 0.5),
+            MediaResolution(mediaDimension: dimension, scaled: 0.4),
+            MediaResolution(mediaDimension: dimension, scaled: 0.3),
+            MediaResolution(mediaDimension: dimension, scaled: 0.2),
+            MediaResolution(mediaDimension: dimension, scaled: 0.1),
         ]
     }
     
@@ -270,9 +270,9 @@ extension MediaInfomationBoxModel {
         }
     }
     
-    var currentDimensionsIndexBinder: Binder<Int> {
+    var currentResolutionIndexBinder: Binder<Int> {
         Binder(self) { target, index in
-            target.currentDimensionsIndexRelay.accept(index)
+            target.currentResolutionIndexRelay.accept(index)
         }
     }
 }
@@ -283,8 +283,8 @@ extension MediaInfomationBoxModel {
         currentAudioTrackIndexRelay.value
     }
     
-    var dimensions: MediaDimension {
-        Self.dismensions(media: mediaPlayer.media)[currentDimensionsIndexRelay.value]
+    var resolution: MediaResolution {
+        Self.dismensions(media: mediaPlayer.media)[currentResolutionIndexRelay.value]
     }
     
     var startTime: String {

@@ -48,7 +48,7 @@ final class MediaInfomationBox: NSBox {
         return button
     }()
     
-    private lazy var dimensionsPopUpButton: NSPopUpButton = {
+    private lazy var resolutionPopUpButton: NSPopUpButton = {
         let button = NSPopUpButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
@@ -66,7 +66,7 @@ final class MediaInfomationBox: NSBox {
         commonInit()
     }
     
-    private let dimensionsLabel: NSTextField = {
+    private let resolutionLabel: NSTextField = {
         let field = NSTextField.makeLabel()
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
@@ -112,7 +112,7 @@ final class MediaInfomationBox: NSBox {
         timeFieldsContainer.addArrangedSubview(timeDashLabel)
         timeFieldsContainer.addArrangedSubview(endTimeTextField)
         
-        gridView.addRow(with: [dimensionsLabel, dimensionsPopUpButton])
+        gridView.addRow(with: [resolutionLabel, resolutionPopUpButton])
         gridView.addRow(with: [audioTrackLabel, audioTrackPopUpButton])
         gridView.addRow(with: [timeLabel, timeFieldsContainer])
         
@@ -133,7 +133,7 @@ final class MediaInfomationBox: NSBox {
     
     
     private func bind() {
-        dimensionsLabel.stringValue = viewModel.dimensionsLabel
+        resolutionLabel.stringValue = viewModel.resolutionLabel
         audioTrackLabel.stringValue = viewModel.audioTrackLabel
         timeLabel.stringValue = viewModel.timeLabel
         
@@ -144,9 +144,9 @@ final class MediaInfomationBox: NSBox {
                 self.setupPopupButtoon(self.audioTrackPopUpButton, $0)
             }),
             
-            viewModel.dismensionNames.drive(onNext: { [weak self] in
+            viewModel.resolutionNames.drive(onNext: { [weak self] in
                 guard let self = self else { return }
-                self.setupPopupButtoon(self.dimensionsPopUpButton, $0)
+                self.setupPopupButtoon(self.resolutionPopUpButton, $0)
             }),
             
             viewModel.startTimeTextDriver.drive(startTimeTextField.rx.text),
@@ -159,9 +159,9 @@ final class MediaInfomationBox: NSBox {
             endTimeTextField.rx.didEndEditing.withLatestFrom(endTimeTextField.rx.text).subscribe(viewModel.endTimeTextBinder),
             
             viewModel.currentAudioTrackIndex.drive(audioTrackPopUpButton.rx.selectedIndex),
-            viewModel.currentDimensionsIndex.drive(dimensionsPopUpButton.rx.selectedIndex),
+            viewModel.currentResolutionIndex.drive(resolutionPopUpButton.rx.selectedIndex),
             audioTrackPopUpButton.rx.selectedIndex.bind(to: viewModel.currentAudioTrackIndexBinder),
-            dimensionsPopUpButton.rx.selectedIndex.bind(to: viewModel.currentDimensionsIndexBinder),
+            resolutionPopUpButton.rx.selectedIndex.bind(to: viewModel.currentResolutionIndexBinder),
         ])
     }
     
