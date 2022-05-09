@@ -5,28 +5,45 @@
 //  Created by QIU DU on 1/5/22.
 //
 
+
+import Foundation
+
 struct MediaResolution {
     
     let width: Int
     let height: Int
-    let scaled: Float
     
-    init(width: Int, height: Int, scaled: Float = 1) {
-        self.width = Int((Float(width) * scaled).rounded())
-        self.height = Int((Float(height) * scaled).rounded())
-        self.scaled = scaled
+    private let scale: CGFloat
+    
+    init(width: Int, height: Int, scaled: CGFloat = 1.0) {
+        scale = scaled
+        self.width = Int((CGFloat(width) * scaled).rounded())
+        self.height = Int((CGFloat(height) * scaled).rounded())
     }
+}
+
+extension MediaResolution: Equatable {
     
-    init(mediaDimension: MediaResolution, scaled: Float = 1) {
-        self.scaled = mediaDimension.scaled * scaled
-        self.width = Int((Float(mediaDimension.width) * self.scaled).rounded())
-        self.height = Int((Float(mediaDimension.height) * self.scaled).rounded())
+    static let custom = MediaResolution(width: Int.min, height: Int.min)
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.width == rhs.width && lhs.height == rhs.height
     }
 }
 
 extension MediaResolution {
     
     var description: String {
-        "\(width) x \(height) - \(String(format: "%.0f", scaled * 100))%"
+        guard self != .custom else {
+            return "Custom"
+        }
+        return "\(width) x \(height)"
+    }
+    
+    var descriptionWithScale: String {
+        guard self != .custom else {
+            return description
+        }
+        return "\(description) - \(String(format: "%.0f", scale * 100))%"
     }
 }

@@ -23,8 +23,8 @@ final class MediaPlayerDelegator: NSObject, VLCMediaPlayerDelegate {
     
     init(mediaPlayer: VLCMediaPlayer) {
         self.mediaPlayer = mediaPlayer
-        stateChangedDriver = stateChanged.asDriver(onErrorJustReturn: self.mediaPlayer).debug("--->stateChangedDriver")
-        timeChangedDriver = timeChanged.asDriver(onErrorJustReturn: self.mediaPlayer).debug("--->timeChangedDriver")
+        stateChangedDriver = stateChanged.asDriver(onErrorJustReturn: self.mediaPlayer)
+        timeChangedDriver = timeChanged.asDriver(onErrorJustReturn: self.mediaPlayer)
         super.init()
         self.mediaPlayer.delegate = self
     }

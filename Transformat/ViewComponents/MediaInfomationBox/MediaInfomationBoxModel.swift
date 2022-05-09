@@ -15,11 +15,18 @@ final class MediaInfomationBoxModel {
     let mediaPlayer: VLCMediaPlayer
     
     let resolutionLabel = "Resolution:"
+    let customResolutionLabel = "Custom Resolution:"
     let audioTrackLabel = "Audio Track:"
     let timeLabel = "Duration:"
     
     let audioTrackNames: Driver<[String]>
     let resolutionNames: Driver<[String]>
+    
+    let customResolutionWidthText: Driver<String>
+    let customResolutionHeightText: Driver<String>
+    
+    private let customResolutionWidthRelay = BehaviorRelay<String>(value: "")
+    private let customResolutionHeightRelay = BehaviorRelay<String>(value: "")
     
     let startTimeRatio: Driver<CGFloat?>
     let endTimeRatio: Driver<CGFloat?>
@@ -48,6 +55,8 @@ final class MediaInfomationBoxModel {
     private let endTimeTextPlaceholderRelay: BehaviorRelay<String?> = BehaviorRelay(value: nil)
     
     private let audioTrackNamesRelay = BehaviorRelay<[String]>(value: [])
+    
+    private let resolutionsRelay: BehaviorRelay<[MediaResolution]>
     private let resolutionNamesRelay = BehaviorRelay<[String]>(value: [])
     
     private let disposeBag = DisposeBag()
@@ -61,10 +70,20 @@ final class MediaInfomationBoxModel {
         audioTrackNamesRelay.accept(audioTracks.sorted(by: { $0.key < $1.key }).map { $0.value.name })
         currentAudioTrackIndexRelay = BehaviorRelay(value: audioTrackNamesRelay.value.count > 1 ? 1 : 0)
         currentAudioTrackIndex = currentAudioTrackIndexRelay.asDriver()
+        resolutionsRelay = BehaviorRelay(value: Self.resolutions(media: mediaPlayer.media))
         
-        resolutionNamesRelay.accept(Self.dismensions(media: mediaPlayer.media).map { $0.description })
         currentResolutionIndexRelay = BehaviorRelay(value: 0)
         currentResolutionIndex = currentResolutionIndexRelay.asDriver()
+        
+        let selectedResolution = currentResolutionIndexRelay
+            .asDriver()
+            .filter { $0 > 0 }
+            .compactMap { [resolutionsRelay] index -> MediaResolution? in
+                return resolutionsRelay.value[index]
+            }
+        
+        customResolutionWidthText = customResolutionWidthRelay.asDriver()
+        customResolutionHeightText = customResolutionHeightRelay.asDriver()
         
         startTimeText = startTimeLimitRelay.asDriver().map { $0.toString() ?? "" }.distinctUntilChanged()
         startTimeTextPlaceholder = startTimeLimitRelay.asDriver().map { $0.toString() ?? "" }.distinctUntilChanged()
@@ -122,13 +141,15 @@ final class MediaInfomationBoxModel {
         
         disposeBag.insert([
             currentAudioTrackIndexUpdater.drive(mediaPlayer.rx.currentAudioTrackIndex),
-        ])
-        
-        disposeBag.insert([
+            
             startTimeText.drive(startTimeTextRelay),
             startTimeTextPlaceholder.drive(startTimeTextPlaceholderRelay),
             endTimeText.drive(endTimeTextRelay),
             endTimeTextPlaceholder.drive(endTimeTextPlaceholderRelay),
+            resolutionsRelay.map { $0.map(\.descriptionWithScale) }.bind(to: resolutionNamesRelay),
+            
+            selectedResolution.map { String($0.width) }.drive(customResolutionWidthRelay),
+            selectedResolution.map { String($0.height) }.drive(customResolutionHeightRelay),
         ])
     }
     
@@ -141,34 +162,23 @@ final class MediaInfomationBoxModel {
         let audioTracks = Self.audioTracks(media: mediaPlayer.media)
         audioTrackNamesRelay.accept(audioTracks.sorted(by: { $0.key < $1.key }).map { $0.value.name })
         currentAudioTrackIndexRelay.accept(audioTrackNamesRelay.value.count > 1 ? 1 : 0)
-        
-        resolutionNamesRelay.accept(Self.dismensions(media: mediaPlayer.media).map { $0.description })
-        currentResolutionIndexRelay.accept(0)
+        resolutionsRelay.accept(Self.resolutions(media: media))
+        currentResolutionIndexRelay.accept(1)
     }
 }
 
 private extension MediaInfomationBoxModel {
     
-    static func dismensions(media: VLCMedia?) -> [MediaResolution] {
+    static func resolutions(media: VLCMedia?) -> [MediaResolution] {
         guard
             let media = media,
             let dimension = FFprobeKit.resolution(media: media) else
         {
             return []
         }
-        
-        return [
-            dimension,
-            MediaResolution(mediaDimension: dimension, scaled: 0.9),
-            MediaResolution(mediaDimension: dimension, scaled: 0.8),
-            MediaResolution(mediaDimension: dimension, scaled: 0.7),
-            MediaResolution(mediaDimension: dimension, scaled: 0.6),
-            MediaResolution(mediaDimension: dimension, scaled: 0.5),
-            MediaResolution(mediaDimension: dimension, scaled: 0.4),
-            MediaResolution(mediaDimension: dimension, scaled: 0.3),
-            MediaResolution(mediaDimension: dimension, scaled: 0.2),
-            MediaResolution(mediaDimension: dimension, scaled: 0.1),
-        ]
+        let scales = stride(from: 1, to: .zero, by: -0.1).map { CGFloat($0) }
+        let resolutions = scales.map { MediaResolution(width: dimension.width, height: dimension.height, scaled: $0) }
+        return [.custom] + resolutions
     }
     
     static func audioTracks(media: VLCMedia?) -> AudioTracks {
@@ -275,6 +285,56 @@ extension MediaInfomationBoxModel {
             target.currentResolutionIndexRelay.accept(index)
         }
     }
+    
+    var customResolutionWidthBinder: Binder<String?> {
+        Binder(self) { target, string in
+            guard
+                let string = string,
+                let width = Int(string),
+                let height = Int(target.customResolutionHeightRelay.value) else
+            {
+                return
+            }
+            
+            if width <= 0 {
+                target.customResolutionWidthRelay.accept("1")
+            } else {
+                target.customResolutionWidthRelay.accept(string)
+            }
+            
+            let dimension = MediaResolution(width: width, height: height)
+            guard let index = target.resolutionsRelay.value.firstIndex(of: dimension) else {
+                target.currentResolutionIndexRelay.accept(0)
+                return
+            }
+            
+            target.currentResolutionIndexRelay.accept(index)
+        }
+    }
+    
+    var customResolutionHeightBinder: Binder<String?> {
+        Binder(self) { target, string in
+            guard
+                let string = string,
+                let width = Int(target.customResolutionWidthRelay.value),
+                let height = Int(string) else
+            {
+                return
+            }
+            if height <= 0 {
+                target.customResolutionHeightRelay.accept("1")
+            } else {
+                target.customResolutionHeightRelay.accept(string)
+            }
+            target.customResolutionHeightRelay.accept(string)
+            let dimension = MediaResolution(width: width, height: height)
+            guard let index = target.resolutionsRelay.value.firstIndex(of: dimension) else {
+                target.currentResolutionIndexRelay.accept(0)
+                return
+            }
+            target.currentResolutionIndexRelay.accept(index)
+        }
+    }
 }
 
 extension MediaInfomationBoxModel {
@@ -283,8 +343,15 @@ extension MediaInfomationBoxModel {
         currentAudioTrackIndexRelay.value
     }
     
-    var resolution: MediaResolution {
-        Self.dismensions(media: mediaPlayer.media)[currentResolutionIndexRelay.value]
+    var resolution: MediaResolution? {
+        guard
+            let width = Int(customResolutionWidthRelay.value),
+            let height = Int(customResolutionHeightRelay.value) else
+        {
+            return nil
+        }
+        
+        return MediaResolution(width: width, height: height)
     }
     
     var startTime: String {

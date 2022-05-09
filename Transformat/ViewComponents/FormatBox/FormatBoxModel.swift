@@ -14,12 +14,26 @@ import VLCKit
 final class FormatBoxModel {
     
     let formatLabel = "Format:"
+    let videoCodecLabel = "Video Codec:"
+    
+    let audioCodecLabel = "Audio Codec:"
+    
     let outputPathLabel = "Save to:"
     let outputPathButtonTitle = "Choose"
     
     let outputPath: Driver<String>
     let selectedFormatIndex: Driver<Int>
     let formatTitles = ContainerFormat.allCases.map { $0.titleWithFileExtension }
+    
+    let videoCodecTitles: Driver<[String]>
+    let audioCodecTitles: Driver<[String]>
+    let selectedVideoCodecIndex: Driver<Int>
+    let selectedAudioCodecIndex: Driver<Int>
+    
+    private let videoCodecTitlesRelay = BehaviorRelay<[String]>(value: [])
+    private let selectedVideoCodecIndexRelay: BehaviorRelay<Int>
+    private let audioCodecTitlesRelay = BehaviorRelay<[String]>(value: [])
+    private let selectedAudioCodecIndexRelay: BehaviorRelay<Int>
     
     private let mediaPlayer: VLCMediaPlayer
     private let savePanel: NSSavePanel
@@ -38,18 +52,25 @@ final class FormatBoxModel {
         self.savePanel = savePanel
         self.userDefaults = userDefaults
         
+        videoCodecTitles = videoCodecTitlesRelay.asDriver()
+        audioCodecTitles = audioCodecTitlesRelay.asDriver()
+        
         savePanel.allowedFileTypes = ContainerFormat.allCases.map(\.rawValue)
         savePanel.allowsOtherFileTypes = false
         savePanel.showsTagField = false
         
+        var selectedFormat = ContainerFormat.gif
         if
-            let selectedFormatString = userDefaults.string(forKey: StoreKeys.selectedFormat),
-            let selectedFormat = ContainerFormat(rawValue: selectedFormatString)
+            let formatString = userDefaults.string(forKey: StoreKeys.selectedFormat),
+            let format = ContainerFormat(rawValue: formatString)
         {
-            selectedFormatRelay = BehaviorRelay<ContainerFormat>(value: selectedFormat)
-        } else {
-            selectedFormatRelay = BehaviorRelay<ContainerFormat>(value: .gif)
+            selectedFormat = format
         }
+        
+        selectedFormatRelay = BehaviorRelay(value: selectedFormat)
+        
+        selectedVideoCodecIndexRelay = BehaviorRelay(value: selectedFormat.videoCodecs.count > 0 ? 0 : -1)
+        selectedAudioCodecIndexRelay = BehaviorRelay(value: selectedFormat.audioCodecs.count > 0 ? 0 : -1)
         
         selectedFormatIndex = selectedFormatRelay.distinctUntilChanged()
             .compactMap { ContainerFormat.allCases.firstIndex(of: $0) }
@@ -57,13 +78,19 @@ final class FormatBoxModel {
         
         outputPath = outputPathRelay.asDriver().map { $0?.path ?? "" }
         
-        let selectedFormat = selectedFormatRelay.distinctUntilChanged()
+        selectedVideoCodecIndex = selectedVideoCodecIndexRelay.asDriver()
+        selectedAudioCodecIndex = selectedAudioCodecIndexRelay.asDriver()
+        
+        let selectedFormatObserable = selectedFormatRelay.distinctUntilChanged()
         
         disposeBag.insert([
-            selectedFormat.map { [$0.rawValue] }.bind(to: savePanel.rx.allowedFileTypes),
-            selectedFormat.subscribe(onNext: { [userDefaults, outputPathRelay] selected in
-                userDefaults.set(selected.rawValue, forKey: StoreKeys.selectedFormat)
-                outputPathRelay.accept(nil)
+            selectedFormatObserable.map { [$0.rawValue] }.bind(to: savePanel.rx.allowedFileTypes),
+            selectedFormatObserable.subscribe(onNext: { [weak self] selected in
+                guard let self = self else { return }
+                self.userDefaults.set(selected.rawValue, forKey: StoreKeys.selectedFormat)
+                self.outputPathRelay.accept(nil)
+                self.videoCodecTitlesRelay.accept(selected.videoCodecs.map(\.title))
+                self.audioCodecTitlesRelay.accept(selected.audioCodecs.map(\.title))
             }),
         ])
     }
@@ -107,6 +134,18 @@ extension FormatBoxModel {
             target.outputPathRelay.accept(nil)
         }
     }
+    
+    var selectedVideoCodecIndexBinder: Binder<Int> {
+        Binder(self) { target, index in
+            target.selectedVideoCodecIndexRelay.accept(index)
+        }
+    }
+    
+    var selectedAudioCodecIndexBinder: Binder<Int> {
+        Binder(self) { target, index in
+            target.selectedAudioCodecIndexRelay.accept(index)
+        }
+    }
 }
 
 extension FormatBoxModel {
@@ -117,5 +156,21 @@ extension FormatBoxModel {
     
     var format: ContainerFormat {
         selectedFormatRelay.value
+    }
+    
+    var videoCodec: VideoCodec? {
+        let index = selectedVideoCodecIndexRelay.value
+        guard index != -1 else {
+            return nil
+        }
+        return selectedFormatRelay.value.videoCodecs[index]
+    }
+    
+    var audioCodec: AudioCodec? {
+        let index = selectedAudioCodecIndexRelay.value
+        guard index != -1 else {
+            return nil
+        }
+        return selectedFormatRelay.value.audioCodecs[index]
     }
 }

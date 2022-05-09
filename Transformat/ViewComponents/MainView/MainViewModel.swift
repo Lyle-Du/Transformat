@@ -82,18 +82,36 @@ final class MainViewModel {
             return
         }
         
-        var videoBitrateOption: String? = nil
-        var videoBitrateText: String? = nil
+        var videoBitrateOption: String?
+        var videoBitrateText: String?
         if let audioBitrate = FFprobeKit.videoBitrate(media: media) {
             videoBitrateOption = "-b:v"
             videoBitrateText = String(audioBitrate)
         }
         
-        var audioBitrateOption: String? = nil
-        var audioBitrateText: String? = nil
+        var audioBitrateOption: String?
+        var audioBitrateText: String?
         if let audioBitrate = FFprobeKit.audioTracks(media: media)[mediaInfomationBoxModel.audioTrackIndex]?.bitrate {
             audioBitrateOption = "-b:a"
             audioBitrateText = String(audioBitrate)
+        }
+        
+        var videoCodecOption: String?
+        let videoCodec = formatBoxModel.videoCodec?.rawValue
+        if videoCodec != nil {
+            videoCodecOption = "-c:v"
+        }
+        var audioCodecOption: String?
+        let audioCodec = formatBoxModel.audioCodec?.encoder
+        if audioCodec != nil {
+            audioCodecOption = "-c:a"
+        }
+        
+        var resolutionOption: String?
+        var resolutionValue: String?
+        if let resolution = mediaInfomationBoxModel.resolution {
+            resolutionOption = "-vf"
+            resolutionValue = "scale=\(resolution.width):\(resolution.height)"
         }
         
         let arguments = [
@@ -105,20 +123,20 @@ final class MainViewModel {
             "-y",
             "-i",
             inputURL.path,
-            
+            videoCodecOption,
+            videoCodec,
+            audioCodecOption,
+            audioCodec,
             videoBitrateOption,
             videoBitrateText,
             audioBitrateOption,
             audioBitrateText,
-            
-            "-vf",
-            "scale=\(mediaInfomationBoxModel.resolution.width):\(mediaInfomationBoxModel.resolution.height)",
-            
+            resolutionOption,
+            resolutionValue,
             outputURL.path,
         ].compactMap { $0 }
         
         print(arguments.joined(separator: " "))
-        
         
         let sesson = FFmpegKit.execute(
             withArgumentsAsync: arguments,

@@ -42,6 +42,34 @@ final class FormatBox: NSBox {
         return button
     }()
     
+    private let videoCodecLabel: NSTextField = {
+        let label = NSTextField.makeLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let videoCodecPopUpBotton: NSPopUpButton = {
+        let button = NSPopUpButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+        button.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        return button
+    }()
+    
+    private let audioCodecLabel: NSTextField = {
+        let label = NSTextField.makeLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let audioCodecPopUpBotton: NSPopUpButton = {
+        let button = NSPopUpButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+        button.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        return button
+    }()
+    
     private let outputPathTextField: NSTextField = {
         let textField = NSTextField()
         textField.isEditable = false
@@ -91,6 +119,8 @@ final class FormatBox: NSBox {
         addSubview(gridView)
         
         gridView.addRow(with: [formatLabel, formatsPopUpBotton])
+        gridView.addRow(with: [videoCodecLabel, videoCodecPopUpBotton])
+        gridView.addRow(with: [audioCodecLabel, audioCodecPopUpBotton])
         gridView.addRow(with: [outputPathLabel, outputPathContainer])
         
         let padding = CGFloat(12)
@@ -105,10 +135,24 @@ final class FormatBox: NSBox {
     func bind() {
         formatLabel.stringValue = viewModel.formatLabel
         formatsPopUpBotton.addItems(withTitles: viewModel.formatTitles)
+        videoCodecLabel.stringValue = viewModel.videoCodecLabel
+        audioCodecLabel.stringValue = viewModel.audioCodecLabel
+        formatsPopUpBotton.addItems(withTitles: viewModel.formatTitles)
         outputPathLabel.stringValue = viewModel.outputPathLabel
         outputPathButton.title = viewModel.outputPathButtonTitle
         
         disposeBag.insert([
+            
+            viewModel.videoCodecTitles.drive(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.setupPopupButtoon(self.videoCodecPopUpBotton, $0)
+            }),
+            
+            viewModel.audioCodecTitles.drive(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.setupPopupButtoon(self.audioCodecPopUpBotton, $0)
+            }),
+            
             outputPathButton.rx.tap
                 .subscribe(onNext: { [weak self] in
                     self?.viewModel.setOutputPath()
@@ -118,6 +162,17 @@ final class FormatBox: NSBox {
             
             viewModel.selectedFormatIndex.drive(formatsPopUpBotton.rx.selectedIndex),
             formatsPopUpBotton.rx.selectedIndex.bind(to: viewModel.selectedIndexBinder),
+            
+            viewModel.selectedVideoCodecIndex.drive(videoCodecPopUpBotton.rx.selectedIndex),
+            videoCodecPopUpBotton.rx.selectedIndex.bind(to: viewModel.selectedVideoCodecIndexBinder),
+            
+            viewModel.selectedAudioCodecIndex.drive(audioCodecPopUpBotton.rx.selectedIndex),
+            audioCodecPopUpBotton.rx.selectedIndex.bind(to: viewModel.selectedAudioCodecIndexBinder),
         ])
+    }
+    
+    private func setupPopupButtoon(_ button: NSPopUpButton, _ names: [String]) {
+        button.removeAllItems()
+        button.addItems(withTitles: names)
     }
 }

@@ -42,6 +42,34 @@ final class MediaInfomationBox: NSBox {
         return button
     }()
     
+    private let customResolutionLabel: NSTextField = {
+        let field = NSTextField.makeLabel()
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    private let customResolutionWidthTextField: NSTextField = {
+        let textField = NSTextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    private let customResolutionHeightTextField: NSTextField = {
+        let textField = NSTextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    private let customResolutionFieldsContainer: NSStackView = {
+        let stackView = NSStackView()
+        stackView.orientation = .horizontal
+        stackView.distribution = .equalCentering
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        stackView.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+        return stackView
+    }()
+    
     private let audioTrackLabel: NSTextField = {
         let field = NSTextField.makeLabel()
         field.translatesAutoresizingMaskIntoConstraints = false
@@ -100,10 +128,15 @@ final class MediaInfomationBox: NSBox {
         addSubview(gridView)
         
         timeFieldsContainer.addArrangedSubview(startTimeTextField)
-        timeFieldsContainer.addArrangedSubview(makeDashLabel())
+        timeFieldsContainer.addArrangedSubview(makeCharLabel("-"))
         timeFieldsContainer.addArrangedSubview(endTimeTextField)
         
+        customResolutionFieldsContainer.addArrangedSubview(customResolutionWidthTextField)
+        customResolutionFieldsContainer.addArrangedSubview(makeCharLabel("x"))
+        customResolutionFieldsContainer.addArrangedSubview(customResolutionHeightTextField)
+        
         gridView.addRow(with: [resolutionLabel, resolutionPopUpButton])
+        gridView.addRow(with: [customResolutionLabel, customResolutionFieldsContainer])
         gridView.addRow(with: [audioTrackLabel, audioTrackPopUpButton])
         gridView.addRow(with: [timeLabel, timeFieldsContainer])
         
@@ -124,6 +157,7 @@ final class MediaInfomationBox: NSBox {
     
     private func bind() {
         resolutionLabel.stringValue = viewModel.resolutionLabel
+        customResolutionLabel.stringValue = viewModel.customResolutionLabel
         audioTrackLabel.stringValue = viewModel.audioTrackLabel
         timeLabel.stringValue = viewModel.timeLabel
         
@@ -138,6 +172,11 @@ final class MediaInfomationBox: NSBox {
                 guard let self = self else { return }
                 self.setupPopupButtoon(self.resolutionPopUpButton, $0)
             }),
+            
+            viewModel.customResolutionWidthText.drive(customResolutionWidthTextField.rx.text),
+            viewModel.customResolutionHeightText.drive(customResolutionHeightTextField.rx.text),
+            customResolutionWidthTextField.rx.didEndEditing.withLatestFrom(customResolutionWidthTextField.rx.text).subscribe(viewModel.customResolutionWidthBinder),
+            customResolutionHeightTextField.rx.didEndEditing.withLatestFrom(customResolutionHeightTextField.rx.text).subscribe(viewModel.customResolutionHeightBinder),
             
             viewModel.startTimeTextDriver.drive(startTimeTextField.rx.text),
             viewModel.endTimeTextDriver.drive(endTimeTextField.rx.text),
@@ -156,7 +195,6 @@ final class MediaInfomationBox: NSBox {
     }
     
     private func setupPopupButtoon(_ button: NSPopUpButton, _ names: [String]) {
-        guard !names.isEmpty else { return }
         button.removeAllItems()
         button.addItems(withTitles: names)
     }
@@ -164,10 +202,10 @@ final class MediaInfomationBox: NSBox {
 
 private extension MediaInfomationBox {
     
-    private func makeDashLabel() -> NSTextField {
+    private func makeCharLabel(_ char: Character) -> NSTextField {
         let label = NSTextField.makeLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.stringValue = "-"
+        label.stringValue = String(char)
         label.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
         label.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
         NSLayoutConstraint.activate([
