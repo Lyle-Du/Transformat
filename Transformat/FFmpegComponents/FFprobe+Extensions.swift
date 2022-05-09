@@ -10,10 +10,23 @@ import VLCKit
 
 extension FFprobeKit {
     
+    static func mediaInformation(media: VLCMedia) -> MediaInformation? {
+        guard let path = media.url?.path else {
+            return nil
+        }
+        return FFprobeKit.getMediaInformation(path).getMediaInformation()
+    }
+    
+    static func videoBitrate(media: VLCMedia) -> Double? {
+        guard let bitrate = mediaInformation(media: media)?.getBitrate() else {
+            return nil
+        }
+        return Double(bitrate)
+    }
+    
     static func sizeInBytes(media: VLCMedia) -> String? {
         guard
-            let path = media.url?.path,
-            let bytesText = FFprobeKit.getMediaInformation(path).getMediaInformation().getSize(),
+            let bytesText = mediaInformation(media: media)?.getSize(),
             let bytes = Double(bytesText) else
         {
             return nil
@@ -37,8 +50,7 @@ extension FFprobeKit {
     
     static func streamsInfomation(media: VLCMedia) -> [StreamInformation] {
         guard
-            let path = media.url?.path,
-            let streams = FFprobeKit.getMediaInformation(path).getMediaInformation().getStreams(),
+            let streams = mediaInformation(media: media)?.getStreams(),
             let streamInfomations = streams as? [StreamInformation] else
         {
             return []
@@ -65,20 +77,14 @@ extension FFprobeKit {
     }
     
     static func duration(media: VLCMedia) -> TimeInterval? {
-        guard
-            let path = media.url?.path,
-            let duration = FFprobeKit.getMediaInformation(path).getMediaInformation().getDuration() else
-        {
+        guard let duration = FFprobeKit.mediaInformation(media: media)?.getDuration() else {
             return nil
         }
         return TimeInterval(duration)
     }
     
     static func startTime(media: VLCMedia) -> TimeInterval? {
-        guard
-            let path = media.url?.path,
-            let duration = FFprobeKit.getMediaInformation(path).getMediaInformation().getStartTime() else
-        {
+        guard let duration = FFprobeKit.mediaInformation(media: media)?.getStartTime() else {
             return nil
         }
         return TimeInterval(duration)
@@ -102,10 +108,14 @@ extension FFprobeKit {
             let tags = streamInformation.getTags()
             let title = tags?["title"] as? String
             let language = tags?["language"] as? String
-            let text = "Track \(index): " + [title, language].compactMap { $0 }.joined(separator: " - ")
-            audioTracks[index] = text
+            let name = "\(index). " + [title, language].compactMap { $0 }.joined(separator: " - ")
+            var bitrate: Double? = nil
+            if let bitrateText = streamInformation.getBitrate() {
+                bitrate = Double(bitrateText)
+            }
+            audioTracks[index] = AudioTrack(name: name, bitrate: bitrate)
         }
-        audioTracks[-1] = "Disabled"
+        audioTracks[-1] = .disabled
         return audioTracks
     }
 }

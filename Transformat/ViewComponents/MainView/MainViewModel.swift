@@ -75,24 +75,47 @@ final class MainViewModel {
     
     func exportButtonClicked() {
         guard
-        let inputURL = mediaPlayer.media?.url,
-        let outputURL = formatBoxModel.fileURL else {
+            let media = mediaPlayer.media,
+            let inputURL = mediaPlayer.media?.url,
+            let outputURL = formatBoxModel.fileURL else
+        {
             return
         }
         
+        var videoBitrateOption: String? = nil
+        var videoBitrateText: String? = nil
+        if let audioBitrate = FFprobeKit.videoBitrate(media: media) {
+            videoBitrateOption = "-b:v"
+            videoBitrateText = String(audioBitrate)
+        }
+        
+        var audioBitrateOption: String? = nil
+        var audioBitrateText: String? = nil
+        if let audioBitrate = FFprobeKit.audioTracks(media: media)[mediaInfomationBoxModel.audioTrackIndex]?.bitrate {
+            audioBitrateOption = "-b:a"
+            audioBitrateText = String(audioBitrate)
+        }
+        
         let arguments = [
-            "-nostdin",
-            "-y",
-            "-i",
-            inputURL.path,
             "-ss",
             mediaInfomationBoxModel.startTime,
             "-to",
             mediaInfomationBoxModel.endTime,
+            "-nostdin",
+            "-y",
+            "-i",
+            inputURL.path,
+            
+            videoBitrateOption,
+            videoBitrateText,
+            audioBitrateOption,
+            audioBitrateText,
+            
             "-vf",
             "scale=\(mediaInfomationBoxModel.resolution.width):\(mediaInfomationBoxModel.resolution.height)",
-            outputURL.path
-        ]
+            
+            outputURL.path,
+        ].compactMap { $0 }
         
         print(arguments.joined(separator: " "))
         
@@ -100,13 +123,13 @@ final class MainViewModel {
         let sesson = FFmpegKit.execute(
             withArgumentsAsync: arguments,
             withCompleteCallback: { x in
-                print("\(x?.getLastReceivedStatistics())")
+//                print("\(x?.getLastReceivedStatistics())")
             },
             withLogCallback: { x in
-                print("\(x?.getMessage())")
+//                print("\(x?.getMessage())")
             },
             withStatisticsCallback: { x in
-                print("\(x?.getVideoQuality())")
+//                print("\(x?.getVideoQuality())")
             })
     }
     

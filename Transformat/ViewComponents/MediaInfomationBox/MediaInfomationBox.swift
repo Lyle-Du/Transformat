@@ -28,16 +28,24 @@ final class MediaInfomationBox: NSBox {
         return gridView
     }()
     
-    fileprivate let startTimeTextField: NSTextField = {
-        let textField = NSTextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
+    private let resolutionLabel: NSTextField = {
+        let field = NSTextField.makeLabel()
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
     }()
     
-    fileprivate let endTimeTextField: NSTextField = {
-        let textField = NSTextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
+    private lazy var resolutionPopUpButton: NSPopUpButton = {
+        let button = NSPopUpButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+        button.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        return button
+    }()
+    
+    private let audioTrackLabel: NSTextField = {
+        let field = NSTextField.makeLabel()
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
     }()
     
     private lazy var audioTrackPopUpButton: NSPopUpButton = {
@@ -48,12 +56,32 @@ final class MediaInfomationBox: NSBox {
         return button
     }()
     
-    private lazy var resolutionPopUpButton: NSPopUpButton = {
-        let button = NSPopUpButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
-        button.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
-        return button
+    private let timeLabel: NSTextField = {
+        let field = NSTextField.makeLabel()
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    private let startTimeTextField: NSTextField = {
+        let textField = NSTextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    private let endTimeTextField: NSTextField = {
+        let textField = NSTextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    private let timeFieldsContainer: NSStackView = {
+        let stackView = NSStackView()
+        stackView.orientation = .horizontal
+        stackView.distribution = .equalCentering
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        stackView.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+        return stackView
     }()
     
     override init(frame frameRect: NSRect) {
@@ -66,50 +94,13 @@ final class MediaInfomationBox: NSBox {
         commonInit()
     }
     
-    private let resolutionLabel: NSTextField = {
-        let field = NSTextField.makeLabel()
-        field.translatesAutoresizingMaskIntoConstraints = false
-        return field
-    }()
-    
-    private let audioTrackLabel: NSTextField = {
-        let field = NSTextField.makeLabel()
-        field.translatesAutoresizingMaskIntoConstraints = false
-        return field
-    }()
-    
-    private let timeLabel: NSTextField = {
-        let field = NSTextField.makeLabel()
-        field.translatesAutoresizingMaskIntoConstraints = false
-        return field
-    }()
-    
-    let timeFieldsContainer: NSStackView = {
-        let stackView = NSStackView()
-        stackView.orientation = .horizontal
-        stackView.distribution = .equalCentering
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
-        stackView.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
-        return stackView
-    }()
-    
-    let timeDashLabel: NSTextField = {
-        let label = NSTextField.makeLabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.stringValue = "-"
-        label.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
-        label.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
-        return label
-    }()
-    
     private func commonInit() {
         titlePosition = .noTitle
         
         addSubview(gridView)
         
         timeFieldsContainer.addArrangedSubview(startTimeTextField)
-        timeFieldsContainer.addArrangedSubview(timeDashLabel)
+        timeFieldsContainer.addArrangedSubview(makeDashLabel())
         timeFieldsContainer.addArrangedSubview(endTimeTextField)
         
         gridView.addRow(with: [resolutionLabel, resolutionPopUpButton])
@@ -127,7 +118,6 @@ final class MediaInfomationBox: NSBox {
         NSLayoutConstraint.activate([
             startTimeTextField.widthAnchor.constraint(greaterThanOrEqualToConstant: 120),
             endTimeTextField.widthAnchor.constraint(greaterThanOrEqualToConstant: 120),
-            timeDashLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 10),
         ])
     }
     
@@ -169,5 +159,20 @@ final class MediaInfomationBox: NSBox {
         guard !names.isEmpty else { return }
         button.removeAllItems()
         button.addItems(withTitles: names)
+    }
+}
+
+private extension MediaInfomationBox {
+    
+    private func makeDashLabel() -> NSTextField {
+        let label = NSTextField.makeLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.stringValue = "-"
+        label.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        label.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+        NSLayoutConstraint.activate([
+            label.widthAnchor.constraint(greaterThanOrEqualToConstant: 10),
+        ])
+        return label
     }
 }

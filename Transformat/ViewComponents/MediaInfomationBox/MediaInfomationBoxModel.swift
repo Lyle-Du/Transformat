@@ -58,7 +58,7 @@ final class MediaInfomationBoxModel {
         resolutionNames = resolutionNamesRelay.asDriver()
         
         let audioTracks = Self.audioTracks(media: mediaPlayer.media)
-        audioTrackNamesRelay.accept(audioTracks.sorted(by: { $0.key < $1.key }).map { $0.value })
+        audioTrackNamesRelay.accept(audioTracks.sorted(by: { $0.key < $1.key }).map { $0.value.name })
         currentAudioTrackIndexRelay = BehaviorRelay(value: audioTrackNamesRelay.value.count > 1 ? 1 : 0)
         currentAudioTrackIndex = currentAudioTrackIndexRelay.asDriver()
         
@@ -139,7 +139,7 @@ final class MediaInfomationBoxModel {
         endTimeLimitRelay.accept(endTime)
         
         let audioTracks = Self.audioTracks(media: mediaPlayer.media)
-        audioTrackNamesRelay.accept(audioTracks.sorted(by: { $0.key < $1.key }).map { $0.value })
+        audioTrackNamesRelay.accept(audioTracks.sorted(by: { $0.key < $1.key }).map { $0.value.name })
         currentAudioTrackIndexRelay.accept(audioTrackNamesRelay.value.count > 1 ? 1 : 0)
         
         resolutionNamesRelay.accept(Self.dismensions(media: mediaPlayer.media).map { $0.description })
