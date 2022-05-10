@@ -82,6 +82,10 @@ final class MainViewModel {
             return
         }
         
+        guard inputURL.path != outputURL.path else {
+            return
+        }
+        
         var videoBitrateOption: String?
         var videoBitrateText: String?
         if let audioBitrate = FFprobeKit.videoBitrate(media: media) {
@@ -138,16 +142,39 @@ final class MainViewModel {
         
         print(arguments.joined(separator: " "))
         
+        var duration: TimeInterval?
+        if
+            let startTimeInterval = mediaInfomationBoxModel.startTime.toTimeInterval(),
+            let endTimeInterval = mediaInfomationBoxModel.endTime.toTimeInterval()
+        {
+            duration = endTimeInterval - startTimeInterval
+        }
+        
+        guard let duration = duration else {
+            return
+        }
+        
         let sesson = FFmpegKit.execute(
             withArgumentsAsync: arguments,
-            withCompleteCallback: { x in
-                print("\(x?.getLastReceivedStatistics()?.getVideoFrameNumber())")
+            withCompleteCallback: { session in
+                guard let session = session else {
+                    return
+                }
+                print("percentText 100% finished!")
             },
-            withLogCallback: { x in
-                print("\(x?.getMessage())")
+            withLogCallback: { session in
+                guard let session = session else {
+                    return
+                }
             },
-            withStatisticsCallback: { x in
-//                print("\(x?.getVideoQuality())")
+            withStatisticsCallback: { session in
+                guard let session = session else {
+                    return
+                }
+                let current = Double(session.getTime()) / 1000
+                let percent = (current / duration).clamped(to: 0...1.0)
+                let percentText = String(format: "%.0f", percent * 100)
+                print("percentText \(percentText)%")
             })
     }
     

@@ -157,7 +157,14 @@ final class MediaInfomationBoxModel {
         let startTime = FFprobeKit.startTime(media: media) ?? .zero
         let endTime = FFprobeKit.endTime(media: media) ?? .zero
         startTimeLimitRelay.accept(startTime)
+        if let startTimeText = startTime.toString() {
+            startTimeTextRelay.accept(startTimeText)
+        }
+        
         endTimeLimitRelay.accept(endTime)
+        if let endTimeText = endTime.toString() {
+            endTimeTextRelay.accept(endTimeText)
+        }
         
         let audioTracks = Self.audioTracks(media: mediaPlayer.media)
         audioTrackNamesRelay.accept(audioTracks.sorted(by: { $0.key < $1.key }).map { $0.value.name })
