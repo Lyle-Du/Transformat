@@ -22,12 +22,17 @@ final class MainViewModel {
     let mediaPlayer: VLCMediaPlayer
     
     let stateChangedDriver: Driver<VLCMediaPlayer>
+    let progressPercentage: Driver<Double?>
+    let progressPercentageText: Driver<String>
+    let isImportExportDisabled: Driver<Bool>
     
     private let disposeBag = DisposeBag()
     private let importButtonTitleRelay = BehaviorRelay<String>(value: Constants.importTitle.formatCString(""))
     private let exportButtonTitleRelay = BehaviorRelay<String>(value: Constants.exportTitle.formatCString(""))
     private let startTimeRelay = BehaviorRelay<TimeInterval>(value: .zero)
     private let endTimeRelay = BehaviorRelay<TimeInterval>(value: .zero)
+    private let progressPercentageRelay = BehaviorRelay<Double?>(value: nil)
+    private let isImportExportDisabledRelay = BehaviorRelay<Bool>(value: false)
     
     private let openPanel: NSOpenPanel
     private let mediaPlayerDelegator: MediaPlayerDelegator
@@ -44,11 +49,19 @@ final class MainViewModel {
         
         importButtonTitle = importButtonTitleRelay.asDriver()
         exportButtonTitle = exportButtonTitleRelay.asDriver()
+        isImportExportDisabled = isImportExportDisabledRelay.asDriver()
         
         controlPanelViewModel = ControlPanelViewModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
         mediaInfomationBoxModel = MediaInfomationBoxModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
         formatBoxModel = FormatBoxModel(mediaPlayer: mediaPlayer)
         stateChangedDriver = mediaPlayerDelegator.stateChangedDriver
+        progressPercentage = progressPercentageRelay.asDriver().map { $0?.clamped(to: .zero...1) }.distinctUntilChanged()
+        progressPercentageText = progressPercentage.map { percent in
+            guard let percent = percent else {
+                return ""
+            }
+            return String(format: "%.0f", percent * 100) + "%"
+        }
         
         disposeBag.insert([
             mediaPlayerDelegator.stateChangedDriver.drive(controlPanelViewModel.stateChanged),
@@ -59,6 +72,12 @@ final class MainViewModel {
             mediaInfomationBoxModel.endTimeRatio.drive(controlPanelViewModel.trimControlModel.endTimeRatio),
             controlPanelViewModel.trimControlModel.startTimePositionRatio.drive(mediaInfomationBoxModel.startTimeRatioBinder),
             controlPanelViewModel.trimControlModel.endTimePositionRatio.drive(mediaInfomationBoxModel.endTimeRatioBinder),
+            progressPercentageText.map { Constants.exportTitle.formatCString($0) }.drive(exportButtonTitleRelay),
+            Driver.zip(isImportExportDisabled, isImportExportDisabled.skip(1))
+                .filter { previous, current in return !current && previous }
+                .map { _, _ in return nil }
+                .delay(.seconds(1))
+                .drive(progressPercentageRelay),
         ])
     }
     
@@ -153,28 +172,35 @@ final class MainViewModel {
         guard let duration = duration else {
             return
         }
-        
+        isImportExportDisabledRelay.accept(true)
+        progressPercentageRelay.accept(nil)
         let sesson = FFmpegKit.execute(
             withArgumentsAsync: arguments,
-            withCompleteCallback: { session in
-                guard let session = session else {
+            withCompleteCallback: { [weak self] session in
+                self?.isImportExportDisabledRelay.accept(false)
+                guard
+                    let self = self,
+                    let session = session else
+                {
                     return
                 }
-                print("percentText 100% finished!")
+                self.progressPercentageRelay.accept(1)
             },
             withLogCallback: { session in
                 guard let session = session else {
                     return
                 }
             },
-            withStatisticsCallback: { session in
-                guard let session = session else {
+            withStatisticsCallback: { [weak self] session in
+                guard
+                    let self = self,
+                    let session = session else
+                {
                     return
                 }
                 let current = Double(session.getTime()) / 1000
                 let percent = (current / duration).clamped(to: 0...1.0)
-                let percentText = String(format: "%.0f", percent * 100)
-                print("percentText \(percentText)%")
+                self.progressPercentageRelay.accept(percent)
             })
     }
     

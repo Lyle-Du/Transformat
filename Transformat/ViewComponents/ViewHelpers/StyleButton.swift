@@ -28,7 +28,6 @@ final class StyleButton: NSButton {
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        print("isHighlighted \(isHighlighted)")
         if isHighlighted {
             layer?.backgroundColor = NSColor.controlColor.shadow(withLevel: 0.1)?.cgColor
         } else {

@@ -17,6 +17,12 @@ final class MainViewController: NSViewController {
     
     private let disposeBag = DisposeBag()
     
+    private let progressView: ProgressView = {
+        let progressView = ProgressView()
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        return progressView
+    }()
+    
     private let playerView: VLCVideoView = {
         let view = VLCVideoView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -56,15 +62,15 @@ final class MainViewController: NSViewController {
         return box
     }()
     
-    private let importButton: StyleButton = {
-        let button = StyleButton()
+    private let importButton: ProgressButton = {
+        let button = ProgressButton()
         button.font = .systemFont(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private let exportButton: StyleButton = {
-        let button = StyleButton()
+    private let exportButton: ProgressButton = {
+        let button = ProgressButton()
         button.font = .systemFont(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -82,7 +88,12 @@ final class MainViewController: NSViewController {
         mediaInfomationBox.viewModel = viewModel.mediaInfomationBoxModel
         formatBox.viewModel = viewModel.formatBoxModel
         
-        disposeBag.insert([
+        let extractedExpr = [
+            viewModel.isImportExportDisabled.map { !$0 }.drive(exportButton.rx.isEnabled),
+            viewModel.isImportExportDisabled.map { !$0 }.drive(importButton.rx.isEnabled),
+            viewModel.progressPercentage.drive(progressView.rx.progressBinder),
+            viewModel.progressPercentage.drive(importButton.rx.progressBinder),
+            viewModel.progressPercentage.drive(exportButton.rx.progressBinder),
             
             viewModel.importButtonTitle.drive(importButton.rx.title),
             viewModel.exportButtonTitle.drive(exportButton.rx.title),
@@ -94,7 +105,8 @@ final class MainViewController: NSViewController {
             exportButton.rx.tap.subscribe(onNext: { [weak self] in
                 self?.viewModel.exportButtonClicked()
             }),
-        ])
+        ]
+        disposeBag.insert(extractedExpr)
         
         // Note: This is to fix incorrect video size
         viewModel.stateChangedDriver
@@ -124,6 +136,9 @@ final class MainViewController: NSViewController {
     }
     
     private func setupViews() {
+        
+        
+        
         view.addSubview(importButton)
         view.addSubview(exportButton)
         view.addSubview(playerView)
@@ -137,6 +152,8 @@ final class MainViewController: NSViewController {
         view.addSubview(formatBox)
         boxContainer.addArrangedSubview(mediaInfomationBox)
         boxContainer.addArrangedSubview(formatBox)
+        
+        view.addSubview(progressView)
         
         NSLayoutConstraint.activate([
             importButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
@@ -170,6 +187,13 @@ final class MainViewController: NSViewController {
             boxContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
             
             mediaInfomationBox.widthAnchor.constraint(equalTo: formatBox.widthAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            progressView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            progressView.topAnchor.constraint(equalTo: controlPanel.bottomAnchor, constant: 8),
+            progressView.heightAnchor.constraint(equalToConstant: 2),
         ])
     }
     
