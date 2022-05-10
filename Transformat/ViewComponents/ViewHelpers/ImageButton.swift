@@ -1,5 +1,5 @@
 //
-//  NSImageButton.swift
+//  ImageButton.swift
 //  Transformat
 //
 //  Created by QIU DU on 27/4/22.
@@ -7,7 +7,7 @@
 
 import Cocoa
 
-final class PaddingButton: NSButton {
+final class ImageButton: NSButton {
     
     var padding = CGFloat.zero {
         didSet {

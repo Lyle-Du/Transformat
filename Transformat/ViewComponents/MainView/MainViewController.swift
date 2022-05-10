@@ -56,14 +56,16 @@ final class MainViewController: NSViewController {
         return box
     }()
     
-    private let importButton: NSButton = {
-        let button = NSButton()
+    private let importButton: StyleButton = {
+        let button = StyleButton()
+        button.font = .systemFont(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private let exportButton: NSButton = {
-        let button = NSButton()
+    private let exportButton: StyleButton = {
+        let button = StyleButton()
+        button.font = .systemFont(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()

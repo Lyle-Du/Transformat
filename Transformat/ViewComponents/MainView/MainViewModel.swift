@@ -141,10 +141,10 @@ final class MainViewModel {
         let sesson = FFmpegKit.execute(
             withArgumentsAsync: arguments,
             withCompleteCallback: { x in
-//                print("\(x?.getLastReceivedStatistics())")
+                print("\(x?.getLastReceivedStatistics()?.getVideoFrameNumber())")
             },
             withLogCallback: { x in
-//                print("\(x?.getMessage())")
+                print("\(x?.getMessage())")
             },
             withStatisticsCallback: { x in
 //                print("\(x?.getVideoQuality())")
@@ -168,7 +168,7 @@ final class MainViewModel {
 private extension MainViewModel {
     
     struct Constants {
-        static let importTitle = "\n► Import ►\n%s"
-        static let exportTitle = "\n► Export ►\n%s"
+        static let importTitle = "\nImport\n%s"
+        static let exportTitle = "\nExport\n%s"
     }
 }

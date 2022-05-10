@@ -160,7 +160,10 @@ extension FormatBoxModel {
     
     var videoCodec: VideoCodec? {
         let index = selectedVideoCodecIndexRelay.value
-        guard index != -1 else {
+        guard
+            index != -1,
+            selectedFormatRelay.value.videoCodecs.count > 0 else
+        {
             return nil
         }
         return selectedFormatRelay.value.videoCodecs[index]
@@ -168,7 +171,9 @@ extension FormatBoxModel {
     
     var audioCodec: AudioCodec? {
         let index = selectedAudioCodecIndexRelay.value
-        guard index != -1 else {
+        guard
+            index != -1,
+            selectedFormatRelay.value.audioCodecs.count > 0 else {
             return nil
         }
         return selectedFormatRelay.value.audioCodecs[index]

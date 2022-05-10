@@ -27,8 +27,8 @@ final class ControlPanel: NSView {
         return view
     }()
     
-    fileprivate let playButton: PaddingButton = {
-        let button = PaddingButton()
+    fileprivate let playButton: ImageButton = {
+        let button = ImageButton()
         button.padding = 12
         button.image = NSImage(named: ControlPanelViewModel.Constants.playImageName)
         button.title = ""

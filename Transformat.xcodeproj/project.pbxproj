@@ -27,9 +27,10 @@
 		3E73FD332820C9BE00143803 /* ControlPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD322820C9BE00143803 /* ControlPanelViewModel.swift */; };
 		3E73FD372820CF4100143803 /* Comparable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD362820CF4100143803 /* Comparable+Extensions.swift */; };
 		3E80634528150264005B9B3C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E80634428150264005B9B3C /* Extensions.swift */; };
-		3EA1E83D281855E400CCCA5F /* PaddingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E83C281855E400CCCA5F /* PaddingButton.swift */; };
+		3EA1E83D281855E400CCCA5F /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E83C281855E400CCCA5F /* ImageButton.swift */; };
 		3EA1E846281AD19100CCCA5F /* MediaInfomationBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E845281AD19100CCCA5F /* MediaInfomationBox.swift */; };
 		3EA1E848281AD56500CCCA5F /* MediaPlayerDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */; };
+		3EAEBDBA282AA64A004BA81C /* StyleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDB9282AA64A004BA81C /* StyleButton.swift */; };
 		3EDC73D82826451200D5673E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC73D72826451200D5673E /* MainViewModel.swift */; };
 		3EDC73DC28267E9600D5673E /* FormatBoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC73DB28267E9600D5673E /* FormatBoxModel.swift */; };
 		3EDC73DE28267FAA00D5673E /* ContainerFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC73DD28267FAA00D5673E /* ContainerFormat.swift */; };
@@ -90,9 +91,10 @@
 		3E73FD322820C9BE00143803 /* ControlPanelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanelViewModel.swift; sourceTree = "<group>"; };
 		3E73FD362820CF4100143803 /* Comparable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Extensions.swift"; sourceTree = "<group>"; };
 		3E80634428150264005B9B3C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		3EA1E83C281855E400CCCA5F /* PaddingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingButton.swift; sourceTree = "<group>"; };
+		3EA1E83C281855E400CCCA5F /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		3EA1E845281AD19100CCCA5F /* MediaInfomationBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInfomationBox.swift; sourceTree = "<group>"; };
 		3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerDelegator.swift; sourceTree = "<group>"; };
+		3EAEBDB9282AA64A004BA81C /* StyleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleButton.swift; sourceTree = "<group>"; };
 		3EDC73D72826451200D5673E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		3EDC73DB28267E9600D5673E /* FormatBoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatBoxModel.swift; sourceTree = "<group>"; };
 		3EDC73DD28267FAA00D5673E /* ContainerFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerFormat.swift; sourceTree = "<group>"; };
@@ -293,9 +295,10 @@
 			isa = PBXGroup;
 			children = (
 				3E80634428150264005B9B3C /* Extensions.swift */,
-				3EA1E83C281855E400CCCA5F /* PaddingButton.swift */,
+				3EA1E83C281855E400CCCA5F /* ImageButton.swift */,
 				3E73FD2B28200CCC00143803 /* NSPopUpButton+Rx.swift */,
 				3E03868C2827C6F000A429F8 /* NSTextField+Rx.swift */,
+				3EAEBDB9282AA64A004BA81C /* StyleButton.swift */,
 			);
 			path = ViewHelpers;
 			sourceTree = "<group>";
@@ -552,6 +555,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E73FD28281DAF2000143803 /* MediaResolution.swift in Sources */,
+				3EAEBDBA282AA64A004BA81C /* StyleButton.swift in Sources */,
 				3EA1E848281AD56500CCCA5F /* MediaPlayerDelegator.swift in Sources */,
 				3E73FD2A28200C7700143803 /* FormatBox.swift in Sources */,
 				3E03868B2827C64100A429F8 /* Rx+Extensions.swift in Sources */,
@@ -576,7 +580,7 @@
 				3E73FD372820CF4100143803 /* Comparable+Extensions.swift in Sources */,
 				3E73FD332820C9BE00143803 /* ControlPanelViewModel.swift in Sources */,
 				3EEF90952823FEA200039BB1 /* MediaInfomationBoxModel.swift in Sources */,
-				3EA1E83D281855E400CCCA5F /* PaddingButton.swift in Sources */,
+				3EA1E83D281855E400CCCA5F /* ImageButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
