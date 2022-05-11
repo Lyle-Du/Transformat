@@ -25,6 +25,7 @@ final class MainViewModel {
     let progressPercentage: Driver<Double?>
     let progressPercentageText: Driver<String>
     let isImportExportDisabled: Driver<Bool>
+    let isExportDisabled: Driver<Bool>
     
     private let disposeBag = DisposeBag()
     private let importButtonTitleRelay = BehaviorRelay<String>(value: Constants.importTitle.formatCString(""))
@@ -33,6 +34,7 @@ final class MainViewModel {
     private let endTimeRelay = BehaviorRelay<TimeInterval>(value: .zero)
     private let progressPercentageRelay = BehaviorRelay<Double?>(value: nil)
     private let isImportExportDisabledRelay = BehaviorRelay<Bool>(value: false)
+    private let isExportDisabledRelay = BehaviorRelay<Bool>(value: true)
     
     private let openPanel: NSOpenPanel
     private let mediaPlayerDelegator: MediaPlayerDelegator
@@ -50,6 +52,7 @@ final class MainViewModel {
         importButtonTitle = importButtonTitleRelay.asDriver()
         exportButtonTitle = exportButtonTitleRelay.asDriver()
         isImportExportDisabled = isImportExportDisabledRelay.asDriver()
+        isExportDisabled = isExportDisabledRelay.asDriver()
         
         controlPanelViewModel = ControlPanelViewModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
         mediaInfomationBoxModel = MediaInfomationBoxModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
@@ -64,6 +67,9 @@ final class MainViewModel {
         }
         
         disposeBag.insert([
+            // Fix buttion is not disabled in the beginning by slight delay
+            Observable.just(true).delay(.milliseconds(100), scheduler: MainScheduler.instance).bind(to: isExportDisabledRelay),
+            
             mediaPlayerDelegator.stateChangedDriver.drive(controlPanelViewModel.stateChanged),
             mediaPlayerDelegator.timeChangedDriver.drive(controlPanelViewModel.timeChanged),
             startTimeRelay.asDriver().drive(mediaInfomationBoxModel.startTimeLimitBinder),
@@ -78,6 +84,11 @@ final class MainViewModel {
                 .map { _, _ in return nil }
                 .delay(.seconds(1))
                 .drive(progressPercentageRelay),
+            
+            formatBoxModel.outputPath.drive(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.updateExportAvailability(self.mediaPlayer.media)
+            }),
         ])
     }
     
@@ -93,104 +104,40 @@ final class MainViewModel {
     }
     
     func exportButtonClicked() {
+        updateExportAvailability(mediaPlayer.media)
         guard
             let media = mediaPlayer.media,
-            let inputURL = mediaPlayer.media?.url,
-            let outputURL = formatBoxModel.fileURL else
+            let outputURL = formatBoxModel.fileURL,
+            let argumentsBuilder = FFmpegArgumentsBuilder(media: media, outputURL: outputURL) else
         {
             return
         }
         
-        guard inputURL.path != outputURL.path else {
-            return
-        }
+        let arguments = argumentsBuilder.reset()
+            .duration(start: mediaInfomationBoxModel.startTime, end: mediaInfomationBoxModel.endTime)
+            .videoCodec(codec: formatBoxModel.videoCodec)
+            .videoBitrate()
+            .audioCodec(codec: formatBoxModel.audioCodec)
+            .audioBitrate()
+            .resolution(mediaInfomationBoxModel.resolution)
+            .build()
         
-        var videoBitrateOption: String?
-        var videoBitrateText: String?
-        if let audioBitrate = FFprobeKit.videoBitrate(media: media) {
-            videoBitrateOption = "-b:v"
-            videoBitrateText = String(audioBitrate)
-        }
-        
-        var audioBitrateOption: String?
-        var audioBitrateText: String?
-        if let audioBitrate = FFprobeKit.audioTracks(media: media)[mediaInfomationBoxModel.audioTrackIndex]?.bitrate {
-            audioBitrateOption = "-b:a"
-            audioBitrateText = String(audioBitrate)
-        }
-        
-        var videoCodecOption: String?
-        let videoCodec = formatBoxModel.videoCodec?.rawValue
-        if videoCodec != nil {
-            videoCodecOption = "-c:v"
-        }
-        var audioCodecOption: String?
-        let audioCodec = formatBoxModel.audioCodec?.encoder
-        if audioCodec != nil {
-            audioCodecOption = "-c:a"
-        }
-        
-        var resolutionOption: String?
-        var resolutionValue: String?
-        if let resolution = mediaInfomationBoxModel.resolution {
-            resolutionOption = "-vf"
-            resolutionValue = "scale=\(resolution.width):\(resolution.height)"
-        }
-        
-        let arguments = [
-            "-ss",
-            mediaInfomationBoxModel.startTime,
-            "-to",
-            mediaInfomationBoxModel.endTime,
-            "-nostdin",
-            "-y",
-            "-i",
-            inputURL.path,
-            videoCodecOption,
-            videoCodec,
-            audioCodecOption,
-            audioCodec,
-            videoBitrateOption,
-            videoBitrateText,
-            audioBitrateOption,
-            audioBitrateText,
-            resolutionOption,
-            resolutionValue,
-            outputURL.path,
-        ].compactMap { $0 }
-        
-        print(arguments.joined(separator: " "))
-        
-        var duration: TimeInterval?
-        if
+        guard
             let startTimeInterval = mediaInfomationBoxModel.startTime.toTimeInterval(),
-            let endTimeInterval = mediaInfomationBoxModel.endTime.toTimeInterval()
+            let endTimeInterval = mediaInfomationBoxModel.endTime.toTimeInterval() else
         {
-            duration = endTimeInterval - startTimeInterval
-        }
-        
-        guard let duration = duration else {
             return
         }
+        let duration = endTimeInterval - startTimeInterval
         isImportExportDisabledRelay.accept(true)
         progressPercentageRelay.accept(nil)
         let sesson = FFmpegKit.execute(
             withArgumentsAsync: arguments,
             withCompleteCallback: { [weak self] session in
                 self?.isImportExportDisabledRelay.accept(false)
-                guard
-                    let self = self,
-                    let session = session else
-                {
-                    return
-                }
-                self.progressPercentageRelay.accept(1)
+                self?.progressPercentageRelay.accept(1)
             },
-            withLogCallback: { session in
-                guard let session = session else {
-                    return
-                }
-            },
+            withLogCallback: { _ in },
             withStatisticsCallback: { [weak self] session in
                 guard
                     let self = self,
@@ -202,6 +149,7 @@ final class MainViewModel {
                 let percent = (current / duration).clamped(to: 0...1.0)
                 self.progressPercentageRelay.accept(percent)
             })
+        do { _ = sesson }
     }
     
     private func setMedia(url: URL) {
@@ -214,6 +162,16 @@ final class MainViewModel {
         mediaInfomationBoxModel.setMedia(media)
         if let size = FFprobeKit.sizeInBytes(media: media) {
             importButtonTitleRelay.accept(Constants.importTitle.formatCString(size))
+        }
+        
+        updateExportAvailability(media)
+    }
+    
+    private func updateExportAvailability(_ media: VLCMedia?) {
+        if formatBoxModel.fileURL == nil || media?.url?.path == nil || media?.url?.path == formatBoxModel.fileURL?.path {
+            isExportDisabledRelay.accept(true || isImportExportDisabledRelay.value)
+        } else {
+            isExportDisabledRelay.accept(isImportExportDisabledRelay.value)
         }
     }
 }

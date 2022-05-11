@@ -88,7 +88,8 @@ final class MainViewController: NSViewController {
         mediaInfomationBox.viewModel = viewModel.mediaInfomationBoxModel
         formatBox.viewModel = viewModel.formatBoxModel
         
-        let extractedExpr = [
+        disposeBag.insert([
+            viewModel.isExportDisabled.map { !$0 }.drive(exportButton.rx.isEnabled),
             viewModel.isImportExportDisabled.map { !$0 }.drive(exportButton.rx.isEnabled),
             viewModel.isImportExportDisabled.map { !$0 }.drive(importButton.rx.isEnabled),
             viewModel.progressPercentage.drive(progressView.rx.progressBinder),
@@ -105,8 +106,7 @@ final class MainViewController: NSViewController {
             exportButton.rx.tap.subscribe(onNext: { [weak self] in
                 self?.viewModel.exportButtonClicked()
             }),
-        ]
-        disposeBag.insert(extractedExpr)
+        ])
         
         // Note: This is to fix incorrect video size
         viewModel.stateChangedDriver

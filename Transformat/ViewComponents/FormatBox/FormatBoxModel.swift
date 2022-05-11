@@ -36,6 +36,7 @@ final class FormatBoxModel {
     private let selectedAudioCodecIndexRelay: BehaviorRelay<Int>
     
     private let mediaPlayer: VLCMediaPlayer
+    private let fileManager: FileManager
     private let savePanel: NSSavePanel
     private let userDefaults: UserDefaults
     
@@ -45,10 +46,12 @@ final class FormatBoxModel {
     
     init(
         mediaPlayer: VLCMediaPlayer,
+        fileManager: FileManager = .default,
         savePanel: NSSavePanel = NSSavePanel(),
         userDefaults: UserDefaults = .standard)
     {
         self.mediaPlayer = mediaPlayer
+        self.fileManager = fileManager
         self.savePanel = savePanel
         self.userDefaults = userDefaults
         
@@ -96,9 +99,24 @@ final class FormatBoxModel {
     }
     
     func setOutputPath() {
-        let url = mediaPlayer.media?.url?.deletingPathExtension().appendingPathExtension(selectedFormatRelay.value.rawValue)
+        var mediaURL = mediaPlayer.media?.url?.deletingPathExtension().appendingPathExtension(selectedFormatRelay.value.rawValue)
+        if let url = mediaURL {
+            let fileExtension = url.pathExtension
+            var newURL = url
+            while fileManager.fileExists(atPath: newURL.path) {
+                print("fileManager.fileExists \(newURL.path)")
+                let path = newURL.deletingLastPathComponent()
+                let urlWithoutExtension = newURL.deletingPathExtension()
+                let fileName = urlWithoutExtension.lastPathComponent
+                let copySuffix = " copy"
+                let newFileName = "\(fileName)\(copySuffix)"
+                newURL = path.appendingPathComponent(newFileName).appendingPathExtension(fileExtension)
+            }
+            mediaURL = newURL
+        }
+        
         savePanel.nameFieldStringValue = "Untitled.\(selectedFormatRelay.value.rawValue)"
-        if let filename = url?.lastPathComponent {
+        if let filename = mediaURL?.lastPathComponent {
             savePanel.nameFieldStringValue = filename
         }
         
