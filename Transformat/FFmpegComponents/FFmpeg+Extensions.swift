@@ -29,13 +29,11 @@ extension FFmpegKit {
         }
         let interval = duration / Double (count)
         
-        let ids = (0..<count)
-        
         var result = [Int: NSImage]()
         
-        for id in ids {
+        DispatchQueue.concurrentPerform(iterations: count) { id in
             let fileURL = directoryURL.appendingPathComponent(String(id)).appendingPathExtension("png")
-            execute(withArguments: [
+            let arguments = [
                 "-nostdin",
                 "-y",
                 "-ss",
@@ -47,7 +45,9 @@ extension FFmpegKit {
                 "-vframes",
                 "1",
                 fileURL.path,
-            ])
+            ]
+            
+            execute(withArguments: arguments)
             
             do {
                 result[id] = try NSImage(data: Data(contentsOf: fileURL))
@@ -55,6 +55,7 @@ extension FFmpegKit {
                 print(error)
             }
         }
+        
         return result
     }
 }

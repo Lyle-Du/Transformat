@@ -35,7 +35,7 @@ final class TrimControlModel {
     private let boundsRelay = BehaviorRelay<NSRect>(value: .zero)
     private let frameRelay = BehaviorRelay<NSRect>(value: .zero)
     
-    private let mediaUpdatedRelay = BehaviorRelay<()>(value: ())
+    private let thumbnailsRelay = BehaviorRelay<[Int: NSImage]>(value: [:])
     
     private let disposeBag = DisposeBag()
     
@@ -97,7 +97,7 @@ final class TrimControlModel {
         .drive(frameRelay)
         .disposed(by: disposeBag)
         
-        images = mediaUpdatedRelay.map { FFmpegKit.thumbnails(media: mediaPlayer.media, count: 15) }.asDriver(onErrorJustReturn: [:])
+        images = thumbnailsRelay.asDriver()
         
         disposeBag.insert([
             boundsRelay.bind(to: frameRelay),
@@ -107,8 +107,9 @@ final class TrimControlModel {
         ])
     }
     
-    func mediaUpdated() {
-        mediaUpdatedRelay.accept(())
+    func loadThumbnails(_ media: VLCMedia) {
+        let thumbnails = FFmpegKit.thumbnails(media: media, count: 15)
+        thumbnailsRelay.accept(thumbnails)
     }
     
     private var wasPlaying = false

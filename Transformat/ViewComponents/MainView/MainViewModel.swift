@@ -165,12 +165,12 @@ final class MainViewModel {
         mediaPlayer.stop()
         resizePlayerView.onNext(())
         let media = VLCMedia(url: url)
+        controlPanelViewModel.trimControlModel.loadThumbnails(media)
         mediaPlayer.media = media
         mediaInfomationBoxModel.setMedia(media)
         if let size = FFprobeKit.sizeInBytes(media: media) {
             importButtonTitleRelay.accept(Constants.importTitle.formatCString(size))
         }
-        controlPanelViewModel.trimControlModel.mediaUpdated()
         updateExportAvailability(media)
     }
     
