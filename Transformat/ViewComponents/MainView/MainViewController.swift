@@ -106,16 +106,17 @@ final class MainViewController: NSViewController {
             exportButton.rx.tap.subscribe(onNext: { [weak self] in
                 self?.viewModel.exportButtonClicked()
             }),
-        ])
-        
-        // Note: This is to fix incorrect video size
-        viewModel.stateChangedDriver
-            .drive(onNext: { [weak self] _ in
+            
+            
+            // Fix player view size
+            viewModel.resize.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
+                self.viewModel.mediaPlayer.drawable = nil
+                self.viewModel.mediaPlayer.drawable = self.playerView
                 self.fixedFirstTimeInvalidSize = false
                 self.fixFirstTimeInvalidSize(view: self.playerView)
-            })
-            .disposed(by: disposeBag)
+            }),
+        ])
     }
     
     override func viewDidLayout() {
@@ -136,9 +137,6 @@ final class MainViewController: NSViewController {
     }
     
     private func setupViews() {
-        
-        
-        
         view.addSubview(importButton)
         view.addSubview(exportButton)
         view.addSubview(playerView)

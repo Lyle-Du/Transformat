@@ -12,6 +12,10 @@ import VLCKit
 
 final class MainViewModel {
     
+    var resize: ControlEvent<()> {
+        ControlEvent(events: resizePlayerView)
+    }
+    
     let controlPanelViewModel: ControlPanelViewModel
     let mediaInfomationBoxModel: MediaInfomationBoxModel
     let formatBoxModel: FormatBoxModel
@@ -35,6 +39,8 @@ final class MainViewModel {
     private let progressPercentageRelay = BehaviorRelay<Double?>(value: nil)
     private let isImportExportDisabledRelay = BehaviorRelay<Bool>(value: false)
     private let isExportDisabledRelay = BehaviorRelay<Bool>(value: true)
+    
+    private let resizePlayerView = PublishSubject<()>()
     
     private let openPanel: NSOpenPanel
     private let mediaPlayerDelegator: MediaPlayerDelegator
@@ -157,6 +163,7 @@ final class MainViewModel {
             return
         }
         mediaPlayer.stop()
+        resizePlayerView.onNext(())
         let media = VLCMedia(url: url)
         mediaPlayer.media = media
         mediaInfomationBoxModel.setMedia(media)
