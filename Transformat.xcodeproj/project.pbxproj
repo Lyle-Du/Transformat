@@ -34,6 +34,7 @@
 		3EAEBDBC282AB64B004BA81C /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDBB282AB64B004BA81C /* ProgressView.swift */; };
 		3EAEBDBE282AF9B1004BA81C /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */; };
 		3EAEBDC2282B59BD004BA81C /* FFmpegArgumentsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDC1282B59BD004BA81C /* FFmpegArgumentsBuilder.swift */; };
+		3EAEBDC6282BF7FF004BA81C /* FFmpeg+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDC5282BF7FF004BA81C /* FFmpeg+Extensions.swift */; };
 		3EDC73D82826451200D5673E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC73D72826451200D5673E /* MainViewModel.swift */; };
 		3EDC73DC28267E9600D5673E /* FormatBoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC73DB28267E9600D5673E /* FormatBoxModel.swift */; };
 		3EDC73DE28267FAA00D5673E /* ContainerFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC73DD28267FAA00D5673E /* ContainerFormat.swift */; };
@@ -101,6 +102,7 @@
 		3EAEBDBB282AB64B004BA81C /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButton.swift; sourceTree = "<group>"; };
 		3EAEBDC1282B59BD004BA81C /* FFmpegArgumentsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFmpegArgumentsBuilder.swift; sourceTree = "<group>"; };
+		3EAEBDC5282BF7FF004BA81C /* FFmpeg+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FFmpeg+Extensions.swift"; sourceTree = "<group>"; };
 		3EDC73D72826451200D5673E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		3EDC73DB28267E9600D5673E /* FormatBoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatBoxModel.swift; sourceTree = "<group>"; };
 		3EDC73DD28267FAA00D5673E /* ContainerFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerFormat.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				3EDDC452282552BD00086041 /* AudioTracks.swift */,
 				3E03869028280E7000A429F8 /* UnitStorage.swift */,
 				3EAEBDC1282B59BD004BA81C /* FFmpegArgumentsBuilder.swift */,
+				3EAEBDC5282BF7FF004BA81C /* FFmpeg+Extensions.swift */,
 			);
 			path = FFmpegComponents;
 			sourceTree = "<group>";
@@ -588,6 +591,7 @@
 				3EAEBDC2282B59BD004BA81C /* FFmpegArgumentsBuilder.swift in Sources */,
 				3EED6EEE282115DE00DDFAEA /* TrimControlModel.swift in Sources */,
 				3E03868D2827C6F000A429F8 /* NSTextField+Rx.swift in Sources */,
+				3EAEBDC6282BF7FF004BA81C /* FFmpeg+Extensions.swift in Sources */,
 				3E73FD372820CF4100143803 /* Comparable+Extensions.swift in Sources */,
 				3E73FD332820C9BE00143803 /* ControlPanelViewModel.swift in Sources */,
 				3EAEBDBC282AB64B004BA81C /* ProgressView.swift in Sources */,

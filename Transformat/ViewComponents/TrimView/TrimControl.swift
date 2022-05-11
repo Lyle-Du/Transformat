@@ -79,6 +79,7 @@ final class TrimControl: NSControl {
         layer?.cornerRadius = CGFloat(TrimControlModel.Constants.buttonWidth * 0.5)
         
         addSubview(trackerView)
+        trackerView.addSubview(thumbnailsContainer)
         trackerView.addSubview(trimView)
         trackerView.pinEdgesTo(view: self)
         
@@ -87,6 +88,11 @@ final class TrimControl: NSControl {
         trimView.addSubview(endTimeButton)
         
         NSLayoutConstraint.activate([
+            thumbnailsContainer.leadingAnchor.constraint(equalTo: trackerView.leadingAnchor, constant: TrimControlModel.Constants.buttonWidth),
+            thumbnailsContainer.trailingAnchor.constraint(equalTo: trackerView.trailingAnchor, constant: -TrimControlModel.Constants.buttonWidth),
+            thumbnailsContainer.topAnchor.constraint(equalTo: trackerView.topAnchor),
+            thumbnailsContainer.bottomAnchor.constraint(equalTo: trackerView.bottomAnchor),
+            
             startTimeButton.leadingAnchor.constraint(equalTo: trimView.leadingAnchor),
             startTimeButton.widthAnchor.constraint(equalToConstant: TrimControlModel.Constants.buttonWidth),
             startTimeButton.topAnchor.constraint(equalTo: trimView.topAnchor),
@@ -98,6 +104,15 @@ final class TrimControl: NSControl {
             endTimeButton.bottomAnchor.constraint(equalTo: trimView.bottomAnchor),
         ])
     }
+    
+    private let thumbnailsContainer: NSStackView = {
+        let stackView = NSStackView()
+        stackView.orientation = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = .zero
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
     private func bind() {
         disposeBag.insert([
@@ -121,6 +136,22 @@ final class TrimControl: NSControl {
             })
             .disposed(by: disposeBag)
         }
+        
+        viewModel.images.drive(onNext: { [weak self] images in
+            guard let self = self else { return }
+            self.thumbnailsContainer.removeAllArrangedSubviews()
+            images.mapValues { image -> NSImageView in
+                let view = NSImageView(image: image)
+                view.imageScaling = .scaleProportionallyUpOrDown
+                view.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+                return view
+            }
+            .sorted(by: { $0.key < $1.key  })
+            .forEach {
+                self.thumbnailsContainer.addArrangedSubview($0.1)
+            }
+        })
+        .disposed(by: disposeBag)
     }
     
     override func layout() {
@@ -174,5 +205,23 @@ private extension TrimControl {
     
     var buttonSize: NSSize {
         NSSize(width: TrimControlModel.Constants.buttonWidth, height: bounds.height)
+    }
+}
+
+
+extension NSStackView {
+    
+    func removeAllArrangedSubviews() {
+        
+        let removedSubviews = arrangedSubviews.reduce([]) { (allSubviews, subview) -> [NSView] in
+            self.removeArrangedSubview(subview)
+            return allSubviews + [subview]
+        }
+        
+        // Deactivate all constraints
+        NSLayoutConstraint.deactivate(removedSubviews.flatMap({ $0.constraints }))
+        
+        // Remove the views from self
+        removedSubviews.forEach({ $0.removeFromSuperview() })
     }
 }

@@ -170,7 +170,7 @@ final class MainViewModel {
         if let size = FFprobeKit.sizeInBytes(media: media) {
             importButtonTitleRelay.accept(Constants.importTitle.formatCString(size))
         }
-        
+        controlPanelViewModel.trimControlModel.mediaUpdated()
         updateExportAvailability(media)
     }
     

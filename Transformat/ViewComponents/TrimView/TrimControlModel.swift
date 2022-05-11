@@ -7,6 +7,7 @@
 
 import RxCocoa
 import RxSwift
+import ffmpegkit
 import VLCKit
 
 final class TrimControlModel {
@@ -17,6 +18,8 @@ final class TrimControlModel {
     
     let startTimePositionRatio: Driver<CGFloat>
     let endTimePositionRatio: Driver<CGFloat>
+    
+    let images: Driver<[Int: NSImage]>
     
     private let mediaPlayer: VLCMediaPlayer
     
@@ -32,9 +35,11 @@ final class TrimControlModel {
     private let boundsRelay = BehaviorRelay<NSRect>(value: .zero)
     private let frameRelay = BehaviorRelay<NSRect>(value: .zero)
     
+    private let mediaUpdatedRelay = BehaviorRelay<()>(value: ())
+    
     private let disposeBag = DisposeBag()
     
-    init(mediaPlayer: VLCMediaPlayer, mediaPlayerDelegator: MediaPlayerDelegator) {
+    init(mediaPlayer: VLCMediaPlayer, mediaPlayerDelegator: MediaPlayerDelegator, scheduler: MainScheduler = .instance) {
         self.mediaPlayer = mediaPlayer
         
         frame = Driver.combineLatest(
@@ -92,12 +97,18 @@ final class TrimControlModel {
         .drive(frameRelay)
         .disposed(by: disposeBag)
         
+        images = mediaUpdatedRelay.map { FFmpegKit.thumbnails(media: mediaPlayer.media, count: 15) }.asDriver(onErrorJustReturn: [:])
+        
         disposeBag.insert([
             boundsRelay.bind(to: frameRelay),
             startTimePositionRatioRelay.bind(to: startTimePositionRatioBinderRelay),
             endTimePositionRatioRelay.bind(to: endTimePositionRatioBinderRelay),
             absoluteCurrentPositionRatio.drive(mediaPlayer.rx.position),
         ])
+    }
+    
+    func mediaUpdated() {
+        mediaUpdatedRelay.accept(())
     }
     
     private var wasPlaying = false
