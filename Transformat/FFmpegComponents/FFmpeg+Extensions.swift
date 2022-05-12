@@ -11,49 +11,35 @@ import VLCKit
 extension FFmpegKit {
     
     static func thumbnails(media: VLCMedia?, count: Int, fileManager: FileManager = .default) -> [Int: NSImage] {
-        guard
-            let media = media,
-            let inputPath = media.url?.path else
-        {
-            return [:]
+        var result = [Int: NSImage]()
+        
+        guard let media = media else {
+            return result
         }
-        guard count > 0 else { return [:] }
+        guard count > 0 else { return result }
         let start = FFprobeKit.startTime(media: media) ?? .zero
         let duration = FFprobeKit.duration(media: media) ?? .zero
-        let directory = NSTemporaryDirectory()
-        let directoryURL = URL(fileURLWithPath: directory).appendingPathComponent("trim_tracke_thumbnail", isDirectory: true)
-        do {
-            try fileManager.createDirectory(atPath: directoryURL.path, withIntermediateDirectories: true, attributes: nil)
-        } catch {
-            print(error.localizedDescription)
-        }
-        let interval = duration / Double (count)
+        let directoryURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("trim_tracke_thumbnail", isDirectory: true)
+        let success: ()? = try? fileManager.createDirectory(atPath: directoryURL.path, withIntermediateDirectories: true, attributes: nil)
+        guard success != nil else { return result }
         
-        var result = [Int: NSImage]()
+        let interval = duration / Double (count)
         
         DispatchQueue.concurrentPerform(iterations: count) { id in
             let fileURL = directoryURL.appendingPathComponent(String(id)).appendingPathExtension("png")
-            let arguments = [
-                "-nostdin",
-                "-y",
-                "-ss",
-                String(start + interval * Double(id)),
-                "-i",
-                inputPath,
-                "-vf",
-                "scale=-1:50",
-                "-vframes",
-                "1",
-                fileURL.path,
-            ]
-            
-            execute(withArguments: arguments)
-            
-            do {
-                result[id] = try NSImage(data: Data(contentsOf: fileURL))
-            } catch {
-                print(error)
+            if let argumentsBuilder = FFmpegArgumentsBuilder(media: media, outputURL: fileURL) {
+                let arguments = argumentsBuilder.reset()
+                    .time(start: String(start + interval * Double(id)))
+                    .resolution(width: -1, height: 50)
+                    .frames(count: 1)
+                    .build()
+                execute(withArguments: arguments)
             }
+        }
+        
+        for id in (0..<count) {
+            let fileURL = directoryURL.appendingPathComponent(String(id)).appendingPathExtension("png")
+            result[id] = try? NSImage(data: Data(contentsOf: fileURL))
         }
         
         return result

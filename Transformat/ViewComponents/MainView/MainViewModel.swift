@@ -120,7 +120,7 @@ final class MainViewModel {
         }
         
         let arguments = argumentsBuilder.reset()
-            .duration(start: mediaInfomationBoxModel.startTime, end: mediaInfomationBoxModel.endTime)
+            .time(start: mediaInfomationBoxModel.startTime, end: mediaInfomationBoxModel.endTime)
             .videoCodec(codec: formatBoxModel.videoCodec)
             .videoBitrate()
             .audioCodec(codec: formatBoxModel.audioCodec)

@@ -74,7 +74,7 @@ final class FormatBox: NSBox {
         let textField = NSTextField()
         textField.isEditable = false
         textField.isSelectable = true
-        textField.lineBreakMode = .byCharWrapping
+        textField.lineBreakMode = .byTruncatingMiddle
         textField.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
         textField.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
         textField.translatesAutoresizingMaskIntoConstraints = false

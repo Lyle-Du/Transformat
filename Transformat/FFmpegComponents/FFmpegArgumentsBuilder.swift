@@ -31,7 +31,7 @@ final class FFmpegArgumentsBuilder {
         return arguments
     }
     
-    func duration(start: String?, end: String?) -> Self {
+    func time(start: String? = nil, end: String? = nil) -> Self {
         if
             let start = start,
             let inputIndex = arguments.firstIndex(of: "-i")
@@ -84,12 +84,34 @@ final class FFmpegArgumentsBuilder {
         guard let resolution = resolution else {
             return self
         }
-        arguments.append(contentsOf: ["-vf", "scale=\(resolution.width):\(resolution.height)"])
+        let scale = "scale=\(resolution.width):\(resolution.height)"
+        if let index = arguments.firstIndex(of: "-vf") {
+            arguments[index + 1] = scale
+        } else {
+            arguments.append(contentsOf: ["-vf", scale])
+        }
+        return self
+    }
+    
+    func resolution(width: Int, height: Int) -> Self {
+        let scale = "scale=\(width):\(height)"
+        if let index = arguments.firstIndex(of: "-vf") {
+            arguments[index + 1] = scale
+        } else {
+            arguments.append(contentsOf: ["-vf", scale])
+        }
+        return self
+    }
+    
+    func frames(count: Int) -> Self {
+        arguments.append(contentsOf: ["-vframes", "\(count)"])
         return self
     }
     
     func reset() -> Self {
         arguments = [
+            "-v",
+            "quiet",
             "-nostdin",
             "-y",
             "-i",
