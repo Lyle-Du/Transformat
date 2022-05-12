@@ -74,7 +74,7 @@ final class FormatBox: NSBox {
         let textField = NSTextField()
         textField.isEditable = false
         textField.isSelectable = true
-        textField.lineBreakMode = .byTruncatingMiddle
+        textField.lineBreakMode = .byTruncatingHead
         textField.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
         textField.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -96,8 +96,9 @@ final class FormatBox: NSBox {
     
     private let outputPathButton: NSButton = {
         let button = NSButton()
+        button.title = ""
+        button.bezelStyle = .roundedDisclosure
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.bezelStyle = .roundRect
         return button
     }()
     
@@ -139,7 +140,6 @@ final class FormatBox: NSBox {
         audioCodecLabel.stringValue = viewModel.audioCodecLabel
         formatsPopUpBotton.addItems(withTitles: viewModel.formatTitles)
         outputPathLabel.stringValue = viewModel.outputPathLabel
-        outputPathButton.title = viewModel.outputPathButtonTitle
         
         disposeBag.insert([
             

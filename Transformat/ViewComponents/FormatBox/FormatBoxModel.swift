@@ -19,7 +19,6 @@ final class FormatBoxModel {
     let audioCodecLabel = "Audio Codec:"
     
     let outputPathLabel = "Save to:"
-    let outputPathButtonTitle = "Choose"
     
     let outputPath: Driver<String>
     let selectedFormatIndex: Driver<Int>
