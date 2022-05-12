@@ -398,6 +398,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1330;
+				ORGANIZATIONNAME = "Qiu Du";
 				TargetAttributes = {
 					3E5E5590280C760F000C5435 = {
 						CreatedOnToolsVersion = 13.3.1;
