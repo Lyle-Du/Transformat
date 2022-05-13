@@ -76,7 +76,18 @@ final class MainViewController: NSViewController {
         return button
     }()
     
+    private let cancelButton: NSButton = {
+        let button = NSButton()
+        button.isBordered = false
+        button.wantsLayer = true
+        button.layer?.backgroundColor = NSColor.red.cgColor
+        button.layer?.cornerRadius = 4
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private let panel = NSOpenPanel()
+    private let alert = NSAlert()
     
     override func viewDidLoad() {
         setupViews()
@@ -88,7 +99,30 @@ final class MainViewController: NSViewController {
         mediaInfomationBox.viewModel = viewModel.mediaInfomationBoxModel
         formatBox.viewModel = viewModel.formatBoxModel
         
+        let pstyle = NSMutableParagraphStyle()
+        pstyle.alignment = .center
+        let attributedTitle = NSAttributedString(
+            string: viewModel.cancleButtonTitle,
+            attributes: [ NSAttributedString.Key.foregroundColor : NSColor.white, NSAttributedString.Key.paragraphStyle : pstyle ])
+        cancelButton.attributedTitle = attributedTitle
+        
+        alert.messageText = viewModel.cancelAlert.messageText
+        alert.informativeText = viewModel.cancelAlert.informativeText
+        alert.alertStyle = viewModel.cancelAlert.alertStyle
+        alert.addButton(withTitle: viewModel.cancelAlert.okButtonTitle)
+        alert.addButton(withTitle: viewModel.cancelAlert.cancelButtonTitle)
+        
         disposeBag.insert([
+            cancelButton.rx.tap.subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                guard let window = self.view.window else { return }
+                self.alert.beginSheetModal(for: window) { [weak self] returnCode in
+                    if returnCode == .alertFirstButtonReturn {
+                        self?.viewModel.cancel()
+                    }
+                }
+            }),
+            
             viewModel.isExportDisabled.map { !$0 }.drive(exportButton.rx.isEnabled),
             viewModel.isImportExportDisabled.map { !$0 }.drive(exportButton.rx.isEnabled),
             viewModel.isImportExportDisabled.map { !$0 }.drive(importButton.rx.isEnabled),
@@ -107,6 +141,7 @@ final class MainViewController: NSViewController {
                 self?.viewModel.exportButtonClicked()
             }),
             
+            viewModel.isCancelButtonHidden.drive(cancelButton.rx.isHidden),
             
             // Fix player view size
             viewModel.resize.subscribe(onNext: { [weak self] in
@@ -144,6 +179,7 @@ final class MainViewController: NSViewController {
     private func setupViews() {
         view.addSubview(importButton)
         view.addSubview(exportButton)
+        exportButton.addSubview(cancelButton)
         view.addSubview(playerView)
         
         view.addSubview(controlPanelContainer)
@@ -157,6 +193,13 @@ final class MainViewController: NSViewController {
         boxContainer.addArrangedSubview(formatBox)
         
         view.addSubview(progressView)
+        
+        NSLayoutConstraint.activate([
+            cancelButton.leadingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: 4),
+            cancelButton.trailingAnchor.constraint(equalTo: exportButton.trailingAnchor, constant: -4),
+            cancelButton.heightAnchor.constraint(lessThanOrEqualToConstant: 30),
+            cancelButton.bottomAnchor.constraint(equalTo: exportButton.bottomAnchor, constant: -4),
+        ])
         
         NSLayoutConstraint.activate([
             importButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),

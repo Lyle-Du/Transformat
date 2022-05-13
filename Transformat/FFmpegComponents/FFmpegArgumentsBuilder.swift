@@ -64,18 +64,12 @@ final class FFmpegArgumentsBuilder {
         return self
     }
     
-    func videoCodec(codec: VideoCodec?) -> Self {
-        guard let codec = codec else {
-            return self
-        }
+    func videoCodec(codec: VideoCodec) -> Self {
         arguments.append(contentsOf: ["-c:v", codec.rawValue])
         return self
     }
     
-    func audioCodec(codec: AudioCodec?) -> Self {
-        guard let codec = codec else {
-            return self
-        }
+    func audioCodec(codec: AudioCodec) -> Self {
         arguments.append(contentsOf: ["-c:a", codec.encoder])
         return self
     }

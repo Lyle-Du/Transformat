@@ -12,11 +12,14 @@ import VLCKit
 
 final class MainViewModel {
     
+    let cancelAlert = CancelAlert()
+    
     var resize: ControlEvent<()> {
         ControlEvent(events: resizePlayerView)
     }
     
     let windowTitle = "Transformat"
+    let cancleButtonTitle = "Cancel"
     
     let controlPanelViewModel: ControlPanelViewModel
     let mediaInfomationBoxModel: MediaInfomationBoxModel
@@ -32,6 +35,7 @@ final class MainViewModel {
     let progressPercentageText: Driver<String>
     let isImportExportDisabled: Driver<Bool>
     let isExportDisabled: Driver<Bool>
+    let isCancelButtonHidden: Driver<Bool>
     
     private let disposeBag = DisposeBag()
     private let importButtonTitleRelay = BehaviorRelay<String>(value: Constants.importTitle.formatCString(""))
@@ -47,6 +51,8 @@ final class MainViewModel {
     private let openPanel: NSOpenPanel
     private let mediaPlayerDelegator: MediaPlayerDelegator
     
+    private var ffmpegSession: FFmpegSession?
+    
     init(
         openPanel: NSOpenPanel = NSOpenPanel(),
         mediaPlayer: VLCMediaPlayer = VLCMediaPlayer())
@@ -61,6 +67,7 @@ final class MainViewModel {
         exportButtonTitle = exportButtonTitleRelay.asDriver()
         isImportExportDisabled = isImportExportDisabledRelay.asDriver()
         isExportDisabled = isExportDisabledRelay.asDriver()
+        isCancelButtonHidden = progressPercentageRelay.asDriver().map { $0 == nil }
         
         controlPanelViewModel = ControlPanelViewModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
         mediaInfomationBoxModel = MediaInfomationBoxModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
@@ -121,15 +128,22 @@ final class MainViewModel {
             return
         }
         
-        let arguments = argumentsBuilder.reset()
+        var builder = argumentsBuilder.reset()
             .time(start: mediaInfomationBoxModel.startTime, end: mediaInfomationBoxModel.endTime)
-            .videoCodec(codec: formatBoxModel.videoCodec)
-            .videoBitrate()
-            .audioCodec(codec: formatBoxModel.audioCodec)
-            .audioBitrate()
-            .audioTrack(index: mediaInfomationBoxModel.audioTrackIndex)
             .resolution(mediaInfomationBoxModel.resolution)
-            .build()
+            
+        if let videoCodec = formatBoxModel.videoCodec {
+            builder = builder.videoCodec(codec: videoCodec)
+                .videoBitrate()
+        }
+        
+        if let audioCodec = formatBoxModel.audioCodec {
+            builder = builder.audioCodec(codec: audioCodec)
+                .audioBitrate()
+                .audioTrack(index: mediaInfomationBoxModel.audioTrackIndex)
+        }
+        
+        let arguments = builder.build()
         
         guard
             let startTimeInterval = mediaInfomationBoxModel.startTime.toTimeInterval(),
@@ -140,9 +154,14 @@ final class MainViewModel {
         let duration = endTimeInterval - startTimeInterval
         isImportExportDisabledRelay.accept(true)
         progressPercentageRelay.accept(nil)
-        let sesson = FFmpegKit.execute(
+        ffmpegSession = FFmpegKit.execute(
             withArgumentsAsync: arguments,
             withCompleteCallback: { [weak self] session in
+                guard session?.getReturnCode()?.isValueSuccess() == true else {
+                    self?.isImportExportDisabledRelay.accept(false)
+                    self?.progressPercentageRelay.accept(nil)
+                    return
+                }
                 self?.isImportExportDisabledRelay.accept(false)
                 self?.progressPercentageRelay.accept(1)
             },
@@ -158,7 +177,12 @@ final class MainViewModel {
                 let percent = (current / duration).clamped(to: 0...1.0)
                 self.progressPercentageRelay.accept(percent)
             })
-        do { _ = sesson }
+    }
+    
+    func cancel() {
+        self.ffmpegSession?.cancel()
+        self.isImportExportDisabledRelay.accept(false)
+        self.progressPercentageRelay.accept(nil)
     }
     
     private func setMedia(url: URL) {
@@ -192,4 +216,14 @@ private extension MainViewModel {
         static let importTitle = "\nImport\n%s"
         static let exportTitle = "\nExport\n%s"
     }
+}
+
+
+struct CancelAlert {
+    
+    let messageText = "Cancel Exporting"
+    let informativeText = "Are you sure to cancel current task? "
+    let alertStyle: NSAlert.Style = .warning
+    let okButtonTitle = "OK"
+    let cancelButtonTitle = "Cancel"
 }
