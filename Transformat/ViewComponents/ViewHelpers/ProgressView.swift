@@ -21,7 +21,14 @@ final class ProgressView: NSView {
         }
     }
     
-    private let progressLayer = CAShapeLayer()
+    private let progressLayer: CAShapeLayer = {
+        let layer = CAShapeLayer()
+        layer.shadowOffset = CGSize(width: .zero, height: -1)
+        layer.shadowRadius = 1
+        layer.shadowOpacity = 1
+        return layer
+    }()
+    
     private let animation: CABasicAnimation = {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.duration = 0.5
@@ -43,15 +50,15 @@ final class ProgressView: NSView {
         wantsLayer = true
         layer?.backgroundColor = .clear
         layer?.addSublayer(progressLayer)
+        layer?.masksToBounds = false
     }
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         progressLayer.lineWidth = bounds.height
-        let red = NSColor.red.redComponent * ( 1 - progress )
-        let green = NSColor.green.greenComponent * progress
-        let color = NSColor(calibratedRed: red, green: green, blue: .zero, alpha: 1)
+        let color = ProgressColor.color(progress)
         progressLayer.strokeColor = color.cgColor
+        progressLayer.shadowColor = color.cgColor
         progressLayer.strokeEnd = progress
         animation.fromValue = animation.toValue ?? 0
         animation.toValue = NSNumber(value: progress)
