@@ -108,8 +108,10 @@ final class TrimControlModel {
     }
     
     func loadThumbnails(_ media: VLCMedia) {
-        let thumbnails = FFmpegKit.thumbnails(media: media, count: 15)
-        thumbnailsRelay.accept(thumbnails)
+        DispatchQueue.main.async { [weak self] in
+            let thumbnails = FFmpegKit.thumbnails(media: media, count: 15)
+            self?.thumbnailsRelay.accept(thumbnails)
+        }
     }
     
     private var wasPlaying = false

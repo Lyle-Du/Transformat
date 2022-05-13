@@ -127,6 +127,7 @@ final class MainViewModel {
             .videoBitrate()
             .audioCodec(codec: formatBoxModel.audioCodec)
             .audioBitrate()
+            .audioTrack(index: mediaInfomationBoxModel.audioTrackIndex)
             .resolution(mediaInfomationBoxModel.resolution)
             .build()
         

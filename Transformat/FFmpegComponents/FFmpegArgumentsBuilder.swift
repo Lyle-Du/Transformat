@@ -76,7 +76,17 @@ final class FFmpegArgumentsBuilder {
         guard let codec = codec else {
             return self
         }
-        arguments.append(contentsOf: ["-c:a", codec.rawValue])
+        arguments.append(contentsOf: ["-c:a", codec.encoder])
+        return self
+    }
+    
+    func audioTrack(index: Int) -> Self {
+        guard index > 0 else {
+            arguments.append(contentsOf: ["-an"])
+            return self
+        }
+        let id = index - 1
+        arguments.append(contentsOf: ["-map", "0:v:0", "-map", "0:a:\(id)"])
         return self
     }
     
