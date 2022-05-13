@@ -159,6 +159,7 @@ final class FormatBox: NSBox {
                 }),
             
             viewModel.outputPath.drive(outputPathTextField.rx.text),
+            viewModel.outputPath.drive(outputPathTextField.rx.toolTip),
             
             viewModel.selectedFormatIndex.drive(formatsPopUpBotton.rx.selectedIndex),
             formatsPopUpBotton.rx.selectedIndex.bind(to: viewModel.selectedIndexBinder),

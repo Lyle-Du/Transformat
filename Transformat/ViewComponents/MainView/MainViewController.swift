@@ -72,10 +72,7 @@ final class MainViewController: NSViewController {
     
     private let cancelButton: NSButton = {
         let button = NSButton()
-        button.isBordered = false
-        button.wantsLayer = true
-        button.layer?.backgroundColor = NSColor.red.cgColor
-        button.layer?.cornerRadius = 4
+        button.bezelStyle = .roundRect
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -92,13 +89,7 @@ final class MainViewController: NSViewController {
         controlPanel.viewModel = viewModel.controlPanelViewModel
         mediaInfomationBox.viewModel = viewModel.mediaInfomationBoxModel
         formatBox.viewModel = viewModel.formatBoxModel
-        
-        let pstyle = NSMutableParagraphStyle()
-        pstyle.alignment = .center
-        let attributedTitle = NSAttributedString(
-            string: viewModel.cancleButtonTitle,
-            attributes: [ NSAttributedString.Key.foregroundColor : NSColor.white, NSAttributedString.Key.paragraphStyle : pstyle ])
-        cancelButton.attributedTitle = attributedTitle
+        cancelButton.title = viewModel.cancleButtonTitle
         
         alert.messageText = viewModel.cancelAlert.messageText
         alert.informativeText = viewModel.cancelAlert.informativeText
@@ -121,7 +112,6 @@ final class MainViewController: NSViewController {
             viewModel.isImportExportDisabled.map { !$0 }.drive(exportButton.rx.isEnabled),
             viewModel.isImportExportDisabled.map { !$0 }.drive(importButton.rx.isEnabled),
             
-            viewModel.progressPercentage.drive(importButton.rx.progressBinder),
             viewModel.progressPercentage.drive(exportButton.rx.progressBinder),
             
             viewModel.importButtonTitle.drive(importButton.rx.title),

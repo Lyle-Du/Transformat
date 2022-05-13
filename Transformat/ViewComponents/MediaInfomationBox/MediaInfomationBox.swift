@@ -132,7 +132,7 @@ final class MediaInfomationBox: NSBox {
         timeFieldsContainer.addArrangedSubview(endTimeTextField)
         
         customResolutionFieldsContainer.addArrangedSubview(customResolutionWidthTextField)
-        customResolutionFieldsContainer.addArrangedSubview(makeCharLabel("x"))
+        customResolutionFieldsContainer.addArrangedSubview(makeCharLabel("\u{2715}"))
         customResolutionFieldsContainer.addArrangedSubview(customResolutionHeightTextField)
         
         gridView.addRow(with: [resolutionLabel, resolutionPopUpButton])

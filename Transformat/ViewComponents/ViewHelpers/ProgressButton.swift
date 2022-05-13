@@ -10,6 +10,8 @@ import RxSwift
 
 final class ProgressButton: NSButton {
     
+    var progressColor: NSColor = .systemBlue
+    
     var progress: Double {
         get { _progress }
         set { _progress = newValue.clamped(to: .zero...1) }
@@ -108,11 +110,10 @@ final class ProgressButton: NSButton {
         }
         
         foregroundLayer.frame = dirtyRect
-        let color = ProgressColor.color(progress)
-        progressLayer.strokeColor = color.cgColor
+        progressLayer.strokeColor = progressColor.cgColor
         progressLayer.fillColor = .clear
         progressLayer.strokeEnd = progress
-        progressLayer.shadowColor = color.cgColor
+        progressLayer.shadowColor = progressColor.cgColor
         animation.fromValue = animation.toValue ?? 0
         animation.toValue = NSNumber(value: progress)
         progressLayer.add(animation, forKey: nil)
