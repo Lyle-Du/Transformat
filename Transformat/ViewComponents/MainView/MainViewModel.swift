@@ -16,6 +16,8 @@ final class MainViewModel {
         ControlEvent(events: resizePlayerView)
     }
     
+    let windowTitle = "Transformat"
+    
     let controlPanelViewModel: ControlPanelViewModel
     let mediaInfomationBoxModel: MediaInfomationBoxModel
     let formatBoxModel: FormatBoxModel

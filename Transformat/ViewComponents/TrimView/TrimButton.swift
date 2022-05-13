@@ -30,12 +30,12 @@ final class TrimButton: NSButton {
     }
     
     override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
         if isHighlighted {
             layer?.backgroundColor = Constants.buttonHighlitedColor.cgColor
         } else {
             layer?.backgroundColor = Constants.borderColor.cgColor
         }
-        super.draw(dirtyRect)
     }
     
     override func mouseDown(with event: NSEvent) {

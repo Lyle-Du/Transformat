@@ -134,6 +134,7 @@ final class TrimControlModel {
     }
     
     func startTimeButtonMoved(x: CGFloat) {
+        guard mediaPlayer.media != nil else { return }
         if mediaPlayer.canPause {
             mediaPlayer.pause()
         }
@@ -147,6 +148,7 @@ final class TrimControlModel {
     }
     
     func endTimeButtonMoved(x: CGFloat) {
+        guard mediaPlayer.media != nil else { return }
         if mediaPlayer.canPause {
             mediaPlayer.pause()
         }

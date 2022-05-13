@@ -38,8 +38,8 @@ final class TrimControl: NSControl {
         let view = NSView()
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.clear.cgColor
-        view.layer?.borderWidth = TrimControlModel.Constants.borderWidth
-        view.layer?.borderColor = TrimControlModel.Constants.borderColor.cgColor
+        
+        
         view.layer?.cornerRadius = CGFloat(TrimControlModel.Constants.buttonWidth * 0.5)
         return view
     }()
@@ -63,6 +63,14 @@ final class TrimControl: NSControl {
         return view
     }()
     
+    private let topBorder: NSView = {
+        return makeBorder()
+    }()
+
+    private let bottomBorder: NSView = {
+        return makeBorder()
+    }()
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         commonInit()
@@ -82,10 +90,23 @@ final class TrimControl: NSControl {
         trackerView.addSubview(thumbnailsContainer)
         trackerView.addSubview(trimView)
         trackerView.pinEdgesTo(view: self)
-        
         trimView.addSubview(timelineIndicator)
+        trimView.addSubview(topBorder)
+        trimView.addSubview(bottomBorder)
         trimView.addSubview(startTimeButton)
         trimView.addSubview(endTimeButton)
+        
+        NSLayoutConstraint.activate([
+            topBorder.topAnchor.constraint(equalTo: trimView.topAnchor),
+            topBorder.heightAnchor.constraint(equalToConstant: TrimControlModel.Constants.borderWidth),
+            topBorder.leadingAnchor.constraint(equalTo: startTimeButton.trailingAnchor),
+            topBorder.trailingAnchor.constraint(equalTo: endTimeButton.leadingAnchor),
+            
+            bottomBorder.bottomAnchor.constraint(equalTo: trimView.bottomAnchor),
+            bottomBorder.heightAnchor.constraint(equalToConstant: TrimControlModel.Constants.borderWidth),
+            bottomBorder.leadingAnchor.constraint(equalTo: startTimeButton.trailingAnchor),
+            bottomBorder.trailingAnchor.constraint(equalTo: endTimeButton.leadingAnchor),
+        ])
         
         NSLayoutConstraint.activate([
             thumbnailsContainer.leadingAnchor.constraint(equalTo: trackerView.leadingAnchor, constant: TrimControlModel.Constants.buttonWidth),
@@ -167,9 +188,9 @@ final class TrimControl: NSControl {
     private let viewDidDrawOnce = PublishSubject<Void>()
     
     override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
         viewDidDrawOnce.onNext(())
         viewDidDrawOnce.onCompleted()
-        super.draw(dirtyRect)
     }
 }
 
@@ -205,6 +226,14 @@ private extension TrimControl {
     
     var buttonSize: NSSize {
         NSSize(width: TrimControlModel.Constants.buttonWidth, height: bounds.height)
+    }
+    
+    static func makeBorder() -> NSView {
+        let view = NSView()
+        view.wantsLayer = true
+        view.layer?.backgroundColor = TrimControlModel.Constants.borderColor.cgColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }
 }
 

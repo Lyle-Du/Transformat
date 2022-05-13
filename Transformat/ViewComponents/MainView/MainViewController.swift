@@ -129,6 +129,11 @@ final class MainViewController: NSViewController {
         super.viewDidDisappear()
         viewModel.mediaPlayer.pause()
     }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        view.window?.title = viewModel.windowTitle
+    }
 
     override var representedObject: Any? {
         didSet {
