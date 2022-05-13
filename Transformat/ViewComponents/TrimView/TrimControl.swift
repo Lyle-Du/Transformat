@@ -99,13 +99,13 @@ final class TrimControl: NSControl {
         NSLayoutConstraint.activate([
             topBorder.topAnchor.constraint(equalTo: trimView.topAnchor),
             topBorder.heightAnchor.constraint(equalToConstant: TrimControlModel.Constants.borderWidth),
-            topBorder.leadingAnchor.constraint(equalTo: startTimeButton.trailingAnchor),
-            topBorder.trailingAnchor.constraint(equalTo: endTimeButton.leadingAnchor),
+            topBorder.leadingAnchor.constraint(equalTo: trimView.leadingAnchor),
+            topBorder.trailingAnchor.constraint(equalTo: trimView.trailingAnchor),
             
             bottomBorder.bottomAnchor.constraint(equalTo: trimView.bottomAnchor),
             bottomBorder.heightAnchor.constraint(equalToConstant: TrimControlModel.Constants.borderWidth),
-            bottomBorder.leadingAnchor.constraint(equalTo: startTimeButton.trailingAnchor),
-            bottomBorder.trailingAnchor.constraint(equalTo: endTimeButton.leadingAnchor),
+            bottomBorder.leadingAnchor.constraint(equalTo: trimView.leadingAnchor),
+            bottomBorder.trailingAnchor.constraint(equalTo: trimView.trailingAnchor),
         ])
         
         NSLayoutConstraint.activate([

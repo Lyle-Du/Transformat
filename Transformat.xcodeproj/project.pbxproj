@@ -31,7 +31,6 @@
 		3EA1E83D281855E400CCCA5F /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E83C281855E400CCCA5F /* ImageButton.swift */; };
 		3EA1E846281AD19100CCCA5F /* MediaInfomationBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E845281AD19100CCCA5F /* MediaInfomationBox.swift */; };
 		3EA1E848281AD56500CCCA5F /* MediaPlayerDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */; };
-		3EAEBDBC282AB64B004BA81C /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDBB282AB64B004BA81C /* ProgressView.swift */; };
 		3EAEBDBE282AF9B1004BA81C /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */; };
 		3EAEBDC2282B59BD004BA81C /* FFmpegArgumentsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDC1282B59BD004BA81C /* FFmpegArgumentsBuilder.swift */; };
 		3EAEBDC6282BF7FF004BA81C /* FFmpeg+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDC5282BF7FF004BA81C /* FFmpeg+Extensions.swift */; };
@@ -99,7 +98,6 @@
 		3EA1E83C281855E400CCCA5F /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		3EA1E845281AD19100CCCA5F /* MediaInfomationBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInfomationBox.swift; sourceTree = "<group>"; };
 		3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerDelegator.swift; sourceTree = "<group>"; };
-		3EAEBDBB282AB64B004BA81C /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButton.swift; sourceTree = "<group>"; };
 		3EAEBDC1282B59BD004BA81C /* FFmpegArgumentsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFmpegArgumentsBuilder.swift; sourceTree = "<group>"; };
 		3EAEBDC5282BF7FF004BA81C /* FFmpeg+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FFmpeg+Extensions.swift"; sourceTree = "<group>"; };
@@ -309,7 +307,6 @@
 				3E73FD2B28200CCC00143803 /* NSPopUpButton+Rx.swift */,
 				3E03868C2827C6F000A429F8 /* NSTextField+Rx.swift */,
 				3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */,
-				3EAEBDBB282AB64B004BA81C /* ProgressView.swift */,
 				3E61C290282E45040061C8B6 /* ProgressColor.swift */,
 			);
 			path = ViewHelpers;
@@ -595,7 +592,6 @@
 				3E61C291282E45040061C8B6 /* ProgressColor.swift in Sources */,
 				3E73FD372820CF4100143803 /* Comparable+Extensions.swift in Sources */,
 				3E73FD332820C9BE00143803 /* ControlPanelViewModel.swift in Sources */,
-				3EAEBDBC282AB64B004BA81C /* ProgressView.swift in Sources */,
 				3EEF90952823FEA200039BB1 /* MediaInfomationBoxModel.swift in Sources */,
 				3EA1E83D281855E400CCCA5F /* ImageButton.swift in Sources */,
 			);

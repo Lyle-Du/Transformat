@@ -17,12 +17,6 @@ final class MainViewController: NSViewController {
     
     private let disposeBag = DisposeBag()
     
-    private let progressView: ProgressView = {
-        let progressView = ProgressView()
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        return progressView
-    }()
-    
     private let playerView: VLCVideoView = {
         let view = VLCVideoView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -126,7 +120,7 @@ final class MainViewController: NSViewController {
             viewModel.isExportDisabled.map { !$0 }.drive(exportButton.rx.isEnabled),
             viewModel.isImportExportDisabled.map { !$0 }.drive(exportButton.rx.isEnabled),
             viewModel.isImportExportDisabled.map { !$0 }.drive(importButton.rx.isEnabled),
-            viewModel.progressPercentage.drive(progressView.rx.progressBinder),
+            
             viewModel.progressPercentage.drive(importButton.rx.progressBinder),
             viewModel.progressPercentage.drive(exportButton.rx.progressBinder),
             
@@ -192,8 +186,6 @@ final class MainViewController: NSViewController {
         boxContainer.addArrangedSubview(mediaInfomationBox)
         boxContainer.addArrangedSubview(formatBox)
         
-        view.addSubview(progressView)
-        
         NSLayoutConstraint.activate([
             cancelButton.leadingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: 4),
             cancelButton.trailingAnchor.constraint(equalTo: exportButton.trailingAnchor, constant: -4),
@@ -233,13 +225,6 @@ final class MainViewController: NSViewController {
             boxContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
             
             mediaInfomationBox.widthAnchor.constraint(equalTo: formatBox.widthAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            progressView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            progressView.topAnchor.constraint(equalTo: controlPanel.bottomAnchor, constant: 8),
-            progressView.heightAnchor.constraint(equalToConstant: 2),
         ])
     }
     
