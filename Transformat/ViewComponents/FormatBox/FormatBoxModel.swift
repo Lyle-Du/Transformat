@@ -28,10 +28,6 @@ final class FormatBoxModel {
     let selectedVideoCodecIndex: Driver<Int>
     let selectedAudioCodecIndex: Driver<Int>
     
-    let speedTextDriver: Driver<String>
-    let speedDriver: Driver<Double>
-    let speedSliderRange: Driver<ClosedRange<Double>>
-    
     let framePerSecondTextDriver: Driver<String>
     let framePerSecondDriver: Driver<Double>
     let framePerSecondSliderRange: Driver<ClosedRange<Double>>
@@ -40,10 +36,7 @@ final class FormatBoxModel {
     private let selectedVideoCodecIndexRelay: BehaviorRelay<Int>
     private let audioCodecTitlesRelay = BehaviorRelay<[String]>(value: [])
     private let selectedAudioCodecIndexRelay: BehaviorRelay<Int>
-    
-    private let speedSliderRangeRelay = BehaviorRelay<ClosedRange<Double>>(value: 0.1...10)
-    private let speedRelay: BehaviorRelay<Double>
-    
+  
     private let framePerSecondSliderRangeRelay = BehaviorRelay<ClosedRange<Double>>(value: 1...60)
     private let framePerSecondRelay: BehaviorRelay<Double>
     
@@ -69,11 +62,6 @@ final class FormatBoxModel {
         
         videoCodecTitles = videoCodecTitlesRelay.asDriver()
         audioCodecTitles = audioCodecTitlesRelay.asDriver()
-        
-        speedSliderRange = speedSliderRangeRelay.asDriver()
-        speedRelay = BehaviorRelay(value: 1)
-        speedDriver = speedRelay.asDriver()
-        speedTextDriver = speedDriver.map { "Speed \u{2715}\(String(format: Constants.twoDigitsFractionFormat, $0)):" }
         
         framePerSecondSliderRange = framePerSecondSliderRangeRelay.asDriver()
         framePerSecondRelay = BehaviorRelay(value: 24)
@@ -192,12 +180,6 @@ extension FormatBoxModel {
         }
     }
     
-    var speedBinder: Binder<Double> {
-        Binder(self) { target, value in
-            target.speedRelay.accept(value)
-        }
-    }
-    
     var framePerSecondBinder: Binder<Double> {
         Binder(self) { target, value in
             target.framePerSecondRelay.accept(value)
@@ -240,13 +222,6 @@ extension FormatBoxModel {
             return nil
         }
         return selectedFormatRelay.value.audioCodecs[index]
-    }
-    
-    var speed: Double? {
-        guard selectedFormatRelay.value.mediaType == .animated else {
-            return nil
-        }
-        return speedRelay.value
     }
     
     var framePerSecond: String? {

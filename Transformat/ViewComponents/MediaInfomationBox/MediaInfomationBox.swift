@@ -112,6 +112,19 @@ final class MediaInfomationBox: NSBox {
         return stackView
     }()
     
+    private let speedLabel: NSTextField = {
+        let label = NSTextField.makeLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let speedSlider: TextFieldSlider = {
+        let slider = TextFieldSlider()
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        return slider
+    }()
+    
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         commonInit()
@@ -139,6 +152,7 @@ final class MediaInfomationBox: NSBox {
         gridView.addRow(with: [customResolutionLabel, customResolutionFieldsContainer])
         gridView.addRow(with: [audioTrackLabel, audioTrackPopUpButton])
         gridView.addRow(with: [timeLabel, timeFieldsContainer])
+        gridView.addRow(with: [speedLabel, speedSlider])
         
         let padding = CGFloat(12)
         NSLayoutConstraint.activate([
@@ -191,6 +205,11 @@ final class MediaInfomationBox: NSBox {
             viewModel.currentResolutionIndex.drive(resolutionPopUpButton.rx.selectedIndex),
             audioTrackPopUpButton.rx.selectedIndex.bind(to: viewModel.currentAudioTrackIndexBinder),
             resolutionPopUpButton.rx.selectedIndex.bind(to: viewModel.currentResolutionIndexBinder),
+            
+            viewModel.speedSliderRange.drive(speedSlider.range),
+            viewModel.speedTextDriver.drive(speedLabel.rx.stringValue),
+            viewModel.speedDriver.drive(speedSlider.valueBinder),
+            speedSlider.value.drive(viewModel.speedBinder),
         ])
     }
     

@@ -143,9 +143,7 @@ final class MainViewModel {
                 .audioTrack(index: mediaInfomationBoxModel.audioTrackIndex)
         }
         
-        if let speed = formatBoxModel.speed {
-            builder.speed(speed)
-        }
+        builder.speed(mediaInfomationBoxModel.speed)
         
         if let framePerSecond = formatBoxModel.framePerSecond {
             builder.framePerSecond(framePerSecond)

@@ -122,6 +122,7 @@ final class FFmpegArgumentsBuilder {
     @discardableResult
     func speed(_ scale: Double) -> Self {
         videoFilter["setpts"] = "PTS/\(scale)"
+        arguments.append(contentsOf: ["-af", "atempo=\(scale)"])
         return self
     }
     

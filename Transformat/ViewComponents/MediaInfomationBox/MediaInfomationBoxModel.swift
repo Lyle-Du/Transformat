@@ -38,6 +38,13 @@ final class MediaInfomationBoxModel {
     let currentAudioTrackIndex: Driver<Int>
     let currentResolutionIndex: Driver<Int>
     
+    let speedTextDriver: Driver<String>
+    let speedDriver: Driver<Double>
+    let speedSliderRange: Driver<ClosedRange<Double>>
+    
+    private let speedSliderRangeRelay = BehaviorRelay<ClosedRange<Double>>(value: 0.1...10)
+    private let speedRelay: BehaviorRelay<Double>
+    
     fileprivate let startTimeLimitRelay = BehaviorRelay<TimeInterval>(value: .zero)
     fileprivate private(set) var endTimeLimitRelay = BehaviorRelay<TimeInterval>(value: .zero)
     
@@ -74,6 +81,11 @@ final class MediaInfomationBoxModel {
         
         currentResolutionIndexRelay = BehaviorRelay(value: 0)
         currentResolutionIndex = currentResolutionIndexRelay.asDriver()
+        
+        speedSliderRange = speedSliderRangeRelay.asDriver()
+        speedRelay = BehaviorRelay(value: 1)
+        speedDriver = speedRelay.asDriver()
+        speedTextDriver = speedDriver.map { "Speed \u{2715}\(String(format: Constants.twoDigitsFractionFormat, $0)):" }
         
         let selectedResolution = currentResolutionIndexRelay
             .asDriver()
@@ -150,7 +162,13 @@ final class MediaInfomationBoxModel {
             
             selectedResolution.map { String($0.width) }.drive(customResolutionWidthRelay),
             selectedResolution.map { String($0.height) }.drive(customResolutionHeightRelay),
+            
+            speedDriver.drive(onNext: { [weak self] rate in
+                self?.mediaPlayer.rate = Float(rate)
+            }),
         ])
+        
+        
     }
     
     func setMedia(_ media: VLCMedia) {
@@ -343,6 +361,19 @@ extension MediaInfomationBoxModel {
             target.currentResolutionIndexRelay.accept(index)
         }
     }
+    
+    var speedBinder: Binder<Double> {
+        Binder(self) { target, value in
+            target.speedRelay.accept(value)
+        }
+    }
+}
+
+private extension MediaInfomationBoxModel {
+    
+    struct Constants {
+        static let twoDigitsFractionFormat = "%.2f"
+    }
 }
 
 extension MediaInfomationBoxModel {
@@ -368,5 +399,9 @@ extension MediaInfomationBoxModel {
     
     var endTime: String {
         endTimeTextRelay.value
+    }
+    
+    var speed: Double {
+        speedRelay.value
     }
 }

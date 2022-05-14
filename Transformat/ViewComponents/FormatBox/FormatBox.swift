@@ -70,18 +70,6 @@ final class FormatBox: NSBox {
         return button
     }()
     
-    private let speedLabel: NSTextField = {
-        let label = NSTextField.makeLabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let speedSlider: TextFieldSlider = {
-        let slider = TextFieldSlider()
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        return slider
-    }()
-    
     private let framePerSecondLabel: NSTextField = {
         let label = NSTextField.makeLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -136,65 +124,17 @@ final class FormatBox: NSBox {
         commonInit()
     }
     
-    private let videoLabelPlaceHolderView: NSView = {
-        let view = NSView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let videoButtonPlaceHolderView: NSView = {
-        let view = NSView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let audioLabelPlaceHolderView: NSView = {
-        let view = NSView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let audioButtonPlaceHolderView: NSView = {
-        let view = NSView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private func commonInit() {
         titlePosition = .noTitle
-        
-        videoLabelPlaceHolderView.addSubview(videoCodecLabel)
-        videoCodecLabel.pinEdgesTo(view: videoLabelPlaceHolderView)
-        videoLabelPlaceHolderView.addSubview(speedLabel)
-        speedLabel.pinEdgesTo(view: videoLabelPlaceHolderView)
-        
-        NSLayoutConstraint.activate([
-            speedLabel.widthAnchor.constraint(equalToConstant: 100),
-        ])
-        
-        videoButtonPlaceHolderView.addSubview(videoCodecPopUpBotton)
-        videoCodecPopUpBotton.pinEdgesTo(view: videoButtonPlaceHolderView)
-        videoButtonPlaceHolderView.addSubview(speedSlider)
-        speedSlider.pinEdgesTo(view: videoButtonPlaceHolderView)
-        
-        audioLabelPlaceHolderView.addSubview(audioCodecLabel)
-        audioCodecLabel.pinEdgesTo(view: audioLabelPlaceHolderView)
-        audioLabelPlaceHolderView.addSubview(framePerSecondLabel)
-        framePerSecondLabel.pinEdgesTo(view: audioLabelPlaceHolderView)
-        
-        audioButtonPlaceHolderView.addSubview(audioCodecPopUpBotton)
-        audioCodecPopUpBotton.pinEdgesTo(view: audioButtonPlaceHolderView)
-        audioButtonPlaceHolderView.addSubview(framePerSecondSlider)
-        framePerSecondSlider.pinEdgesTo(view: audioButtonPlaceHolderView)
-        
         outputPathContainer.addArrangedSubview(outputPathTextField)
         outputPathContainer.addArrangedSubview(outputPathButton)
         addSubview(gridView)
         
         gridView.addRow(with: [formatLabel, formatsPopUpBotton])
-        gridView.addRow(with: [videoLabelPlaceHolderView, videoButtonPlaceHolderView])
-        gridView.addRow(with: [audioLabelPlaceHolderView, audioButtonPlaceHolderView])
+        gridView.addRow(with: [videoCodecLabel, videoCodecPopUpBotton])
+        gridView.addRow(with: [audioCodecLabel, audioCodecPopUpBotton])
         gridView.addRow(with: [outputPathLabel, outputPathContainer])
+        gridView.addRow(with: [framePerSecondLabel, framePerSecondSlider])
         
         let padding = CGFloat(12)
         NSLayoutConstraint.activate([
@@ -215,19 +155,9 @@ final class FormatBox: NSBox {
         outputPathLabel.stringValue = viewModel.outputPathLabel
         
         disposeBag.insert([
-            viewModel.selectedMediaType.drive(onNext: { [weak self] type in
-                guard let self = self else { return }
-                let isImageType = type == .animated
-                self.videoCodecLabel.isHidden = isImageType
-                self.videoCodecPopUpBotton.isHidden = isImageType
-                self.audioCodecLabel.isHidden = isImageType
-                self.audioCodecPopUpBotton.isHidden = isImageType
-                
-                self.speedLabel.isHidden = !isImageType
-                self.speedSlider.isHidden = !isImageType
-                self.framePerSecondLabel.isHidden = !isImageType
-                self.framePerSecondSlider.isHidden = !isImageType
-            }),
+            
+            viewModel.selectedMediaType.map { $0 != .animated }.drive(framePerSecondSlider.rx.isHidden),
+            viewModel.selectedMediaType.map { $0 != .animated }.drive(framePerSecondLabel.rx.isHidden),
             
             viewModel.videoCodecTitles.drive(onNext: { [weak self] in
                 guard let self = self else { return }
@@ -255,11 +185,6 @@ final class FormatBox: NSBox {
             
             viewModel.selectedAudioCodecIndex.drive(audioCodecPopUpBotton.rx.selectedIndex),
             audioCodecPopUpBotton.rx.selectedIndex.bind(to: viewModel.selectedAudioCodecIndexBinder),
-            
-            viewModel.speedSliderRange.drive(speedSlider.range),
-            viewModel.speedTextDriver.drive(speedLabel.rx.stringValue),
-            viewModel.speedDriver.drive(speedSlider.valueBinder),
-            speedSlider.value.drive(viewModel.speedBinder),
             
             viewModel.framePerSecondSliderRange.drive(framePerSecondSlider.range),
             viewModel.framePerSecondTextDriver.drive(framePerSecondLabel.rx.stringValue),
