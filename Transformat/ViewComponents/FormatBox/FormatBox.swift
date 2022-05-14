@@ -183,7 +183,7 @@ final class FormatBox: NSBox {
             
             viewModel.selectedMediaType.drive(onNext: { [weak self] type in
                 guard let self = self else { return }
-                let isImageType = type == .image
+                let isImageType = type == .animated
                 self.videoCodecLabel.isHidden = isImageType
                 self.videoCodecPopUpBotton.isHidden = isImageType
                 self.audioCodecLabel.isHidden = isImageType

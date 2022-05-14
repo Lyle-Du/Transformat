@@ -128,19 +128,23 @@ final class MainViewModel {
             return
         }
         
-        var builder = argumentsBuilder.reset()
+        let builder = argumentsBuilder.reset()
             .time(start: mediaInfomationBoxModel.startTime, end: mediaInfomationBoxModel.endTime)
             .resolution(mediaInfomationBoxModel.resolution)
             
         if let videoCodec = formatBoxModel.videoCodec {
-            builder = builder.videoCodec(codec: videoCodec)
+            builder.videoCodec(codec: videoCodec)
                 .videoBitrate()
         }
         
         if let audioCodec = formatBoxModel.audioCodec {
-            builder = builder.audioCodec(codec: audioCodec)
+            builder.audioCodec(codec: audioCodec)
                 .audioBitrate()
                 .audioTrack(index: mediaInfomationBoxModel.audioTrackIndex)
+        }
+        
+        if let framePerSecond = formatBoxModel.framePerSecond {
+            builder.framePerSecond(framePerSecond)
         }
         
         let arguments = builder.build()

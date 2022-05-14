@@ -83,7 +83,6 @@ final class FormatBoxModel {
         }
         
         selectedFormatRelay = BehaviorRelay(value: selectedFormat)
-        
         selectedMediaType = selectedFormatRelay.asDriver().map(\.mediaType)
         
         selectedVideoCodecIndexRelay = BehaviorRelay(value: selectedFormat.videoCodecs.count > 0 ? 0 : -1)
@@ -201,6 +200,9 @@ extension FormatBoxModel {
     }
     
     var videoCodec: VideoCodec? {
+        guard selectedFormatRelay.value.mediaType == .video else {
+            return nil
+        }
         let index = selectedVideoCodecIndexRelay.value
         guard
             index != -1,
@@ -212,6 +214,9 @@ extension FormatBoxModel {
     }
     
     var audioCodec: AudioCodec? {
+        guard selectedFormatRelay.value.mediaType == .video else {
+            return nil
+        }
         let index = selectedAudioCodecIndexRelay.value
         guard
             index != -1,
@@ -222,6 +227,9 @@ extension FormatBoxModel {
     }
     
     var framePerSecond: String? {
-        String(format: Constants.framePerSecondFormat, framePerSecondRelay.value)
+        guard selectedFormatRelay.value.mediaType == .animated else {
+            return nil
+        }
+        return String(format: Constants.framePerSecondFormat, framePerSecondRelay.value)
     }
 }

@@ -54,14 +54,14 @@ enum ContainerFormat: String, CaseIterable {
     }
     
     enum MediaType {
-        case image
+        case animated
         case video
     }
     
     var mediaType: MediaType {
         switch self {
         case .gif:
-            return .image
+            return .animated
         case .mkv, .mov, .mp4:
             return .video
         }

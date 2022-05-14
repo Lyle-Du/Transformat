@@ -31,6 +31,7 @@ final class FFmpegArgumentsBuilder {
         return arguments
     }
     
+    @discardableResult
     func time(start: String? = nil, end: String? = nil) -> Self {
         if
             let start = start,
@@ -48,6 +49,7 @@ final class FFmpegArgumentsBuilder {
         return self
     }
     
+    @discardableResult
     func videoBitrate() -> Self {
         guard let audioBitrate = FFprobeKit.videoBitrate(media: media) else {
             return self
@@ -56,6 +58,7 @@ final class FFmpegArgumentsBuilder {
         return self
     }
     
+    @discardableResult
     func audioBitrate(index: Int = 1) -> Self {
         guard let audioBitrate = FFprobeKit.audioTracks(media: media)[index]?.bitrate else {
             return self
@@ -64,16 +67,19 @@ final class FFmpegArgumentsBuilder {
         return self
     }
     
+    @discardableResult
     func videoCodec(codec: VideoCodec) -> Self {
         arguments.append(contentsOf: ["-c:v", codec.rawValue])
         return self
     }
     
+    @discardableResult
     func audioCodec(codec: AudioCodec) -> Self {
         arguments.append(contentsOf: ["-c:a", codec.encoder])
         return self
     }
     
+    @discardableResult
     func audioTrack(index: Int) -> Self {
         guard index > 0 else {
             arguments.append(contentsOf: ["-an"])
@@ -84,6 +90,7 @@ final class FFmpegArgumentsBuilder {
         return self
     }
     
+    @discardableResult
     func resolution(_ resolution: MediaResolution?) -> Self {
         guard let resolution = resolution else {
             return self
@@ -97,6 +104,7 @@ final class FFmpegArgumentsBuilder {
         return self
     }
     
+    @discardableResult
     func resolution(width: Int, height: Int) -> Self {
         let scale = "scale=\(width):\(height)"
         if let index = arguments.firstIndex(of: "-vf") {
@@ -107,11 +115,19 @@ final class FFmpegArgumentsBuilder {
         return self
     }
     
+    @discardableResult
     func frames(count: Int) -> Self {
         arguments.append(contentsOf: ["-vframes", "\(count)"])
         return self
     }
     
+    @discardableResult
+    func framePerSecond(_ fps: String) -> Self {
+        arguments.append(contentsOf: ["-r", fps])
+        return self
+    }
+    
+    @discardableResult
     func reset() -> Self {
         arguments = [
             "-v",
