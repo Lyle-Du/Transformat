@@ -48,3 +48,15 @@ extension NSTextField {
         return field
     }
 }
+
+extension NSVisualEffectView {
+    
+    static func makeDarkBlurView() -> NSVisualEffectView {
+        let view = NSVisualEffectView()
+        view.blendingMode = .behindWindow
+        view.state = .active
+        view.isEmphasized = true
+        view.material = .ultraDark
+        return view
+    }
+}

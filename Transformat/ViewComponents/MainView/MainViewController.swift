@@ -17,6 +17,12 @@ final class MainViewController: NSViewController {
     
     private let disposeBag = DisposeBag()
     
+    private let playerBackgroundView: NSVisualEffectView = {
+        let view = NSVisualEffectView.makeDarkBlurView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let playerView: VLCVideoView = {
         let view = VLCVideoView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -24,9 +30,7 @@ final class MainViewController: NSViewController {
     }()
     
     private let controlPanelContainer: NSVisualEffectView = {
-        let view = NSVisualEffectView()
-        view.blendingMode = .withinWindow
-        view.material = .ultraDark
+        let view = NSVisualEffectView.makeDarkBlurView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -161,6 +165,7 @@ final class MainViewController: NSViewController {
     }
     
     private func setupViews() {
+        view.addSubview(playerBackgroundView)
         view.addSubview(importButton)
         view.addSubview(exportButton)
         exportButton.addSubview(cancelButton)
@@ -175,6 +180,13 @@ final class MainViewController: NSViewController {
         view.addSubview(formatBox)
         boxContainer.addArrangedSubview(mediaInfomationBox)
         boxContainer.addArrangedSubview(formatBox)
+        
+        NSLayoutConstraint.activate([
+            playerBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            playerBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            playerBackgroundView.topAnchor.constraint(equalTo: playerView.topAnchor),
+            playerBackgroundView.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
+        ])
         
         NSLayoutConstraint.activate([
             cancelButton.leadingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: 4),
@@ -200,12 +212,12 @@ final class MainViewController: NSViewController {
         NSLayoutConstraint.activate([
             playerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             playerView.topAnchor.constraint(equalTo: view.topAnchor),
-            playerView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            playerView.widthAnchor.constraint(equalTo: playerView.heightAnchor, multiplier: 4 / 3),
             playerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 400),
             playerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 600),
             
-            controlPanelContainer.leadingAnchor.constraint(equalTo: playerView.leadingAnchor),
-            controlPanelContainer.trailingAnchor.constraint(equalTo: playerView.trailingAnchor),
+            controlPanelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            controlPanelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             controlPanelContainer.topAnchor.constraint(equalTo: playerView.bottomAnchor),
             controlPanelContainer.heightAnchor.constraint(equalToConstant: 60),
             
