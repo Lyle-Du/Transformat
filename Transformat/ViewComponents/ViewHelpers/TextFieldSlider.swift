@@ -94,4 +94,11 @@ extension TextFieldSlider {
             target.textField.stringValue = String(format: target.stringFormat, value)
         }
     }
+    
+    var range: Binder<ClosedRange<Double>> {
+        Binder(self) { target, range in
+            target.slider.minValue = range.lowerBound
+            target.slider.maxValue = range.upperBound
+        }
+    }
 }

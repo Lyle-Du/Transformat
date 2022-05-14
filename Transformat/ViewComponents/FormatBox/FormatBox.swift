@@ -62,6 +62,26 @@ final class FormatBox: NSBox {
         return label
     }()
     
+    private let audioCodecPopUpBotton: NSPopUpButton = {
+        let button = NSPopUpButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+        button.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        return button
+    }()
+    
+    private let speedLabel: NSTextField = {
+        let label = NSTextField.makeLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let speedSlider: TextFieldSlider = {
+        let slider = TextFieldSlider()
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        return slider
+    }()
+    
     private let framePerSecondLabel: NSTextField = {
         let label = NSTextField.makeLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -72,14 +92,6 @@ final class FormatBox: NSBox {
         let slider = TextFieldSlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
-    }()
-    
-    private let audioCodecPopUpBotton: NSPopUpButton = {
-        let button = NSPopUpButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
-        button.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
-        return button
     }()
     
     private let outputPathTextField: NSTextField = {
@@ -124,6 +136,18 @@ final class FormatBox: NSBox {
         commonInit()
     }
     
+    private let videoLabelPlaceHolderView: NSView = {
+        let view = NSView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let videoButtonPlaceHolderView: NSView = {
+        let view = NSView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let audioLabelPlaceHolderView: NSView = {
         let view = NSView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -139,9 +163,19 @@ final class FormatBox: NSBox {
     private func commonInit() {
         titlePosition = .noTitle
         
-        outputPathContainer.addArrangedSubview(outputPathTextField)
-        outputPathContainer.addArrangedSubview(outputPathButton)
-        addSubview(gridView)
+        videoLabelPlaceHolderView.addSubview(videoCodecLabel)
+        videoCodecLabel.pinEdgesTo(view: videoLabelPlaceHolderView)
+        videoLabelPlaceHolderView.addSubview(speedLabel)
+        speedLabel.pinEdgesTo(view: videoLabelPlaceHolderView)
+        
+        NSLayoutConstraint.activate([
+            speedLabel.widthAnchor.constraint(equalToConstant: 100),
+        ])
+        
+        videoButtonPlaceHolderView.addSubview(videoCodecPopUpBotton)
+        videoCodecPopUpBotton.pinEdgesTo(view: videoButtonPlaceHolderView)
+        videoButtonPlaceHolderView.addSubview(speedSlider)
+        speedSlider.pinEdgesTo(view: videoButtonPlaceHolderView)
         
         audioLabelPlaceHolderView.addSubview(audioCodecLabel)
         audioCodecLabel.pinEdgesTo(view: audioLabelPlaceHolderView)
@@ -152,12 +186,13 @@ final class FormatBox: NSBox {
         audioCodecPopUpBotton.pinEdgesTo(view: audioButtonPlaceHolderView)
         audioButtonPlaceHolderView.addSubview(framePerSecondSlider)
         framePerSecondSlider.pinEdgesTo(view: audioButtonPlaceHolderView)
-        framePerSecondSlider.slider.maxValue = 60
-        framePerSecondSlider.doubleValue = 24
-        framePerSecondSlider.slider.minValue = 1
+        
+        outputPathContainer.addArrangedSubview(outputPathTextField)
+        outputPathContainer.addArrangedSubview(outputPathButton)
+        addSubview(gridView)
         
         gridView.addRow(with: [formatLabel, formatsPopUpBotton])
-        gridView.addRow(with: [videoCodecLabel, videoCodecPopUpBotton])
+        gridView.addRow(with: [videoLabelPlaceHolderView, videoButtonPlaceHolderView])
         gridView.addRow(with: [audioLabelPlaceHolderView, audioButtonPlaceHolderView])
         gridView.addRow(with: [outputPathLabel, outputPathContainer])
         
@@ -176,11 +211,10 @@ final class FormatBox: NSBox {
         videoCodecLabel.stringValue = viewModel.videoCodecLabel
         audioCodecLabel.stringValue = viewModel.audioCodecLabel
         formatsPopUpBotton.addItems(withTitles: viewModel.formatTitles)
+        framePerSecondSlider.stringFormat = FormatBoxModel.Constants.twoDigitsFractionFormat
         outputPathLabel.stringValue = viewModel.outputPathLabel
-        framePerSecondSlider.stringFormat = FormatBoxModel.Constants.framePerSecondFormat
         
         disposeBag.insert([
-            
             viewModel.selectedMediaType.drive(onNext: { [weak self] type in
                 guard let self = self else { return }
                 let isImageType = type == .animated
@@ -189,6 +223,8 @@ final class FormatBox: NSBox {
                 self.audioCodecLabel.isHidden = isImageType
                 self.audioCodecPopUpBotton.isHidden = isImageType
                 
+                self.speedLabel.isHidden = !isImageType
+                self.speedSlider.isHidden = !isImageType
                 self.framePerSecondLabel.isHidden = !isImageType
                 self.framePerSecondSlider.isHidden = !isImageType
             }),
@@ -220,13 +256,14 @@ final class FormatBox: NSBox {
             viewModel.selectedAudioCodecIndex.drive(audioCodecPopUpBotton.rx.selectedIndex),
             audioCodecPopUpBotton.rx.selectedIndex.bind(to: viewModel.selectedAudioCodecIndexBinder),
             
+            viewModel.speedSliderRange.drive(speedSlider.range),
+            viewModel.speedTextDriver.drive(speedLabel.rx.stringValue),
+            viewModel.speedDriver.drive(speedSlider.valueBinder),
+            speedSlider.value.drive(viewModel.speedBinder),
+            
+            viewModel.framePerSecondSliderRange.drive(framePerSecondSlider.range),
             viewModel.framePerSecondTextDriver.drive(framePerSecondLabel.rx.stringValue),
             viewModel.framePerSecondDriver.drive(framePerSecondSlider.valueBinder),
-            viewModel.framePerSecondSliderRange.drive(onNext: { [weak self] bound in
-                guard let self = self else { return }
-                self.framePerSecondSlider.slider.minValue = bound.lowerBound
-                self.framePerSecondSlider.slider.maxValue = bound.upperBound
-            }),
             framePerSecondSlider.value.drive(viewModel.framePerSecondBinder),
         ])
     }

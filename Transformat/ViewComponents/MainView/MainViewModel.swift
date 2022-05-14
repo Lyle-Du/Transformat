@@ -143,11 +143,17 @@ final class MainViewModel {
                 .audioTrack(index: mediaInfomationBoxModel.audioTrackIndex)
         }
         
+        if let speed = formatBoxModel.speed {
+            builder.speed(speed)
+        }
+        
         if let framePerSecond = formatBoxModel.framePerSecond {
             builder.framePerSecond(framePerSecond)
         }
         
         let arguments = builder.build()
+        
+        print(arguments.joined(separator: " "))
         
         guard
             let startTimeInterval = mediaInfomationBoxModel.startTime.toTimeInterval(),

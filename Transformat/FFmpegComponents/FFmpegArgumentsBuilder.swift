@@ -11,6 +11,7 @@ import VLCKit
 final class FFmpegArgumentsBuilder {
     
     private var arguments = [String]()
+    private var videoFilter = [String: String]()
     
     private let media: VLCMedia
     private let inputURL: URL
@@ -26,7 +27,14 @@ final class FFmpegArgumentsBuilder {
         self.outputURL = outputURL
     }
     
+    private func appendVideoFilter() {
+        let videoFilterOption = "-vf"
+        let videoFilterValue = videoFilter.map { key, value in "\(key)=\(value)" }.joined(separator: ",")
+        arguments.append(contentsOf: [videoFilterOption, videoFilterValue])
+    }
+    
     func build() -> [String] {
+        appendVideoFilter()
         arguments.append(outputURL.path)
         return arguments
     }
@@ -95,29 +103,25 @@ final class FFmpegArgumentsBuilder {
         guard let resolution = resolution else {
             return self
         }
-        let scale = "scale=\(resolution.width):\(resolution.height)"
-        if let index = arguments.firstIndex(of: "-vf") {
-            arguments[index + 1] = scale
-        } else {
-            arguments.append(contentsOf: ["-vf", scale])
-        }
+        videoFilter["scale"] = "\(resolution.width):\(resolution.height)"
         return self
     }
     
     @discardableResult
     func resolution(width: Int, height: Int) -> Self {
-        let scale = "scale=\(width):\(height)"
-        if let index = arguments.firstIndex(of: "-vf") {
-            arguments[index + 1] = scale
-        } else {
-            arguments.append(contentsOf: ["-vf", scale])
-        }
+        videoFilter["scale"] = "\(width):\(height)"
         return self
     }
     
     @discardableResult
     func frames(count: Int) -> Self {
         arguments.append(contentsOf: ["-vframes", "\(count)"])
+        return self
+    }
+    
+    @discardableResult
+    func speed(_ scale: Double) -> Self {
+        videoFilter["setpts"] = "PTS/\(scale)"
         return self
     }
     
