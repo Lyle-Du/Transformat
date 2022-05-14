@@ -156,14 +156,15 @@ final class MediaInfomationBoxModel {
     func setMedia(_ media: VLCMedia) {
         let startTime = FFprobeKit.startTime(media: media) ?? .zero
         let endTime = FFprobeKit.endTime(media: media) ?? .zero
-        startTimeLimitRelay.accept(startTime)
-        if let startTimeText = startTime.toString() {
-            startTimeTextRelay.accept(startTimeText)
-        }
         
         endTimeLimitRelay.accept(endTime)
         if let endTimeText = endTime.toString() {
             endTimeTextRelay.accept(endTimeText)
+        }
+        
+        startTimeLimitRelay.accept(startTime)
+        if let startTimeText = startTime.toString() {
+            startTimeTextRelay.accept(startTimeText)
         }
         
         let audioTracks = Self.audioTracks(media: mediaPlayer.media)
