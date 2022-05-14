@@ -52,6 +52,20 @@ enum ContainerFormat: String, CaseIterable {
             return [.h264, .mpeg4, .prores]
         }
     }
+    
+    enum MediaType {
+        case image
+        case video
+    }
+    
+    var mediaType: MediaType {
+        switch self {
+        case .gif:
+            return .image
+        case .mkv, .mov, .mp4:
+            return .video
+        }
+    }
 }
 
 enum AudioCodec: String, CaseIterable {

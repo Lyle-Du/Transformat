@@ -21,6 +21,7 @@ final class FormatBoxModel {
     let outputPathLabel = "Save to:"
     
     let outputPath: Driver<String>
+    let selectedMediaType: Driver<ContainerFormat.MediaType>
     let selectedFormatIndex: Driver<Int>
     let formatTitles = ContainerFormat.allCases.map { $0.titleWithFileExtension }
     
@@ -29,10 +30,17 @@ final class FormatBoxModel {
     let selectedVideoCodecIndex: Driver<Int>
     let selectedAudioCodecIndex: Driver<Int>
     
+    let framePerSecondTextDriver: Driver<String>
+    let framePerSecondDriver: Driver<Double>
+    let framePerSecondSliderRange: Driver<ClosedRange<Double>>
+    
     private let videoCodecTitlesRelay = BehaviorRelay<[String]>(value: [])
     private let selectedVideoCodecIndexRelay: BehaviorRelay<Int>
     private let audioCodecTitlesRelay = BehaviorRelay<[String]>(value: [])
     private let selectedAudioCodecIndexRelay: BehaviorRelay<Int>
+    
+    private let framePerSecondSliderRangeRelay = BehaviorRelay<ClosedRange<Double>>(value: 1...60)
+    private let framePerSecondRelay: BehaviorRelay<Double>
     
     private let mediaPlayer: VLCMediaPlayer
     private let fileManager: FileManager
@@ -57,6 +65,11 @@ final class FormatBoxModel {
         videoCodecTitles = videoCodecTitlesRelay.asDriver()
         audioCodecTitles = audioCodecTitlesRelay.asDriver()
         
+        framePerSecondSliderRange = framePerSecondSliderRangeRelay.asDriver()
+        framePerSecondRelay = BehaviorRelay(value: 24)
+        framePerSecondDriver = framePerSecondRelay.asDriver()
+        framePerSecondTextDriver = framePerSecondDriver.map { "FPS (\(String(format: Constants.framePerSecondFormat, $0))):" }
+        
         savePanel.allowedFileTypes = ContainerFormat.allCases.map(\.rawValue)
         savePanel.allowsOtherFileTypes = false
         savePanel.showsTagField = false
@@ -70,6 +83,8 @@ final class FormatBoxModel {
         }
         
         selectedFormatRelay = BehaviorRelay(value: selectedFormat)
+        
+        selectedMediaType = selectedFormatRelay.asDriver().map(\.mediaType)
         
         selectedVideoCodecIndexRelay = BehaviorRelay(value: selectedFormat.videoCodecs.count > 0 ? 0 : -1)
         selectedAudioCodecIndexRelay = BehaviorRelay(value: selectedFormat.audioCodecs.count > 0 ? 0 : -1)
@@ -137,6 +152,10 @@ extension FormatBoxModel {
     struct StoreKeys {
         static let selectedFormat = "FormatBoxModel.StoreKeys.selectedFormat"
     }
+    
+    struct Constants {
+        static let framePerSecondFormat = "%.2f"
+    }
 }
 
 extension FormatBoxModel {
@@ -161,6 +180,12 @@ extension FormatBoxModel {
     var selectedAudioCodecIndexBinder: Binder<Int> {
         Binder(self) { target, index in
             target.selectedAudioCodecIndexRelay.accept(index)
+        }
+    }
+    
+    var framePerSecondBinder: Binder<Double> {
+        Binder(self) { target, value in
+            target.framePerSecondRelay.accept(value)
         }
     }
 }
@@ -194,5 +219,9 @@ extension FormatBoxModel {
             return nil
         }
         return selectedFormatRelay.value.audioCodecs[index]
+    }
+    
+    var framePerSecond: String? {
+        String(format: Constants.framePerSecondFormat, framePerSecondRelay.value)
     }
 }

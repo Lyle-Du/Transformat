@@ -175,8 +175,8 @@ final class MediaInfomationBox: NSBox {
             
             viewModel.customResolutionWidthText.drive(customResolutionWidthTextField.rx.text),
             viewModel.customResolutionHeightText.drive(customResolutionHeightTextField.rx.text),
-            customResolutionWidthTextField.rx.didEndEditing.withLatestFrom(customResolutionWidthTextField.rx.text).subscribe(viewModel.customResolutionWidthBinder),
-            customResolutionHeightTextField.rx.didEndEditing.withLatestFrom(customResolutionHeightTextField.rx.text).subscribe(viewModel.customResolutionHeightBinder),
+            customResolutionWidthTextField.rx.didEndEditingText.subscribe(viewModel.customResolutionWidthBinder),
+            customResolutionHeightTextField.rx.didEndEditingText.subscribe(viewModel.customResolutionHeightBinder),
             
             viewModel.startTimeTextDriver.drive(startTimeTextField.rx.text),
             viewModel.endTimeTextDriver.drive(endTimeTextField.rx.text),
@@ -184,8 +184,8 @@ final class MediaInfomationBox: NSBox {
             viewModel.startTimeTextPlaceholderDriver.drive(startTimeTextField.rx.placeholderString),
             viewModel.endTimeTextPlaceholderDriver.drive(endTimeTextField.rx.placeholderString),
             
-            startTimeTextField.rx.didEndEditing.withLatestFrom(startTimeTextField.rx.text).subscribe(viewModel.startTimeTextBinder),
-            endTimeTextField.rx.didEndEditing.withLatestFrom(endTimeTextField.rx.text).subscribe(viewModel.endTimeTextBinder),
+            startTimeTextField.rx.didEndEditingText.subscribe(viewModel.startTimeTextBinder),
+            endTimeTextField.rx.didEndEditingText.subscribe(viewModel.endTimeTextBinder),
             
             viewModel.currentAudioTrackIndex.drive(audioTrackPopUpButton.rx.selectedIndex),
             viewModel.currentResolutionIndex.drive(resolutionPopUpButton.rx.selectedIndex),

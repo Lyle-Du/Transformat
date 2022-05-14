@@ -13,4 +13,8 @@ extension Reactive where Base: NSTextField {
     var didEndEditing: ControlEvent<()> {
         ControlEvent(events: self.delegate.methodInvoked(#selector(NSTextFieldDelegate.controlTextDidEndEditing(_:))).map { _ in () })
     }
+    
+    var didEndEditingText: Observable<String?> {
+        didEndEditing.withLatestFrom(base.rx.text)
+    }
 }
