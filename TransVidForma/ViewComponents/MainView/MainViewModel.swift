@@ -18,7 +18,7 @@ final class MainViewModel {
         ControlEvent(events: resizePlayerView)
     }
     
-    let windowTitle = "Transformat"
+    let windowTitle = "TransVidForma"
     let cancleButtonTitle = "Cancel"
     
     let controlPanelViewModel: ControlPanelViewModel

@@ -1,22 +1,22 @@
 # Uncomment the next line to define a global platform for your project
 platform :macos, '10.15'
 
-target 'Transformat' do
+target 'TransVidForma' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for Transformat
+  # Pods for TransVidForma
   pod 'ffmpeg-kit-macos-full', '~> 4.5.1'
-  pod 'VLCKit', '~> 3.4.1b8'
+  pod 'VLCKit', '~> 3.4.1b9'
   pod 'RxSwift', '~> 6.5.0'
   pod 'RxCocoa', '~> 6.5.0'
 
-  target 'TransformatTests' do
+  target 'TransVidFormaTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
-  target 'TransformatUITests' do
+  target 'TransVidFormaUITests' do
     # Pods for testing
   end
 

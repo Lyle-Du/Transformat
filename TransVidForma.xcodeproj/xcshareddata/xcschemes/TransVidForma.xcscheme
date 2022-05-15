@@ -45,11 +45,20 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3E5E5590280C760F000C5435"
+            BuildableName = "TransVidForma.app"
+            BlueprintName = "TransVidForma"
+            ReferencedContainer = "container:TransVidForma.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "3E5E5590280C760F000C5435"
             BuildableName = "Transformat.app"
             BlueprintName = "Transformat"
             ReferencedContainer = "container:Transformat.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

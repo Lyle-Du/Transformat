@@ -56,7 +56,7 @@ extension NSVisualEffectView {
         view.blendingMode = .behindWindow
         view.state = .active
         view.isEmphasized = true
-        view.material = .ultraDark
+        view.appearance = NSAppearance(named: .vibrantDark)
         return view
     }
 }

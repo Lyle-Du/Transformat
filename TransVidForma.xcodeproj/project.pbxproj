@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DBD2855DB4DAB74B39FE08A /* Pods_TransVidFormaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7C9CE3D15C495232736563 /* Pods_TransVidFormaTests.framework */; };
 		3E02AF9A281704D000BE6FE4 /* ControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E02AF99281704D000BE6FE4 /* ControlPanel.swift */; };
 		3E02AF9C2818089B00BE6FE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */; };
 		3E03868B2827C64100A429F8 /* Rx+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03868A2827C64100A429F8 /* Rx+Extensions.swift */; };
@@ -15,9 +16,6 @@
 		3E5E5595280C760F000C5435 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E5594280C760F000C5435 /* AppDelegate.swift */; };
 		3E5E5597280C760F000C5435 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E5596280C760F000C5435 /* MainViewController.swift */; };
 		3E5E559C280C7610000C5435 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E5E559A280C7610000C5435 /* Main.storyboard */; };
-		3E5E55A7280C7610000C5435 /* TransformatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E55A6280C7610000C5435 /* TransformatTests.swift */; };
-		3E5E55B1280C7610000C5435 /* TransformatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E55B0280C7610000C5435 /* TransformatUITests.swift */; };
-		3E5E55B3280C7610000C5435 /* TransformatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E55B2280C7610000C5435 /* TransformatUITestsLaunchTests.swift */; };
 		3E73FD26281DA1AD00143803 /* FFprobe+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD25281DA1AD00143803 /* FFprobe+Extensions.swift */; };
 		3E73FD28281DAF2000143803 /* MediaResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD27281DAF2000143803 /* MediaResolution.swift */; };
 		3E73FD2A28200C7700143803 /* FormatBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E73FD2928200C7700143803 /* FormatBox.swift */; };
@@ -42,9 +40,8 @@
 		3EEF90952823FEA200039BB1 /* MediaInfomationBoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF90942823FEA200039BB1 /* MediaInfomationBoxModel.swift */; };
 		3EF84002282FCA6A00689AD6 /* TextFieldSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF84001282FCA6A00689AD6 /* TextFieldSlider.swift */; };
 		3EFBBC392812A72E00A0A05C /* TrimControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFBBC382812A72E00A0A05C /* TrimControl.swift */; };
-		C328560C8C54865E78736815 /* Pods_Transformat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A89AA9A1145CC1D6C84C55 /* Pods_Transformat.framework */; };
-		C8137FAC295FAB210EBAF761 /* Pods_TransformatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 729855B7D0274EE712EA0AC9 /* Pods_TransformatTests.framework */; };
-		CFE40DC222D23D78627DC564 /* Pods_Transformat_TransformatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 300A52991ECA8DE96DA0271F /* Pods_Transformat_TransformatUITests.framework */; };
+		95BE421829C3E1997EF345D2 /* Pods_TransVidForma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 989CC43F4441AF6C96AEA182 /* Pods_TransVidForma.framework */; };
+		E11C0DBC7722D2C4623D3A02 /* Pods_TransVidForma_TransVidFormaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A6C7634F842FCE64C7FFB4 /* Pods_TransVidForma_TransVidFormaUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,26 +62,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		08C02F16D1F8940C8E854D26 /* Pods-Transformat-TransformatUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transformat-TransformatUITests.debug.xcconfig"; path = "Target Support Files/Pods-Transformat-TransformatUITests/Pods-Transformat-TransformatUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		27A89AA9A1145CC1D6C84C55 /* Pods_Transformat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Transformat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		300A52991ECA8DE96DA0271F /* Pods_Transformat_TransformatUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Transformat_TransformatUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		308EA28F49FE6053C09AAB58 /* Pods-Transformat-TransformatUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transformat-TransformatUITests.release.xcconfig"; path = "Target Support Files/Pods-Transformat-TransformatUITests/Pods-Transformat-TransformatUITests.release.xcconfig"; sourceTree = "<group>"; };
-		3CBE637FDD92C71D43192830 /* Pods-TransformatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransformatTests.release.xcconfig"; path = "Target Support Files/Pods-TransformatTests/Pods-TransformatTests.release.xcconfig"; sourceTree = "<group>"; };
+		3D6B1BCAD1889823FB04BE1A /* Pods-TransVidFormaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVidFormaTests.release.xcconfig"; path = "Target Support Files/Pods-TransVidFormaTests/Pods-TransVidFormaTests.release.xcconfig"; sourceTree = "<group>"; };
 		3E02AF99281704D000BE6FE4 /* ControlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanel.swift; sourceTree = "<group>"; };
 		3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E03868A2827C64100A429F8 /* Rx+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Extensions.swift"; sourceTree = "<group>"; };
 		3E03868C2827C6F000A429F8 /* NSTextField+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Rx.swift"; sourceTree = "<group>"; };
 		3E03869028280E7000A429F8 /* UnitStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitStorage.swift; sourceTree = "<group>"; };
-		3E5E5591280C760F000C5435 /* Transformat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transformat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E5E5591280C760F000C5435 /* TransVidForma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransVidForma.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E5E5594280C760F000C5435 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E5E5596280C760F000C5435 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		3E5E559B280C7610000C5435 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3E5E559D280C7610000C5435 /* Transformat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Transformat.entitlements; sourceTree = "<group>"; };
-		3E5E55A2280C7610000C5435 /* TransformatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransformatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E5E55A6280C7610000C5435 /* TransformatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformatTests.swift; sourceTree = "<group>"; };
-		3E5E55AC280C7610000C5435 /* TransformatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransformatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E5E55B0280C7610000C5435 /* TransformatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformatUITests.swift; sourceTree = "<group>"; };
-		3E5E55B2280C7610000C5435 /* TransformatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3E5E55A2280C7610000C5435 /* TransVidFormaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransVidFormaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E5E55AC280C7610000C5435 /* TransVidFormaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransVidFormaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E73FD25281DA1AD00143803 /* FFprobe+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FFprobe+Extensions.swift"; sourceTree = "<group>"; };
 		3E73FD27281DAF2000143803 /* MediaResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResolution.swift; sourceTree = "<group>"; };
 		3E73FD2928200C7700143803 /* FormatBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatBox.swift; sourceTree = "<group>"; };
@@ -100,6 +89,7 @@
 		3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButton.swift; sourceTree = "<group>"; };
 		3EAEBDC1282B59BD004BA81C /* FFmpegArgumentsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFmpegArgumentsBuilder.swift; sourceTree = "<group>"; };
 		3EAEBDC5282BF7FF004BA81C /* FFmpeg+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FFmpeg+Extensions.swift"; sourceTree = "<group>"; };
+		3EC71C9F2830F5BC00B1DFFF /* TransVidForma.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TransVidForma.entitlements; sourceTree = "<group>"; };
 		3EDC73D72826451200D5673E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		3EDC73DB28267E9600D5673E /* FormatBoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatBoxModel.swift; sourceTree = "<group>"; };
 		3EDC73DD28267FAA00D5673E /* ContainerFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerFormat.swift; sourceTree = "<group>"; };
@@ -109,10 +99,14 @@
 		3EEF90942823FEA200039BB1 /* MediaInfomationBoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInfomationBoxModel.swift; sourceTree = "<group>"; };
 		3EF84001282FCA6A00689AD6 /* TextFieldSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSlider.swift; sourceTree = "<group>"; };
 		3EFBBC382812A72E00A0A05C /* TrimControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimControl.swift; sourceTree = "<group>"; };
-		5C4BEBCF2B0F474FC1D6868A /* Pods-TransformatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransformatTests.debug.xcconfig"; path = "Target Support Files/Pods-TransformatTests/Pods-TransformatTests.debug.xcconfig"; sourceTree = "<group>"; };
-		729855B7D0274EE712EA0AC9 /* Pods_TransformatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransformatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AFEA51FBF28065A1D2F46ABF /* Pods-Transformat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transformat.debug.xcconfig"; path = "Target Support Files/Pods-Transformat/Pods-Transformat.debug.xcconfig"; sourceTree = "<group>"; };
-		FF9FF7E5697ADF4080C409F8 /* Pods-Transformat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Transformat.release.xcconfig"; path = "Target Support Files/Pods-Transformat/Pods-Transformat.release.xcconfig"; sourceTree = "<group>"; };
+		46A6C7634F842FCE64C7FFB4 /* Pods_TransVidForma_TransVidFormaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVidForma_TransVidFormaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A1B0D3449F06132B3518F24 /* Pods-TransVidForma-TransVidFormaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVidForma-TransVidFormaUITests.release.xcconfig"; path = "Target Support Files/Pods-TransVidForma-TransVidFormaUITests/Pods-TransVidForma-TransVidFormaUITests.release.xcconfig"; sourceTree = "<group>"; };
+		989CC43F4441AF6C96AEA182 /* Pods_TransVidForma.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVidForma.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B7C9CE3D15C495232736563 /* Pods_TransVidFormaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVidFormaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD5DEA6AF01479AD92A3D4F6 /* Pods-TransVidForma.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVidForma.release.xcconfig"; path = "Target Support Files/Pods-TransVidForma/Pods-TransVidForma.release.xcconfig"; sourceTree = "<group>"; };
+		D30DD4F1745D6B655494C774 /* Pods-TransVidForma-TransVidFormaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVidForma-TransVidFormaUITests.debug.xcconfig"; path = "Target Support Files/Pods-TransVidForma-TransVidFormaUITests/Pods-TransVidForma-TransVidFormaUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		D6278F291F7AD70741E3DE6C /* Pods-TransVidFormaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVidFormaTests.debug.xcconfig"; path = "Target Support Files/Pods-TransVidFormaTests/Pods-TransVidFormaTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E591FC4C2D538B153B43990D /* Pods-TransVidForma.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVidForma.debug.xcconfig"; path = "Target Support Files/Pods-TransVidForma/Pods-TransVidForma.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C328560C8C54865E78736815 /* Pods_Transformat.framework in Frameworks */,
+				95BE421829C3E1997EF345D2 /* Pods_TransVidForma.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,7 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8137FAC295FAB210EBAF761 /* Pods_TransformatTests.framework in Frameworks */,
+				0DBD2855DB4DAB74B39FE08A /* Pods_TransVidFormaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,48 +130,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFE40DC222D23D78627DC564 /* Pods_Transformat_TransformatUITests.framework in Frameworks */,
+				E11C0DBC7722D2C4623D3A02 /* Pods_TransVidForma_TransVidFormaUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0DCE809D9839F97E66DFCDE3 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				27A89AA9A1145CC1D6C84C55 /* Pods_Transformat.framework */,
-				300A52991ECA8DE96DA0271F /* Pods_Transformat_TransformatUITests.framework */,
-				729855B7D0274EE712EA0AC9 /* Pods_TransformatTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		3E5E5588280C760F000C5435 = {
 			isa = PBXGroup;
 			children = (
-				3E5E5593280C760F000C5435 /* Transformat */,
-				3E5E55A5280C7610000C5435 /* TransformatTests */,
-				3E5E55AF280C7610000C5435 /* TransformatUITests */,
+				3E5E5593280C760F000C5435 /* TransVidForma */,
 				3E5E5592280C760F000C5435 /* Products */,
 				7436038F57912ABBED71E86F /* Pods */,
-				0DCE809D9839F97E66DFCDE3 /* Frameworks */,
+				7B54FCE2F747D92BBB570383 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		3E5E5592280C760F000C5435 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3E5E5591280C760F000C5435 /* Transformat.app */,
-				3E5E55A2280C7610000C5435 /* TransformatTests.xctest */,
-				3E5E55AC280C7610000C5435 /* TransformatUITests.xctest */,
+				3E5E5591280C760F000C5435 /* TransVidForma.app */,
+				3E5E55A2280C7610000C5435 /* TransVidFormaTests.xctest */,
+				3E5E55AC280C7610000C5435 /* TransVidFormaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3E5E5593280C760F000C5435 /* Transformat */ = {
+		3E5E5593280C760F000C5435 /* TransVidForma */ = {
 			isa = PBXGroup;
 			children = (
+				3EC71C9F2830F5BC00B1DFFF /* TransVidForma.entitlements */,
 				3E73FD2D28204CD500143803 /* Extensions */,
 				3E73FD24281DA18B00143803 /* FFmpegComponents */,
 				3EA1E83E2819A6C600CCCA5F /* VLCComponents */,
@@ -185,26 +168,8 @@
 				3E5E5594280C760F000C5435 /* AppDelegate.swift */,
 				3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */,
 				3E5E559A280C7610000C5435 /* Main.storyboard */,
-				3E5E559D280C7610000C5435 /* Transformat.entitlements */,
 			);
-			path = Transformat;
-			sourceTree = "<group>";
-		};
-		3E5E55A5280C7610000C5435 /* TransformatTests */ = {
-			isa = PBXGroup;
-			children = (
-				3E5E55A6280C7610000C5435 /* TransformatTests.swift */,
-			);
-			path = TransformatTests;
-			sourceTree = "<group>";
-		};
-		3E5E55AF280C7610000C5435 /* TransformatUITests */ = {
-			isa = PBXGroup;
-			children = (
-				3E5E55B0280C7610000C5435 /* TransformatUITests.swift */,
-				3E5E55B2280C7610000C5435 /* TransformatUITestsLaunchTests.swift */,
-			);
-			path = TransformatUITests;
+			path = TransVidForma;
 			sourceTree = "<group>";
 		};
 		3E73FD24281DA18B00143803 /* FFmpegComponents */ = {
@@ -315,43 +280,53 @@
 		7436038F57912ABBED71E86F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				AFEA51FBF28065A1D2F46ABF /* Pods-Transformat.debug.xcconfig */,
-				FF9FF7E5697ADF4080C409F8 /* Pods-Transformat.release.xcconfig */,
-				08C02F16D1F8940C8E854D26 /* Pods-Transformat-TransformatUITests.debug.xcconfig */,
-				308EA28F49FE6053C09AAB58 /* Pods-Transformat-TransformatUITests.release.xcconfig */,
-				5C4BEBCF2B0F474FC1D6868A /* Pods-TransformatTests.debug.xcconfig */,
-				3CBE637FDD92C71D43192830 /* Pods-TransformatTests.release.xcconfig */,
+				E591FC4C2D538B153B43990D /* Pods-TransVidForma.debug.xcconfig */,
+				CD5DEA6AF01479AD92A3D4F6 /* Pods-TransVidForma.release.xcconfig */,
+				D30DD4F1745D6B655494C774 /* Pods-TransVidForma-TransVidFormaUITests.debug.xcconfig */,
+				6A1B0D3449F06132B3518F24 /* Pods-TransVidForma-TransVidFormaUITests.release.xcconfig */,
+				D6278F291F7AD70741E3DE6C /* Pods-TransVidFormaTests.debug.xcconfig */,
+				3D6B1BCAD1889823FB04BE1A /* Pods-TransVidFormaTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		7B54FCE2F747D92BBB570383 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				989CC43F4441AF6C96AEA182 /* Pods_TransVidForma.framework */,
+				46A6C7634F842FCE64C7FFB4 /* Pods_TransVidForma_TransVidFormaUITests.framework */,
+				9B7C9CE3D15C495232736563 /* Pods_TransVidFormaTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3E5E5590280C760F000C5435 /* Transformat */ = {
+		3E5E5590280C760F000C5435 /* TransVidForma */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3E5E55B6280C7610000C5435 /* Build configuration list for PBXNativeTarget "Transformat" */;
+			buildConfigurationList = 3E5E55B6280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVidForma" */;
 			buildPhases = (
-				EE7E50C44D6D5AC37E1D430F /* [CP] Check Pods Manifest.lock */,
+				F3745C7C44E5353E51E91EBA /* [CP] Check Pods Manifest.lock */,
 				3E5E558D280C760F000C5435 /* Sources */,
 				3E5E558E280C760F000C5435 /* Frameworks */,
 				3E5E558F280C760F000C5435 /* Resources */,
-				1DFD694E8F82E41C28796D83 /* [CP] Embed Pods Frameworks */,
+				A7F9A4E23FD49EB2F7031068 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Transformat;
+			name = TransVidForma;
 			productName = Transformat;
-			productReference = 3E5E5591280C760F000C5435 /* Transformat.app */;
+			productReference = 3E5E5591280C760F000C5435 /* TransVidForma.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3E5E55A1280C7610000C5435 /* TransformatTests */ = {
+		3E5E55A1280C7610000C5435 /* TransVidFormaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3E5E55B9280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransformatTests" */;
+			buildConfigurationList = 3E5E55B9280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVidFormaTests" */;
 			buildPhases = (
-				EEC6EE7468ED80B23E332338 /* [CP] Check Pods Manifest.lock */,
+				1116BF51B82E1FAA47159F25 /* [CP] Check Pods Manifest.lock */,
 				3E5E559E280C7610000C5435 /* Sources */,
 				3E5E559F280C7610000C5435 /* Frameworks */,
 				3E5E55A0280C7610000C5435 /* Resources */,
@@ -361,29 +336,29 @@
 			dependencies = (
 				3E5E55A4280C7610000C5435 /* PBXTargetDependency */,
 			);
-			name = TransformatTests;
+			name = TransVidFormaTests;
 			productName = TransformatTests;
-			productReference = 3E5E55A2280C7610000C5435 /* TransformatTests.xctest */;
+			productReference = 3E5E55A2280C7610000C5435 /* TransVidFormaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3E5E55AB280C7610000C5435 /* TransformatUITests */ = {
+		3E5E55AB280C7610000C5435 /* TransVidFormaUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3E5E55BC280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransformatUITests" */;
+			buildConfigurationList = 3E5E55BC280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVidFormaUITests" */;
 			buildPhases = (
-				6D15AB06FAC85F5FCFD1AE4E /* [CP] Check Pods Manifest.lock */,
+				3095FCD9E38E3506D25EBB13 /* [CP] Check Pods Manifest.lock */,
 				3E5E55A8280C7610000C5435 /* Sources */,
 				3E5E55A9280C7610000C5435 /* Frameworks */,
 				3E5E55AA280C7610000C5435 /* Resources */,
-				C9A89884A2318AA79F543700 /* [CP] Embed Pods Frameworks */,
+				450193CED873514872032E50 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				3E5E55AE280C7610000C5435 /* PBXTargetDependency */,
 			);
-			name = TransformatUITests;
+			name = TransVidFormaUITests;
 			productName = TransformatUITests;
-			productReference = 3E5E55AC280C7610000C5435 /* TransformatUITests.xctest */;
+			productReference = 3E5E55AC280C7610000C5435 /* TransVidFormaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -410,7 +385,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3E5E558C280C760F000C5435 /* Build configuration list for PBXProject "Transformat" */;
+			buildConfigurationList = 3E5E558C280C760F000C5435 /* Build configuration list for PBXProject "TransVidForma" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -423,9 +398,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3E5E5590280C760F000C5435 /* Transformat */,
-				3E5E55A1280C7610000C5435 /* TransformatTests */,
-				3E5E55AB280C7610000C5435 /* TransformatUITests */,
+				3E5E5590280C760F000C5435 /* TransVidForma */,
+				3E5E55A1280C7610000C5435 /* TransVidFormaTests */,
+				3E5E55AB280C7610000C5435 /* TransVidFormaUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -457,24 +432,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1DFD694E8F82E41C28796D83 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Transformat/Pods-Transformat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Transformat/Pods-Transformat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Transformat/Pods-Transformat-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6D15AB06FAC85F5FCFD1AE4E /* [CP] Check Pods Manifest.lock */ = {
+		1116BF51B82E1FAA47159F25 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -489,31 +447,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Transformat-TransformatUITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TransVidFormaTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C9A89884A2318AA79F543700 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Transformat-TransformatUITests/Pods-Transformat-TransformatUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Transformat-TransformatUITests/Pods-Transformat-TransformatUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Transformat-TransformatUITests/Pods-Transformat-TransformatUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EE7E50C44D6D5AC37E1D430F /* [CP] Check Pods Manifest.lock */ = {
+		3095FCD9E38E3506D25EBB13 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -528,14 +469,48 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Transformat-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TransVidForma-TransVidFormaUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EEC6EE7468ED80B23E332338 /* [CP] Check Pods Manifest.lock */ = {
+		450193CED873514872032E50 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TransVidForma-TransVidFormaUITests/Pods-TransVidForma-TransVidFormaUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TransVidForma-TransVidFormaUITests/Pods-TransVidForma-TransVidFormaUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TransVidForma-TransVidFormaUITests/Pods-TransVidForma-TransVidFormaUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A7F9A4E23FD49EB2F7031068 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TransVidForma/Pods-TransVidForma-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TransVidForma/Pods-TransVidForma-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TransVidForma/Pods-TransVidForma-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F3745C7C44E5353E51E91EBA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -550,7 +525,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TransformatTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TransVidForma-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -601,7 +576,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E5E55A7280C7610000C5435 /* TransformatTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,8 +583,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E5E55B3280C7610000C5435 /* TransformatUITestsLaunchTests.swift in Sources */,
-				3E5E55B1280C7610000C5435 /* TransformatUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,12 +591,12 @@
 /* Begin PBXTargetDependency section */
 		3E5E55A4280C7610000C5435 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3E5E5590280C760F000C5435 /* Transformat */;
+			target = 3E5E5590280C760F000C5435 /* TransVidForma */;
 			targetProxy = 3E5E55A3280C7610000C5435 /* PBXContainerItemProxy */;
 		};
 		3E5E55AE280C7610000C5435 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3E5E5590280C760F000C5435 /* Transformat */;
+			target = 3E5E5590280C760F000C5435 /* TransVidForma */;
 			targetProxy = 3E5E55AD280C7610000C5435 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -691,11 +663,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_PREPROCESS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = macosx;
+				STRINGS_FILE_INFOPLIST_RENAME = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -745,10 +721,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_PREPROCESS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = macosx;
+				STRINGS_FILE_INFOPLIST_RENAME = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
@@ -756,17 +736,19 @@
 		};
 		3E5E55B7280C7610000C5435 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AFEA51FBF28065A1D2F46ABF /* Pods-Transformat.debug.xcconfig */;
+			baseConfigurationReference = E591FC4C2D538B153B43990D /* Pods-TransVidForma.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Transformat/Transformat.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TransVidForma/TransVidForma.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P45J34CJYG;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -774,10 +756,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lyledu.Transformat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lyledu.TransVidForma;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -785,17 +768,19 @@
 		};
 		3E5E55B8280C7610000C5435 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FF9FF7E5697ADF4080C409F8 /* Pods-Transformat.release.xcconfig */;
+			baseConfigurationReference = CD5DEA6AF01479AD92A3D4F6 /* Pods-TransVidForma.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Transformat/Transformat.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TransVidForma/TransVidForma.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P45J34CJYG;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -803,10 +788,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lyledu.Transformat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lyledu.TransVidForma;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -814,7 +800,7 @@
 		};
 		3E5E55BA280C7610000C5435 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C4BEBCF2B0F474FC1D6868A /* Pods-TransformatTests.debug.xcconfig */;
+			baseConfigurationReference = D6278F291F7AD70741E3DE6C /* Pods-TransVidFormaTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -827,13 +813,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Transformat.app/Contents/MacOS/Transformat";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TransVidForma.app/Contents/MacOS/TransVidForma";
 			};
 			name = Debug;
 		};
 		3E5E55BB280C7610000C5435 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CBE637FDD92C71D43192830 /* Pods-TransformatTests.release.xcconfig */;
+			baseConfigurationReference = 3D6B1BCAD1889823FB04BE1A /* Pods-TransVidFormaTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -846,13 +832,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Transformat.app/Contents/MacOS/Transformat";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TransVidForma.app/Contents/MacOS/TransVidForma";
 			};
 			name = Release;
 		};
 		3E5E55BD280C7610000C5435 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 08C02F16D1F8940C8E854D26 /* Pods-Transformat-TransformatUITests.debug.xcconfig */;
+			baseConfigurationReference = D30DD4F1745D6B655494C774 /* Pods-TransVidForma-TransVidFormaUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -869,7 +855,7 @@
 		};
 		3E5E55BE280C7610000C5435 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 308EA28F49FE6053C09AAB58 /* Pods-Transformat-TransformatUITests.release.xcconfig */;
+			baseConfigurationReference = 6A1B0D3449F06132B3518F24 /* Pods-TransVidForma-TransVidFormaUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -887,7 +873,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3E5E558C280C760F000C5435 /* Build configuration list for PBXProject "Transformat" */ = {
+		3E5E558C280C760F000C5435 /* Build configuration list for PBXProject "TransVidForma" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E5E55B4280C7610000C5435 /* Debug */,
@@ -896,7 +882,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3E5E55B6280C7610000C5435 /* Build configuration list for PBXNativeTarget "Transformat" */ = {
+		3E5E55B6280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVidForma" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E5E55B7280C7610000C5435 /* Debug */,
@@ -905,7 +891,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3E5E55B9280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransformatTests" */ = {
+		3E5E55B9280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVidFormaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E5E55BA280C7610000C5435 /* Debug */,
@@ -914,7 +900,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3E5E55BC280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransformatUITests" */ = {
+		3E5E55BC280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVidFormaUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E5E55BD280C7610000C5435 /* Debug */,
