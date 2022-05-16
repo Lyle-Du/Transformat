@@ -11,10 +11,10 @@ import RxSwift
 extension Reactive where Base: NSTextField {
     /// Reactive wrapper for `delegate` message.
     var didEndEditing: ControlEvent<()> {
-        ControlEvent(events: self.delegate.methodInvoked(#selector(NSTextFieldDelegate.controlTextDidEndEditing(_:))).map { _ in () })
+        return ControlEvent(events: self.delegate.methodInvoked(#selector(NSTextFieldDelegate.controlTextDidEndEditing(_:))).map { _ in () })
     }
     
     var didEndEditingText: Observable<String?> {
-        didEndEditing.withLatestFrom(base.rx.text)
+        return didEndEditing.withLatestFrom(base.rx.text)
     }
 }

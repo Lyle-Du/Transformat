@@ -154,8 +154,8 @@ final class MainViewModel {
         print(arguments.joined(separator: " "))
         
         guard
-            let startTimeInterval = mediaInfomationBoxModel.startTime.toTimeInterval(),
-            let endTimeInterval = mediaInfomationBoxModel.endTime.toTimeInterval() else
+            let startTimeInterval = mediaInfomationBoxModel.startTime?.toTimeInterval(),
+            let endTimeInterval = mediaInfomationBoxModel.endTime?.toTimeInterval() else
         {
             return
         }

@@ -8,6 +8,7 @@
 import Cocoa
 
 import RxCocoa
+import RxRelay
 import RxSwift
 import VLCKit
 import ffmpegkit
@@ -189,8 +190,8 @@ final class MediaInfomationBox: NSBox {
             
             viewModel.customResolutionWidthText.drive(customResolutionWidthTextField.rx.text),
             viewModel.customResolutionHeightText.drive(customResolutionHeightTextField.rx.text),
-            customResolutionWidthTextField.rx.didEndEditingText.subscribe(viewModel.customResolutionWidthBinder),
-            customResolutionHeightTextField.rx.didEndEditingText.subscribe(viewModel.customResolutionHeightBinder),
+            customResolutionWidthTextField.rx.text.subscribe(viewModel.customResolutionWidthBinder),
+            customResolutionHeightTextField.rx.text.subscribe(viewModel.customResolutionHeightBinder),
             
             viewModel.startTimeTextDriver.drive(startTimeTextField.rx.text),
             viewModel.endTimeTextDriver.drive(endTimeTextField.rx.text),

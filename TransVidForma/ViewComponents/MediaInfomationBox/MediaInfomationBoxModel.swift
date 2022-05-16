@@ -31,9 +31,9 @@ final class MediaInfomationBoxModel {
     let startTimeRatio: Driver<CGFloat?>
     let endTimeRatio: Driver<CGFloat?>
     
-    let startTimeTextDriver: Driver<String>
+    let startTimeTextDriver: Driver<String?>
     let startTimeTextPlaceholderDriver: Driver<String?>
-    let endTimeTextDriver: Driver<String>
+    let endTimeTextDriver: Driver<String?>
     let endTimeTextPlaceholderDriver: Driver<String?>
     let currentAudioTrackIndex: Driver<Int>
     let currentResolutionIndex: Driver<Int>
@@ -56,9 +56,9 @@ final class MediaInfomationBoxModel {
     private let currentAudioTrackIndexRelay: BehaviorRelay<Int>
     private let currentResolutionIndexRelay: BehaviorRelay<Int>
     
-    fileprivate let startTimeTextRelay: BehaviorRelay<String> = BehaviorRelay(value: "0")
+    fileprivate let startTimeTextRelay: BehaviorRelay<String?> = BehaviorRelay(value: nil)
     private let startTimeTextPlaceholderRelay: BehaviorRelay<String?> = BehaviorRelay(value: nil)
-    fileprivate let endTimeTextRelay: BehaviorRelay<String> = BehaviorRelay(value: "0")
+    fileprivate let endTimeTextRelay: BehaviorRelay<String?> = BehaviorRelay(value: nil)
     private let endTimeTextPlaceholderRelay: BehaviorRelay<String?> = BehaviorRelay(value: nil)
     
     private let audioTrackNamesRelay = BehaviorRelay<[String]>(value: [])
@@ -118,7 +118,7 @@ final class MediaInfomationBoxModel {
             startAndEndTimeinterval)
         .map { [startTimeLimitRelay] startTimeText, timeInterval -> CGFloat? in
             guard
-                let startTimeInterval = startTimeText.toTimeInterval(),
+                let startTimeInterval = startTimeText?.toTimeInterval(),
                 timeInterval != .zero else
             {
                 return nil
@@ -131,7 +131,7 @@ final class MediaInfomationBoxModel {
             startAndEndTimeinterval)
             .map { [startTimeLimitRelay] endTimeText, timeInterval -> CGFloat? in
                 guard
-                    let endTimeInterval = endTimeText.toTimeInterval(),
+                    let endTimeInterval = endTimeText?.toTimeInterval(),
                     timeInterval != .zero else
                 {
                     return nil
@@ -220,7 +220,7 @@ extension MediaInfomationBoxModel {
     
     var startTimeTextBinder: Binder<String?> {
         Binder(self) { target, text in
-            
+            let text = text?.toTimeInterval()?.toString()
             guard let startTimeText = text else {
                 if let startTimeLimitText = target.startTimeLimitRelay.value.toString() {
                     target.startTimeTextRelay.accept(startTimeLimitText)
@@ -229,7 +229,7 @@ extension MediaInfomationBoxModel {
             }
             
             guard
-                let endTimeIntervalLimit = target.endTimeTextRelay.value.toTimeInterval(),
+                let endTimeIntervalLimit = target.endTimeTextRelay.value?.toTimeInterval(),
                 let startTimeInterval = startTimeText.toTimeInterval()?.clamped(to: target.startTimeLimitRelay.value...endTimeIntervalLimit),
                 let startTimeText = startTimeInterval.toString() else
             {
@@ -245,7 +245,7 @@ extension MediaInfomationBoxModel {
     
     var endTimeTextBinder: Binder<String?> {
         Binder(self) { target, text in
-            
+            let text = text?.toTimeInterval()?.toString()
             guard let endTimeText = text else {
                 if let endTimeLimitText = target.endTimeLimitRelay.value.toString() {
                     target.endTimeTextRelay.accept(endTimeLimitText)
@@ -254,7 +254,7 @@ extension MediaInfomationBoxModel {
             }
             
             guard
-                let startTimeIntervalLimit = target.startTimeTextRelay.value.toTimeInterval(),
+                let startTimeIntervalLimit = target.startTimeTextRelay.value?.toTimeInterval(),
                 let endTimeInterval = endTimeText.toTimeInterval()?.clamped(to: startTimeIntervalLimit...target.endTimeLimitRelay.value),
                 let endTimeText = endTimeInterval.toString() else
             {
@@ -393,11 +393,11 @@ extension MediaInfomationBoxModel {
         return MediaResolution(width: width, height: height)
     }
     
-    var startTime: String {
+    var startTime: String? {
         startTimeTextRelay.value
     }
     
-    var endTime: String {
+    var endTime: String? {
         endTimeTextRelay.value
     }
     
