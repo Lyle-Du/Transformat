@@ -93,9 +93,4 @@ final class ControlPanel: NSView {
             .drive(playButton.rx.image)
             .disposed(by: disposeBag)
     }
-    
-    override func layout() {
-        super.layout()
-        layer?.cornerRadius = min(frame.height, frame.width) * 0.1
-    }
 }

@@ -53,18 +53,12 @@ enum ContainerFormat: String, CaseIterable {
         }
     }
     
-    enum MediaType {
-        case animated
-        case video
+    var hasAudioCodecs: Bool {
+        !audioCodecs.isEmpty
     }
     
-    var mediaType: MediaType {
-        switch self {
-        case .gif:
-            return .animated
-        case .mkv, .mov, .mp4:
-            return .video
-        }
+    var hasVideoCodecs: Bool {
+        !videoCodecs.isEmpty
     }
 }
 

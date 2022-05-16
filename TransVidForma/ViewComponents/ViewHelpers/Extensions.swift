@@ -11,7 +11,7 @@ extension NSView {
     
     // Making view acceptFirstResponder by default,
     // This will enable NSViewController receive responder event dispatched into responder chain
-    open override var acceptsFirstResponder: Bool{ true }
+    open override var acceptsFirstResponder: Bool { true }
     
     func pinEdgesTo(view: NSView, padding: CGFloat = .zero) {
         translatesAutoresizingMaskIntoConstraints = false
@@ -21,6 +21,29 @@ extension NSView {
             topAnchor.constraint(equalTo: view.topAnchor, constant: padding),
             bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding),
         ])
+    }
+    
+    func pinEdgesTo(view: NSView, padding: CGFloat = .zero, orientation: Orientation) {
+        translatesAutoresizingMaskIntoConstraints = false
+        var horizontalPadding = CGFloat.zero
+        var verticalPadding = CGFloat.zero
+        switch orientation {
+        case .horizontal:
+            horizontalPadding = padding
+        case .vertical:
+            verticalPadding = padding
+        }
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalPadding),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalPadding),
+            topAnchor.constraint(equalTo: view.topAnchor, constant: verticalPadding),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -verticalPadding),
+        ])
+    }
+    
+    enum Orientation {
+        case horizontal
+        case vertical
     }
 }
 
@@ -58,5 +81,22 @@ extension NSVisualEffectView {
         view.isEmphasized = true
         view.appearance = NSAppearance(named: .vibrantDark)
         return view
+    }
+}
+
+extension NSStackView {
+    
+    func removeAllArrangedSubviews() {
+        
+        let removedSubviews = arrangedSubviews.reduce([]) { (allSubviews, subview) -> [NSView] in
+            self.removeArrangedSubview(subview)
+            return allSubviews + [subview]
+        }
+        
+        // Deactivate all constraints
+        NSLayoutConstraint.deactivate(removedSubviews.flatMap({ $0.constraints }))
+        
+        // Remove the views from self
+        removedSubviews.forEach({ $0.removeFromSuperview() })
     }
 }

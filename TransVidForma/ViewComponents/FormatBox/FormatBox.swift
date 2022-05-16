@@ -156,8 +156,8 @@ final class FormatBox: NSBox {
         
         disposeBag.insert([
             
-            viewModel.selectedMediaType.map { $0 != .animated }.drive(framePerSecondSlider.rx.isHidden),
-            viewModel.selectedMediaType.map { $0 != .animated }.drive(framePerSecondLabel.rx.isHidden),
+            viewModel.isFramePerSecondHidden.drive(framePerSecondSlider.rx.isHidden),
+            viewModel.isFramePerSecondHidden.drive(framePerSecondLabel.rx.isHidden),
             
             viewModel.videoCodecTitles.drive(onNext: { [weak self] in
                 guard let self = self else { return }

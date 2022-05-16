@@ -19,7 +19,7 @@ final class FormatBoxModel {
     let outputPathLabel = "Save to:"
     
     let outputPath: Driver<String>
-    let selectedMediaType: Driver<ContainerFormat.MediaType>
+    let isFramePerSecondHidden: Driver<Bool>
     let selectedFormatIndex: Driver<Int>
     let formatTitles = ContainerFormat.allCases.map { $0.titleWithFileExtension }
     
@@ -81,7 +81,7 @@ final class FormatBoxModel {
         }
         
         selectedFormatRelay = BehaviorRelay(value: selectedFormat)
-        selectedMediaType = selectedFormatRelay.asDriver().map(\.mediaType)
+        isFramePerSecondHidden = selectedFormatRelay.asDriver().map { $0 != .gif }
         
         selectedVideoCodecIndexRelay = BehaviorRelay(value: selectedFormat.videoCodecs.count > 0 ? 0 : -1)
         selectedAudioCodecIndexRelay = BehaviorRelay(value: selectedFormat.audioCodecs.count > 0 ? 0 : -1)
@@ -115,7 +115,6 @@ final class FormatBoxModel {
             let fileExtension = url.pathExtension
             var newURL = url
             while fileManager.fileExists(atPath: newURL.path) {
-                print("fileManager.fileExists \(newURL.path)")
                 let path = newURL.deletingLastPathComponent()
                 let urlWithoutExtension = newURL.deletingPathExtension()
                 let fileName = urlWithoutExtension.lastPathComponent
@@ -198,7 +197,7 @@ extension FormatBoxModel {
     }
     
     var videoCodec: VideoCodec? {
-        guard selectedFormatRelay.value.mediaType == .video else {
+        guard selectedFormatRelay.value.hasVideoCodecs else {
             return nil
         }
         let index = selectedVideoCodecIndexRelay.value
@@ -212,7 +211,7 @@ extension FormatBoxModel {
     }
     
     var audioCodec: AudioCodec? {
-        guard selectedFormatRelay.value.mediaType == .video else {
+        guard selectedFormatRelay.value.hasAudioCodecs else {
             return nil
         }
         let index = selectedAudioCodecIndexRelay.value
@@ -225,7 +224,7 @@ extension FormatBoxModel {
     }
     
     var framePerSecond: String? {
-        guard selectedFormatRelay.value.mediaType == .animated else {
+        guard !selectedFormatRelay.value.hasAudioCodecs && !selectedFormatRelay.value.hasVideoCodecs else {
             return nil
         }
         return String(format: Constants.twoDigitsFractionFormat, framePerSecondRelay.value)

@@ -81,6 +81,12 @@ final class MainViewController: NSViewController {
         return button
     }()
     
+    private let clipView: ClipView = {
+        let view = ClipView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let panel = NSOpenPanel()
     private let alert = NSAlert()
     
@@ -90,6 +96,7 @@ final class MainViewController: NSViewController {
     }
     
     func bind() {
+        clipView.viewModel = viewModel.clipViewModel
         controlPanel.viewModel = viewModel.controlPanelViewModel
         mediaInfomationBox.viewModel = viewModel.mediaInfomationBoxModel
         formatBox.viewModel = viewModel.formatBoxModel
@@ -175,6 +182,8 @@ final class MainViewController: NSViewController {
         controlPanelContainer.addSubview(controlPanel)
         controlPanel.pinEdgesTo(view: controlPanelContainer, padding: 8)
         
+        view.addSubview(clipView)
+        
         view.addSubview(boxContainer)
         view.addSubview(mediaInfomationBox)
         view.addSubview(formatBox)
@@ -189,24 +198,24 @@ final class MainViewController: NSViewController {
         ])
         
         NSLayoutConstraint.activate([
-            cancelButton.leadingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: 4),
-            cancelButton.trailingAnchor.constraint(equalTo: exportButton.trailingAnchor, constant: -4),
-            cancelButton.heightAnchor.constraint(lessThanOrEqualToConstant: 30),
-            cancelButton.bottomAnchor.constraint(equalTo: exportButton.bottomAnchor, constant: -4),
-        ])
-        
-        NSLayoutConstraint.activate([
             importButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-            importButton.topAnchor.constraint(equalTo: boxContainer.topAnchor),
+            importButton.topAnchor.constraint(equalTo: clipView.topAnchor),
             importButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
             importButton.widthAnchor.constraint(equalToConstant: 120),
         ])
         
         NSLayoutConstraint.activate([
             exportButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
-            exportButton.topAnchor.constraint(equalTo: boxContainer.topAnchor),
+            exportButton.topAnchor.constraint(equalTo: clipView.topAnchor),
             exportButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
             exportButton.widthAnchor.constraint(equalToConstant: 120),
+        ])
+        
+        NSLayoutConstraint.activate([
+            cancelButton.leadingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: 4),
+            cancelButton.trailingAnchor.constraint(equalTo: exportButton.trailingAnchor, constant: -4),
+            cancelButton.heightAnchor.constraint(lessThanOrEqualToConstant: 30),
+            cancelButton.bottomAnchor.constraint(equalTo: exportButton.bottomAnchor, constant: -4),
         ])
         
         NSLayoutConstraint.activate([
@@ -215,17 +224,31 @@ final class MainViewController: NSViewController {
             playerView.widthAnchor.constraint(equalTo: playerView.heightAnchor, multiplier: 4 / 3),
             playerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 400),
             playerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 600),
-            
+        ])
+        
+        NSLayoutConstraint.activate([
             controlPanelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             controlPanelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             controlPanelContainer.topAnchor.constraint(equalTo: playerView.bottomAnchor),
             controlPanelContainer.heightAnchor.constraint(equalToConstant: 60),
-            
+        ])
+        
+        NSLayoutConstraint.activate([
+            clipView.leadingAnchor.constraint(equalTo: importButton.trailingAnchor, constant: 12),
+            clipView.trailingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: -12),
+            clipView.topAnchor.constraint(equalTo: controlPanelContainer.bottomAnchor, constant: 12),
+            clipView.heightAnchor.constraint(equalToConstant: 50),
+        ])
+        
+        NSLayoutConstraint.activate([
             boxContainer.leadingAnchor.constraint(equalTo: importButton.trailingAnchor, constant: 12),
             boxContainer.trailingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: -12),
-            boxContainer.topAnchor.constraint(equalTo: controlPanelContainer.bottomAnchor, constant: 12),
+            boxContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            boxContainer.topAnchor.constraint(equalTo: clipView.bottomAnchor, constant: 4),
             boxContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
-            
+        ])
+        
+        NSLayoutConstraint.activate([
             mediaInfomationBox.widthAnchor.constraint(equalTo: formatBox.widthAnchor),
         ])
     }

@@ -28,11 +28,7 @@ extension FFmpegKit {
         DispatchQueue.concurrentPerform(iterations: count) { id in
             let fileURL = directoryURL.appendingPathComponent(String(id)).appendingPathExtension("png")
             if let argumentsBuilder = FFmpegArgumentsBuilder(media: media, outputURL: fileURL) {
-                let arguments = argumentsBuilder.reset()
-                    .time(start: String(start + interval * Double(id)))
-                    .resolution(width: -1, height: 50)
-                    .frames(count: 1)
-                    .build()
+                let arguments = argumentsBuilder.initArguments().frame(at: start + interval * Double(id), width: -1, height: 50)
                 execute(withArguments: arguments)
             }
         }

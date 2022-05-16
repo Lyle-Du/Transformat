@@ -100,22 +100,22 @@ extension FFprobeKit {
         return TimeInterval(startTime + duration)
     }
      
-    static func audioTracks(media: VLCMedia) -> AudioTracks {
-        var audioTracks = AudioTracks()
+    static func audioTracks(media: VLCMedia) -> [AudioTrack] {
+        var audioTracks = [AudioTrack]()
         let streamInfomationLists = FFprobeKit.streamsInfomation(media: media)
         for streamInformation in streamInfomationLists where streamInformation.getType().equalsToIgnoreCase("audio") {
             let index = Int(truncating: streamInformation.getIndex())
             let tags = streamInformation.getTags()
-            let title = tags?["title"] as? String
-            let language = tags?["language"] as? String
-            let name = "\(index). " + [title, language].compactMap { $0 }.joined(separator: " - ")
             var bitrate: Double? = nil
             if let bitrateText = streamInformation.getBitrate() {
                 bitrate = Double(bitrateText)
             }
-            audioTracks[index] = AudioTrack(name: name, bitrate: bitrate)
+            audioTracks.append(AudioTrack(
+                index: index,
+                title: tags?["title"] as? String,
+                language: tags?["language"] as? String,
+                bitrate: bitrate))
         }
-        audioTracks[-1] = .disabled
         return audioTracks
     }
 }

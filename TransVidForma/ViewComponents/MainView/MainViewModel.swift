@@ -22,6 +22,7 @@ final class MainViewModel {
     let cancleButtonTitle = "Cancel"
     
     let controlPanelViewModel: ControlPanelViewModel
+    let clipViewModel: ClipViewModel
     let mediaInfomationBoxModel: MediaInfomationBoxModel
     let formatBoxModel: FormatBoxModel
     
@@ -40,8 +41,6 @@ final class MainViewModel {
     private let disposeBag = DisposeBag()
     private let importButtonTitleRelay = BehaviorRelay<String>(value: Constants.importTitle.formatCString(""))
     private let exportButtonTitleRelay = BehaviorRelay<String>(value: Constants.exportTitle.formatCString(""))
-    private let startTimeRelay = BehaviorRelay<TimeInterval>(value: .zero)
-    private let endTimeRelay = BehaviorRelay<TimeInterval>(value: .zero)
     private let progressPercentageRelay = BehaviorRelay<Double?>(value: nil)
     private let isImportExportDisabledRelay = BehaviorRelay<Bool>(value: false)
     private let isExportDisabledRelay = BehaviorRelay<Bool>(value: true)
@@ -71,6 +70,9 @@ final class MainViewModel {
         
         controlPanelViewModel = ControlPanelViewModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
         mediaInfomationBoxModel = MediaInfomationBoxModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
+        clipViewModel = ClipViewModel(
+            trimControlModel: controlPanelViewModel.trimControlModel,
+            mediaInfomationBoxModel: mediaInfomationBoxModel)
         formatBoxModel = FormatBoxModel(mediaPlayer: mediaPlayer)
         stateChangedDriver = mediaPlayerDelegator.stateChangedDriver
         progressPercentage = progressPercentageRelay.asDriver().map { $0?.clamped(to: .zero...1) }.distinctUntilChanged()
@@ -87,12 +89,12 @@ final class MainViewModel {
             
             mediaPlayerDelegator.stateChangedDriver.drive(controlPanelViewModel.stateChanged),
             mediaPlayerDelegator.timeChangedDriver.drive(controlPanelViewModel.timeChanged),
-            startTimeRelay.asDriver().drive(mediaInfomationBoxModel.startTimeLimitBinder),
-            endTimeRelay.asDriver().drive(mediaInfomationBoxModel.endTimeLimitBinder),
-            mediaInfomationBoxModel.startTimeRatio.drive(controlPanelViewModel.trimControlModel.startTimeRatio),
-            mediaInfomationBoxModel.endTimeRatio.drive(controlPanelViewModel.trimControlModel.endTimeRatio),
-            controlPanelViewModel.trimControlModel.startTimePositionRatio.drive(mediaInfomationBoxModel.startTimeRatioBinder),
-            controlPanelViewModel.trimControlModel.endTimePositionRatio.drive(mediaInfomationBoxModel.endTimeRatioBinder),
+            
+            mediaInfomationBoxModel.timeRatioRange.map(\.lowerBound).drive(controlPanelViewModel.trimControlModel.startTimeRatio),
+            mediaInfomationBoxModel.timeRatioRange.map(\.upperBound).drive(controlPanelViewModel.trimControlModel.endTimeRatio),
+
+            controlPanelViewModel.trimControlModel.timePositionRatioRange.drive(mediaInfomationBoxModel.timeRatioRangeBinder),
+            
             progressPercentageText.map { Constants.exportTitle.formatCString($0) }.drive(exportButtonTitleRelay),
             Driver.zip(isImportExportDisabled, isImportExportDisabled.skip(1))
                 .filter { previous, current in return !current && previous }
@@ -123,14 +125,38 @@ final class MainViewModel {
         guard
             let media = mediaPlayer.media,
             let outputURL = formatBoxModel.fileURL,
-            let argumentsBuilder = FFmpegArgumentsBuilder(media: media, outputURL: outputURL) else
+            let argumentsBuilder = FFmpegArgumentsBuilder(media: media, outputURL: outputURL, format: formatBoxModel.format) else
         {
             return
         }
         
-        let builder = argumentsBuilder.reset()
-            .time(start: mediaInfomationBoxModel.startTime, end: mediaInfomationBoxModel.endTime)
-            .resolution(mediaInfomationBoxModel.resolution)
+        let builder = argumentsBuilder.initArguments()
+        
+        var duration: TimeInterval = .zero
+        
+        let clips: [Clip]
+        if clipViewModel.clips.isEmpty {
+            guard
+                let start = mediaInfomationBoxModel.startTime?.toTimeInterval(),
+                let end = mediaInfomationBoxModel.endTime?.toTimeInterval(),
+                start < end else
+            {
+                return
+            }
+            clips = [Clip(start: start, end: end)].compactMap { $0 }
+        } else {
+            clips = clipViewModel.clips
+        }
+        
+        builder.clips(clips)
+        
+        clips.forEach { clip in
+            duration += (clip.end - clip.start) / mediaInfomationBoxModel.speed
+        }
+        
+        guard duration > .zero else { return }
+        builder.speed(mediaInfomationBoxModel.speed)
+        builder.resolution(mediaInfomationBoxModel.resolution)
             
         if let videoCodec = formatBoxModel.videoCodec {
             builder.videoCodec(codec: videoCodec)
@@ -140,28 +166,19 @@ final class MainViewModel {
         if let audioCodec = formatBoxModel.audioCodec {
             builder.audioCodec(codec: audioCodec)
                 .audioBitrate()
-                .audioTrack(index: mediaInfomationBoxModel.audioTrackIndex)
         }
-        
-        builder.speed(mediaInfomationBoxModel.speed)
         
         if let framePerSecond = formatBoxModel.framePerSecond {
             builder.framePerSecond(framePerSecond)
         }
         
         let arguments = builder.build()
-        
+        #if DEBUG
         print(arguments.joined(separator: " "))
-        
-        guard
-            let startTimeInterval = mediaInfomationBoxModel.startTime?.toTimeInterval(),
-            let endTimeInterval = mediaInfomationBoxModel.endTime?.toTimeInterval() else
-        {
-            return
-        }
-        let duration = endTimeInterval - startTimeInterval
+        #endif
         isImportExportDisabledRelay.accept(true)
         progressPercentageRelay.accept(nil)
+        
         ffmpegSession = FFmpegKit.execute(
             withArgumentsAsync: arguments,
             withCompleteCallback: { [weak self] session in
@@ -173,7 +190,11 @@ final class MainViewModel {
                 self?.isImportExportDisabledRelay.accept(false)
                 self?.progressPercentageRelay.accept(1)
             },
-            withLogCallback: { _ in },
+            withLogCallback: { session in
+                #if DEBUG
+                print("\(session?.getMessage() ?? "session message is nil")")
+                #endif
+            },
             withStatisticsCallback: { [weak self] session in
                 guard
                     let self = self,
@@ -194,9 +215,7 @@ final class MainViewModel {
     }
     
     private func setMedia(url: URL) {
-        guard mediaPlayer.media?.url != url else {
-            return
-        }
+        guard mediaPlayer.media?.url != url else { return }
         mediaPlayer.stop()
         resizePlayerView.onNext(())
         let media = VLCMedia(url: url)

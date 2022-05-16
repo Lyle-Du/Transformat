@@ -9,7 +9,7 @@ import Foundation
 
 extension TimeInterval {
     
-    func toString() -> String? {
+    func toTimeString() -> String? {
         
         guard let roundedToMillionseconds = Double(String(format: "%.6f", self)) else {
             return nil

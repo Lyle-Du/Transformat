@@ -28,8 +28,7 @@ final class MediaInfomationBoxModel {
     private let customResolutionWidthRelay = BehaviorRelay<String>(value: "")
     private let customResolutionHeightRelay = BehaviorRelay<String>(value: "")
     
-    let startTimeRatio: Driver<CGFloat?>
-    let endTimeRatio: Driver<CGFloat?>
+    let timeRatioRange: Driver<ClosedRange<CGFloat>>
     
     let startTimeTextDriver: Driver<String?>
     let startTimeTextPlaceholderDriver: Driver<String?>
@@ -45,8 +44,7 @@ final class MediaInfomationBoxModel {
     private let speedSliderRangeRelay = BehaviorRelay<ClosedRange<Double>>(value: 0.1...10)
     private let speedRelay: BehaviorRelay<Double>
     
-    fileprivate let startTimeLimitRelay = BehaviorRelay<TimeInterval>(value: .zero)
-    fileprivate private(set) var endTimeLimitRelay = BehaviorRelay<TimeInterval>(value: .zero)
+    private let timeLimitRangeRelay = BehaviorRelay<ClosedRange<TimeInterval>>(value: .zero...(.zero))
     
     fileprivate let startTimeText: Driver<String>
     fileprivate let startTimeTextPlaceholder: Driver<String?>
@@ -61,6 +59,7 @@ final class MediaInfomationBoxModel {
     fileprivate let endTimeTextRelay: BehaviorRelay<String?> = BehaviorRelay(value: nil)
     private let endTimeTextPlaceholderRelay: BehaviorRelay<String?> = BehaviorRelay(value: nil)
     
+    private let audioTracksRelay = BehaviorRelay<[AudioTrack]>(value: [])
     private let audioTrackNamesRelay = BehaviorRelay<[String]>(value: [])
     
     private let resolutionsRelay: BehaviorRelay<[MediaResolution]>
@@ -74,8 +73,8 @@ final class MediaInfomationBoxModel {
         resolutionNames = resolutionNamesRelay.asDriver()
         
         let audioTracks = Self.audioTracks(media: mediaPlayer.media)
-        audioTrackNamesRelay.accept(audioTracks.sorted(by: { $0.key < $1.key }).map { $0.value.name })
-        currentAudioTrackIndexRelay = BehaviorRelay(value: audioTrackNamesRelay.value.count > 1 ? 1 : 0)
+        audioTracksRelay.accept(audioTracks)
+        currentAudioTrackIndexRelay = BehaviorRelay(value: 0)
         currentAudioTrackIndex = currentAudioTrackIndexRelay.asDriver()
         resolutionsRelay = BehaviorRelay(value: Self.resolutions(media: mediaPlayer.media))
         
@@ -97,53 +96,46 @@ final class MediaInfomationBoxModel {
         customResolutionWidthText = customResolutionWidthRelay.asDriver()
         customResolutionHeightText = customResolutionHeightRelay.asDriver()
         
-        startTimeText = startTimeLimitRelay.asDriver().map { $0.toString() ?? "" }.distinctUntilChanged()
-        startTimeTextPlaceholder = startTimeLimitRelay.asDriver().map { $0.toString() ?? "" }.distinctUntilChanged()
-        endTimeText = endTimeLimitRelay.asDriver().map { $0.toString() ?? "" }.distinctUntilChanged()
-        endTimeTextPlaceholder = endTimeLimitRelay.asDriver().map { $0.toString() ?? "" }
+        startTimeText = timeLimitRangeRelay.asDriver().map { $0.lowerBound.toTimeString() ?? "" }.distinctUntilChanged()
+        startTimeTextPlaceholder = timeLimitRangeRelay.asDriver().map { $0.lowerBound.toTimeString() ?? "" }.distinctUntilChanged()
+        endTimeText = timeLimitRangeRelay.asDriver().map { $0.upperBound.toTimeString() ?? "" }.distinctUntilChanged()
+        endTimeTextPlaceholder = timeLimitRangeRelay.asDriver().map { $0.upperBound.toTimeString() ?? "" }
         
         startTimeTextDriver = startTimeTextRelay.asDriver()
         startTimeTextPlaceholderDriver = startTimeTextPlaceholderRelay.asDriver()
         endTimeTextDriver = endTimeTextRelay.asDriver()
         endTimeTextPlaceholderDriver = endTimeTextPlaceholderRelay.asDriver()
         
-        let startAndEndTimeinterval = Driver.combineLatest(
-            startTimeLimitRelay.asDriver(),
-            endTimeLimitRelay.asDriver())
-            .map { $1 - $0 }
-            .distinctUntilChanged()
-        
-        startTimeRatio = Driver.combineLatest(
+        timeRatioRange = Driver.combineLatest(
             startTimeTextRelay.asDriver(),
-            startAndEndTimeinterval)
-        .map { [startTimeLimitRelay] startTimeText, timeInterval -> CGFloat? in
+            endTimeTextRelay.asDriver(),
+            timeLimitRangeRelay.asDriver())
+        .map { startTimeText, endTimeText, limitRange in
+            let timeInterval = limitRange.interval
             guard
                 let startTimeInterval = startTimeText?.toTimeInterval(),
-                timeInterval != .zero else
+                let endTimeInterval = endTimeText?.toTimeInterval(),
+                startTimeInterval <= endTimeInterval,
+                timeInterval > .zero else
             {
-                return nil
+                return .zero...(1)
             }
-            return (startTimeInterval - startTimeLimitRelay.value) / timeInterval
+            let startRatio = (startTimeInterval - limitRange.lowerBound) / timeInterval
+            let endRatio = (endTimeInterval - limitRange.lowerBound) / timeInterval
+            return startRatio...endRatio
         }
-        
-        endTimeRatio = Driver.combineLatest(
-            endTimeTextRelay.asDriver(),
-            startAndEndTimeinterval)
-            .map { [startTimeLimitRelay] endTimeText, timeInterval -> CGFloat? in
-                guard
-                    let endTimeInterval = endTimeText?.toTimeInterval(),
-                    timeInterval != .zero else
-                {
-                    return nil
-                }
-                return (endTimeInterval - startTimeLimitRelay.value) / timeInterval
-            }
-            .distinctUntilChanged()
+        .distinctUntilChanged()
         
         let isPlaying = mediaPlayerDelegator.stateChangedDriver
             .map { $0.isPlaying }
             
-        let mappedCurrentAudioTrackIndex = currentAudioTrackIndex.map { Int32($0 <= 0 ? -1 : $0) }
+        let mappedCurrentAudioTrackIndex = currentAudioTrackIndex.compactMap { [audioTracksRelay] index -> Int32? in
+            let audioTracks = audioTracksRelay.value
+            guard index < audioTracks.count && index >= 0 else {
+                return -1
+            }
+            return Int32(audioTracks[index].index)
+        }
         
         let currentAudioTrackIndexUpdater = Driver.combineLatest(
             isPlaying,
@@ -152,6 +144,7 @@ final class MediaInfomationBoxModel {
             .filter { [mediaPlayer] in mediaPlayer.currentAudioTrackIndex != $0 }
         
         disposeBag.insert([
+            audioTracksRelay.map { $0.sorted(by: { $0.index < $1.index }).map(\.name) }.bind(to: audioTrackNamesRelay),
             currentAudioTrackIndexUpdater.drive(mediaPlayer.rx.currentAudioTrackIndex),
             
             startTimeText.drive(startTimeTextRelay),
@@ -167,27 +160,20 @@ final class MediaInfomationBoxModel {
                 self?.mediaPlayer.rate = Float(rate)
             }),
         ])
-        
-        
     }
     
     func setMedia(_ media: VLCMedia) {
         let startTime = FFprobeKit.startTime(media: media) ?? .zero
         let endTime = FFprobeKit.endTime(media: media) ?? .zero
+        let timeLimitRange = startTime...endTime
+        timeLimitRangeRelay.accept(timeLimitRange)
         
-        endTimeLimitRelay.accept(endTime)
-        if let endTimeText = endTime.toString() {
-            endTimeTextRelay.accept(endTimeText)
-        }
-        
-        startTimeLimitRelay.accept(startTime)
-        if let startTimeText = startTime.toString() {
-            startTimeTextRelay.accept(startTimeText)
-        }
+        timeLimitRangeRelay.accept(startTime...endTime)
+        timeRatioRangeBinder.onNext(.zero...1)
         
         let audioTracks = Self.audioTracks(media: mediaPlayer.media)
-        audioTrackNamesRelay.accept(audioTracks.sorted(by: { $0.key < $1.key }).map { $0.value.name })
-        currentAudioTrackIndexRelay.accept(audioTrackNamesRelay.value.count > 1 ? 1 : 0)
+        audioTracksRelay.accept(audioTracks)
+        currentAudioTrackIndexRelay.accept(0)
         resolutionsRelay.accept(Self.resolutions(media: media))
         currentResolutionIndexRelay.accept(1)
     }
@@ -207,9 +193,9 @@ private extension MediaInfomationBoxModel {
         return [.custom] + resolutions
     }
     
-    static func audioTracks(media: VLCMedia?) -> AudioTracks {
+    static func audioTracks(media: VLCMedia?) -> [AudioTrack] {
         guard let media = media else {
-            return [:]
+            return []
         }
         
         return FFprobeKit.audioTracks(media: media)
@@ -220,9 +206,10 @@ extension MediaInfomationBoxModel {
     
     var startTimeTextBinder: Binder<String?> {
         Binder(self) { target, text in
-            let text = text?.toTimeInterval()?.toString()
+            let text = text?.toTimeInterval()?.toTimeString()
+            let startLimit = target.timeLimitRangeRelay.value.lowerBound
             guard let startTimeText = text else {
-                if let startTimeLimitText = target.startTimeLimitRelay.value.toString() {
+                if let startTimeLimitText = startLimit.toTimeString() {
                     target.startTimeTextRelay.accept(startTimeLimitText)
                 }
                 return
@@ -230,24 +217,25 @@ extension MediaInfomationBoxModel {
             
             guard
                 let endTimeIntervalLimit = target.endTimeTextRelay.value?.toTimeInterval(),
-                let startTimeInterval = startTimeText.toTimeInterval()?.clamped(to: target.startTimeLimitRelay.value...endTimeIntervalLimit),
-                let startTimeText = startTimeInterval.toString() else
+                let startTimeInterval = startTimeText.toTimeInterval()?.clamped(to: startLimit...endTimeIntervalLimit),
+                let startTimeText = startTimeInterval.toTimeString() else
             {
-                if let startTimeLimitText = target.startTimeLimitRelay.value.toString() {
+                if let startTimeLimitText = startLimit.toTimeString() {
                     target.startTimeTextRelay.accept(startTimeLimitText)
                 }
                 return
             }
-            
+
             target.startTimeTextRelay.accept(startTimeText)
         }
     }
     
     var endTimeTextBinder: Binder<String?> {
         Binder(self) { target, text in
-            let text = text?.toTimeInterval()?.toString()
+            let text = text?.toTimeInterval()?.toTimeString()
+            let endLimit = target.timeLimitRangeRelay.value.upperBound
             guard let endTimeText = text else {
-                if let endTimeLimitText = target.endTimeLimitRelay.value.toString() {
+                if let endTimeLimitText = endLimit.toTimeString() {
                     target.endTimeTextRelay.accept(endTimeLimitText)
                 }
                 return
@@ -255,10 +243,10 @@ extension MediaInfomationBoxModel {
             
             guard
                 let startTimeIntervalLimit = target.startTimeTextRelay.value?.toTimeInterval(),
-                let endTimeInterval = endTimeText.toTimeInterval()?.clamped(to: startTimeIntervalLimit...target.endTimeLimitRelay.value),
-                let endTimeText = endTimeInterval.toString() else
+                let endTimeInterval = endTimeText.toTimeInterval()?.clamped(to: startTimeIntervalLimit...endLimit),
+                let endTimeText = endTimeInterval.toTimeString() else
             {
-                if let endTimeLimitText = target.endTimeLimitRelay.value.toString() {
+                if let endTimeLimitText = endLimit.toTimeString() {
                     target.endTimeTextRelay.accept(endTimeLimitText)
                 }
                 return
@@ -268,35 +256,18 @@ extension MediaInfomationBoxModel {
         }
     }
     
-    var startTimeLimitBinder: Binder<TimeInterval> {
-        Binder(self) { target, timeInterval in
-            target.startTimeLimitRelay.accept(timeInterval)
-        }
-    }
-    
-    var endTimeLimitBinder: Binder<TimeInterval> {
-        Binder(self) { target, timeInterval in
-            target.endTimeLimitRelay.accept(timeInterval)
-        }
-    }
-    
-    var startTimeRatioBinder: Binder<CGFloat> {
-        Binder(self) { target, ratio in
-            let startTimeInterval = (target.endTimeLimitRelay.value - target.startTimeLimitRelay.value) * ratio + target.startTimeLimitRelay.value
-            guard let startTimeText = startTimeInterval.toString() else {
-                return
+    var timeRatioRangeBinder: Binder<ClosedRange<CGFloat>> {
+        Binder(self) { target, ratioRange in
+            let limitRange = target.timeLimitRangeRelay.value
+            let startTimeInterval = limitRange.interval * ratioRange.lowerBound + limitRange.lowerBound
+            if let startTimeText = startTimeInterval.toTimeString() {
+                target.startTimeTextRelay.accept(startTimeText)
             }
-            target.startTimeTextRelay.accept(startTimeText)
-        }
-    }
-    
-    var endTimeRatioBinder: Binder<CGFloat> {
-        Binder(self) { target, ratio in
-            let endTimeInterval = (target.endTimeLimitRelay.value - target.startTimeLimitRelay.value) * ratio + target.startTimeLimitRelay.value
-            guard let endTimeText = endTimeInterval.toString() else {
-                return
+            
+            let endTimeInterval = limitRange.interval * ratioRange.upperBound + limitRange.lowerBound
+            if let endTimeText = endTimeInterval.toTimeString() {
+                target.endTimeTextRelay.accept(endTimeText)
             }
-            target.endTimeTextRelay.accept(endTimeText)
         }
     }
     
@@ -379,7 +350,12 @@ private extension MediaInfomationBoxModel {
 extension MediaInfomationBoxModel {
     
     var audioTrackIndex: Int {
-        currentAudioTrackIndexRelay.value
+        let audioTracks = audioTracksRelay.value
+        let index = currentAudioTrackIndexRelay.value
+        if index < 0 || index >= audioTracks.count {
+            return -1
+        }
+        return audioTracks[index].index
     }
     
     var resolution: MediaResolution? {

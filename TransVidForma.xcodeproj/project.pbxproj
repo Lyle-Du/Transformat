@@ -13,6 +13,11 @@
 		3E03868B2827C64100A429F8 /* Rx+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03868A2827C64100A429F8 /* Rx+Extensions.swift */; };
 		3E03868D2827C6F000A429F8 /* NSTextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03868C2827C6F000A429F8 /* NSTextField+Rx.swift */; };
 		3E03869128280E7000A429F8 /* UnitStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03869028280E7000A429F8 /* UnitStorage.swift */; };
+		3E18655B283240620003016E /* ClosedRange+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E18655A283240620003016E /* ClosedRange+Extensions.swift */; };
+		3E18655D283252640003016E /* ClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E18655C283252640003016E /* ClipViewModel.swift */; };
+		3E1865612832915B0003016E /* DraggableStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1865602832915B0003016E /* DraggableStackView.swift */; };
+		3E1865642832D85F0003016E /* SubClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1865632832D85F0003016E /* SubClipView.swift */; };
+		3E226BBC2831395200067778 /* ClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E226BBB2831395200067778 /* ClipView.swift */; };
 		3E5E5595280C760F000C5435 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E5594280C760F000C5435 /* AppDelegate.swift */; };
 		3E5E5597280C760F000C5435 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E5596280C760F000C5435 /* MainViewController.swift */; };
 		3E5E559C280C7610000C5435 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E5E559A280C7610000C5435 /* Main.storyboard */; };
@@ -28,6 +33,7 @@
 		3EA1E83D281855E400CCCA5F /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E83C281855E400CCCA5F /* ImageButton.swift */; };
 		3EA1E846281AD19100CCCA5F /* MediaInfomationBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E845281AD19100CCCA5F /* MediaInfomationBox.swift */; };
 		3EA1E848281AD56500CCCA5F /* MediaPlayerDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */; };
+		3EA46AA1283611FB00B0819E /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA46AA0283611FB00B0819E /* TextFieldCell.swift */; };
 		3EAEBDBE282AF9B1004BA81C /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */; };
 		3EAEBDC2282B59BD004BA81C /* FFmpegArgumentsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDC1282B59BD004BA81C /* FFmpegArgumentsBuilder.swift */; };
 		3EAEBDC6282BF7FF004BA81C /* FFmpeg+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDC5282BF7FF004BA81C /* FFmpeg+Extensions.swift */; };
@@ -68,6 +74,11 @@
 		3E03868A2827C64100A429F8 /* Rx+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Extensions.swift"; sourceTree = "<group>"; };
 		3E03868C2827C6F000A429F8 /* NSTextField+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Rx.swift"; sourceTree = "<group>"; };
 		3E03869028280E7000A429F8 /* UnitStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitStorage.swift; sourceTree = "<group>"; };
+		3E18655A283240620003016E /* ClosedRange+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClosedRange+Extensions.swift"; sourceTree = "<group>"; };
+		3E18655C283252640003016E /* ClipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipViewModel.swift; sourceTree = "<group>"; };
+		3E1865602832915B0003016E /* DraggableStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableStackView.swift; sourceTree = "<group>"; };
+		3E1865632832D85F0003016E /* SubClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubClipView.swift; sourceTree = "<group>"; };
+		3E226BBB2831395200067778 /* ClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipView.swift; sourceTree = "<group>"; };
 		3E5E5591280C760F000C5435 /* TransVidForma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransVidForma.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E5E5594280C760F000C5435 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E5E5596280C760F000C5435 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +97,7 @@
 		3EA1E83C281855E400CCCA5F /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		3EA1E845281AD19100CCCA5F /* MediaInfomationBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInfomationBox.swift; sourceTree = "<group>"; };
 		3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerDelegator.swift; sourceTree = "<group>"; };
+		3EA46AA0283611FB00B0819E /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButton.swift; sourceTree = "<group>"; };
 		3EAEBDC1282B59BD004BA81C /* FFmpegArgumentsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFmpegArgumentsBuilder.swift; sourceTree = "<group>"; };
 		3EAEBDC5282BF7FF004BA81C /* FFmpeg+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FFmpeg+Extensions.swift"; sourceTree = "<group>"; };
@@ -137,6 +149,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E1865622832D8510003016E /* SubClipView */ = {
+			isa = PBXGroup;
+			children = (
+				3E1865632832D85F0003016E /* SubClipView.swift */,
+			);
+			path = SubClipView;
+			sourceTree = "<group>";
+		};
+		3E226BBA2831394100067778 /* ClipView */ = {
+			isa = PBXGroup;
+			children = (
+				3E1865622832D8510003016E /* SubClipView */,
+				3E226BBB2831395200067778 /* ClipView.swift */,
+				3E18655C283252640003016E /* ClipViewModel.swift */,
+			);
+			path = ClipView;
+			sourceTree = "<group>";
+		};
 		3E5E5588280C760F000C5435 = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +222,7 @@
 				3E73FD3028204D1300143803 /* TimeInvertal+Extensions.swift */,
 				3E73FD362820CF4100143803 /* Comparable+Extensions.swift */,
 				3E03868A2827C64100A429F8 /* Rx+Extensions.swift */,
+				3E18655A283240620003016E /* ClosedRange+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -199,6 +230,7 @@
 		3EA1E83B2818558F00CCCA5F /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				3E226BBA2831394100067778 /* ClipView */,
 				3EDC73DA28267E7300D5673E /* FormatBox */,
 				3EDC73D928264C7800D5673E /* MainView */,
 				3EEF90982824FBFA00039BB1 /* ViewHelpers */,
@@ -273,6 +305,8 @@
 				3E03868C2827C6F000A429F8 /* NSTextField+Rx.swift */,
 				3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */,
 				3EF84001282FCA6A00689AD6 /* TextFieldSlider.swift */,
+				3E1865602832915B0003016E /* DraggableStackView.swift */,
+				3EA46AA0283611FB00B0819E /* TextFieldCell.swift */,
 			);
 			path = ViewHelpers;
 			sourceTree = "<group>";
@@ -547,7 +581,9 @@
 				3EDC73DE28267FAA00D5673E /* ContainerFormat.swift in Sources */,
 				3E02AF9A281704D000BE6FE4 /* ControlPanel.swift in Sources */,
 				3E03869128280E7000A429F8 /* UnitStorage.swift in Sources */,
+				3E1865642832D85F0003016E /* SubClipView.swift in Sources */,
 				3EDDC453282552BD00086041 /* AudioTracks.swift in Sources */,
+				3E226BBC2831395200067778 /* ClipView.swift in Sources */,
 				3E73FD2F28204CE900143803 /* String+Extensions.swift in Sources */,
 				3E5E5597280C760F000C5435 /* MainViewController.swift in Sources */,
 				3E73FD2C28200CCC00143803 /* NSPopUpButton+Rx.swift in Sources */,
@@ -555,16 +591,20 @@
 				3EDC73DC28267E9600D5673E /* FormatBoxModel.swift in Sources */,
 				3EAEBDBE282AF9B1004BA81C /* ProgressButton.swift in Sources */,
 				3EFBBC392812A72E00A0A05C /* TrimControl.swift in Sources */,
+				3E1865612832915B0003016E /* DraggableStackView.swift in Sources */,
 				3E5E5595280C760F000C5435 /* AppDelegate.swift in Sources */,
 				3E73FD26281DA1AD00143803 /* FFprobe+Extensions.swift in Sources */,
 				3EA1E846281AD19100CCCA5F /* MediaInfomationBox.swift in Sources */,
 				3EDC73D82826451200D5673E /* MainViewModel.swift in Sources */,
+				3EA46AA1283611FB00B0819E /* TextFieldCell.swift in Sources */,
 				3E73FD3128204D1300143803 /* TimeInvertal+Extensions.swift in Sources */,
 				3EAEBDC2282B59BD004BA81C /* FFmpegArgumentsBuilder.swift in Sources */,
 				3EED6EEE282115DE00DDFAEA /* TrimControlModel.swift in Sources */,
 				3E03868D2827C6F000A429F8 /* NSTextField+Rx.swift in Sources */,
+				3E18655B283240620003016E /* ClosedRange+Extensions.swift in Sources */,
 				3EAEBDC6282BF7FF004BA81C /* FFmpeg+Extensions.swift in Sources */,
 				3E73FD372820CF4100143803 /* Comparable+Extensions.swift in Sources */,
+				3E18655D283252640003016E /* ClipViewModel.swift in Sources */,
 				3EF84002282FCA6A00689AD6 /* TextFieldSlider.swift in Sources */,
 				3E73FD332820C9BE00143803 /* ControlPanelViewModel.swift in Sources */,
 				3EEF90952823FEA200039BB1 /* MediaInfomationBoxModel.swift in Sources */,

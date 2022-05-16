@@ -38,8 +38,6 @@ final class TrimControl: NSControl {
         let view = NSView()
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.clear.cgColor
-        
-        
         view.layer?.cornerRadius = CGFloat(TrimControlModel.Constants.buttonWidth * 0.5)
         return view
     }()
@@ -81,11 +79,22 @@ final class TrimControl: NSControl {
         commonInit()
     }
     
+    private func flagsChanged(with event: NSEvent) -> NSEvent? {
+        let point = convert(event.locationInWindow, from: nil)
+        if bounds.contains(point) {
+            if event.modifierFlags.contains(.option) && event.type == .leftMouseDragged {
+                viewModel.canAddClip = true
+            }
+            updateCursor(with: event)
+        }
+        return event
+    }
+    
     private func commonInit() {
+        NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged, .leftMouseDragged], handler: flagsChanged)
         wantsLayer = true
         layer?.backgroundColor = NSColor.clear.cgColor
         layer?.cornerRadius = CGFloat(TrimControlModel.Constants.buttonWidth * 0.5)
-        
         addSubview(trackerView)
         trackerView.addSubview(thumbnailsContainer)
         trackerView.addSubview(trimView)
@@ -136,6 +145,8 @@ final class TrimControl: NSControl {
     }()
     
     private func bind() {
+        trackerView.toolTip = viewModel.dragHint
+        
         disposeBag.insert([
             trackerViewBounds.distinctUntilChanged().bind(to: viewModel.boundsBinder),
             trackerViewFrame.distinctUntilChanged().bind(to: viewModel.frameBinder),
@@ -196,26 +207,80 @@ final class TrimControl: NSControl {
 
 extension TrimControl {
     
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+
+        for trackingArea in trackingAreas {
+            removeTrackingArea(trackingArea)
+        }
+        
+        let options: NSTrackingArea.Options = [.mouseEnteredAndExited, .mouseMoved, .activeAlways]
+        let trackingArea = NSTrackingArea(rect: trimView.frame, options: options, owner: self, userInfo: nil)
+        addTrackingArea(trackingArea)
+    }
+    
+    private func updateCursor(with event: NSEvent) {
+        let converted = convert(event.locationInWindow, from: nil)
+        guard trimView.frame.contains(converted) else {
+            return
+        }
+
+        if event.modifierFlags.contains(.command) {
+            guard NSCursor.current != .openHand else { return }
+            NSCursor.openHand.push()
+        } else if event.modifierFlags.contains(.option) {
+            guard NSCursor.current != .pointingHand else { return }
+            NSCursor.pointingHand.push()
+        } else {
+            guard NSCursor.current != .arrow else { return }
+            NSCursor.pop()
+        }
+    }
+    
+    override func mouseMoved(with event: NSEvent) {
+        updateCursor(with: event)
+    }
+    
+    override func mouseEntered(with event: NSEvent) {
+        updateCursor(with: event)
+    }
+    
     override func mouseDown(with event: NSEvent) {
+        self.window?.disableCursorRects()
+        updateCursor(with: event)
         mouseEvent(event)
     }
     
     override func mouseDragged(with event: NSEvent) {
+        updateCursor(with: event)
         mouseEvent(event)
     }
     
     override func mouseUp(with event: NSEvent) {
+        updateCursor(with: event)
         mouseEvent(event)
     }
     
     private func mouseEvent(_ event: NSEvent) {
-        let converted = convert(event.locationInWindow, from: nil).x
-        let offset = TrimControlModel.Constants.buttonWidth / 2
-        if startTimeButton.isHighlighted {
-            viewModel.startTimeButtonMoved(x: converted - offset)
-        } else if endTimeButton.isHighlighted {
-            viewModel.endTimeButtonMoved(x: converted + offset)
+        if event.modifierFlags.contains(.command) {
+            viewModel.shift(deltaX: event.deltaX)
+        } else if event.modifierFlags.contains(.option) {
+            
         } else {
+            let point = convert(event.locationInWindow, from: nil)
+            let converted = point.x
+            let offset = TrimControlModel.Constants.buttonWidth / 2
+            if startTimeButton.isHighlighted {
+                viewModel.startTimeButtonMoved(x: converted - offset)
+                return
+            }
+            
+            if endTimeButton.isHighlighted {
+                viewModel.endTimeButtonMoved(x: converted + offset)
+                return
+            }
+            
+            guard trimView.frame.contains(point) else { return }
             let x = trimView.convert(event.locationInWindow, from: nil).x
             viewModel.indicatorMoved(x: x, type: event.type)
         }
@@ -234,23 +299,5 @@ private extension TrimControl {
         view.layer?.backgroundColor = TrimControlModel.Constants.borderColor.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-    }
-}
-
-
-extension NSStackView {
-    
-    func removeAllArrangedSubviews() {
-        
-        let removedSubviews = arrangedSubviews.reduce([]) { (allSubviews, subview) -> [NSView] in
-            self.removeArrangedSubview(subview)
-            return allSubviews + [subview]
-        }
-        
-        // Deactivate all constraints
-        NSLayoutConstraint.deactivate(removedSubviews.flatMap({ $0.constraints }))
-        
-        // Remove the views from self
-        removedSubviews.forEach({ $0.removeFromSuperview() })
     }
 }

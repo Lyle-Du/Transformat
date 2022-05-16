@@ -12,25 +12,25 @@ import VLCKit
 
 final class TrimControlModel {
     
+    var canAddClip = false
+    
+    let dragHint = "Hold \"command\" + Drag to shift the trimmed clip."
+    
     let frame: Driver<NSRect>
     
     let relativeCurrentPosition: Driver<CGFloat>
-    
-    let startTimePositionRatio: Driver<CGFloat>
-    let endTimePositionRatio: Driver<CGFloat>
+
+    let timePositionRatioRange: Driver<ClosedRange<CGFloat>>
     
     let images: Driver<[Int: NSImage]>
     
     private let mediaPlayer: VLCMediaPlayer
     
     private let mediaPlayerRelativeCurrentPositionRelay = BehaviorRelay<CGFloat>(value: Constants.buttonWidth)
-    
     private let relativeCurrentPositionRatioRelay = BehaviorRelay<CGFloat>(value: .zero)
     
-    private let startTimePositionRatioRelay = BehaviorRelay<CGFloat>(value: .zero)
-    private let startTimePositionRatioBinderRelay = BehaviorRelay<CGFloat>(value: .zero)
-    private let endTimePositionRatioRelay = BehaviorRelay<CGFloat>(value: 1)
-    private let endTimePositionRatioBinderRelay = BehaviorRelay<CGFloat>(value: 1)
+    private let timePositionRatioRangeRelay = BehaviorRelay<ClosedRange<CGFloat>>(value: .zero...1.0)
+    private let timePositionRatioRangeBinderRelay = BehaviorRelay<ClosedRange<CGFloat>>(value: .zero...1.0)
     
     private let boundsRelay = BehaviorRelay<NSRect>(value: .zero)
     private let frameRelay = BehaviorRelay<NSRect>(value: .zero)
@@ -43,21 +43,19 @@ final class TrimControlModel {
         self.mediaPlayer = mediaPlayer
         
         frame = Driver.combineLatest(
-            startTimePositionRatioBinderRelay.asDriver(),
-            endTimePositionRatioBinderRelay.asDriver(),
+            timePositionRatioRangeBinderRelay.asDriver(),
             boundsRelay.asDriver().distinctUntilChanged())
-        .map { startTimeRatio, endTimeRatio, bounds -> NSRect in
+        .map { range, bounds -> NSRect in
             let rect = NSRect(
-                x: bounds.minX + startTimeRatio * (bounds.width - 2 * Constants.buttonWidth),
+                x: bounds.minX + range.lowerBound * (bounds.width - 2 * Constants.buttonWidth),
                 y: bounds.minY,
-                width: (endTimeRatio - startTimeRatio) * (bounds.width - 2 * Constants.buttonWidth) + 2 * Constants.buttonWidth,
+                width: range.interval * (bounds.width - 2 * Constants.buttonWidth) + 2 * Constants.buttonWidth,
                 height: bounds.height)
             return rect
         }
         .distinctUntilChanged()
         
-        startTimePositionRatio = startTimePositionRatioRelay.asDriver()
-        endTimePositionRatio = endTimePositionRatioRelay.asDriver()
+        timePositionRatioRange = timePositionRatioRangeRelay.asDriver()
         
         let relativeCurrentRatioToPosition = Driver.combineLatest(
             relativeCurrentPositionRatioRelay.asDriver(),
@@ -73,24 +71,22 @@ final class TrimControlModel {
         
         let absoluteCurrentPositionRatio = Driver.combineLatest(
             mediaPlayerDelegator.stateChangedDriver.map { $0.isPlaying }.filter { $0 == true }.asObservable().take(1).asDriver(onErrorJustReturn: false),
-            startTimePositionRatioBinderRelay.asDriver().distinctUntilChanged(),
-            endTimePositionRatioBinderRelay.asDriver().distinctUntilChanged(),
+            timePositionRatioRangeBinderRelay.asDriver().distinctUntilChanged(),
             relativeCurrentPositionRatioRelay.asDriver())
-            .map { _, startTimePositionRatio, endTimePositionRatio, relativeCurrentPositionRatio -> CGFloat in
-                let absoluteCurrentPositionRatio = startTimePositionRatio + (endTimePositionRatio - startTimePositionRatio) * relativeCurrentPositionRatio
+            .map { _, range, relativeCurrentPositionRatio -> CGFloat in
+                let absoluteCurrentPositionRatio = range.lowerBound + range.interval * relativeCurrentPositionRatio
                 return absoluteCurrentPositionRatio
             }
             .map { Float($0) }
         
         Driver.combineLatest(
             boundsRelay.asDriver(),
-            startTimePositionRatioBinderRelay.asDriver().distinctUntilChanged(),
-            endTimePositionRatioBinderRelay.asDriver().distinctUntilChanged())
-        .map { bounds, startTimeRatio, endTimeRatio -> NSRect in
+            timePositionRatioRangeBinderRelay.asDriver().distinctUntilChanged())
+        .map { bounds, range -> NSRect in
             let rect = NSRect(
-                x: bounds.minX + startTimeRatio * (bounds.width - 2 * Constants.buttonWidth),
+                x: bounds.minX + range.lowerBound * (bounds.width - 2 * Constants.buttonWidth),
                 y: bounds.minY,
-                width: (endTimeRatio - startTimeRatio) * (bounds.width - 2 * Constants.buttonWidth) + 2 * Constants.buttonWidth,
+                width: range.interval * (bounds.width - 2 * Constants.buttonWidth) + 2 * Constants.buttonWidth,
                 height: bounds.height)
             return rect
         }
@@ -101,8 +97,7 @@ final class TrimControlModel {
         
         disposeBag.insert([
             boundsRelay.bind(to: frameRelay),
-            startTimePositionRatioRelay.bind(to: startTimePositionRatioBinderRelay),
-            endTimePositionRatioRelay.bind(to: endTimePositionRatioBinderRelay),
+            timePositionRatioRangeRelay.bind(to: timePositionRatioRangeBinderRelay),
             absoluteCurrentPositionRatio.drive(mediaPlayer.rx.position),
         ])
     }
@@ -112,6 +107,7 @@ final class TrimControlModel {
             let thumbnails = FFmpegKit.thumbnails(media: media, count: 15)
             self?.thumbnailsRelay.accept(thumbnails)
         }
+        timePositionRatioRangeRelay.accept(.zero...1)
     }
     
     private var wasPlaying = false
@@ -144,8 +140,9 @@ final class TrimControlModel {
         let rect = frameRelay.value
         let range = boundsRelay.value.minX...(rect.maxX - Constants.buttonWidth * 2)
         let clampedX = x.clamped(to: range)
-        let ratio = (clampedX / (boundsRelay.value.width - Constants.buttonWidth * 2)).clamped(to: .zero...1.0)
-        startTimePositionRatioRelay.accept(ratio)
+        let upperBound = timePositionRatioRangeRelay.value.upperBound
+        let ratio = (clampedX / (boundsRelay.value.width - Constants.buttonWidth * 2)).clamped(to: .zero...upperBound)
+        timePositionRatioRangeRelay.accept(ratio...upperBound)
         relativeCurrentPositionRatioRelay.accept(.zero)
     }
     
@@ -158,14 +155,15 @@ final class TrimControlModel {
         let rect = frameRelay.value
         let range = (rect.minX + Constants.buttonWidth * 2)...boundsRelay.value.maxX
         let clampedX = x.clamped(to: range)
-        let ratio = ((clampedX - Constants.buttonWidth * 2) / (boundsRelay.value.width - Constants.buttonWidth * 2)).clamped(to: .zero...1.0)
-        endTimePositionRatioRelay.accept(ratio)
+        let lowerBound = timePositionRatioRangeRelay.value.lowerBound
+        let ratio = ((clampedX - Constants.buttonWidth * 2) / (boundsRelay.value.width - Constants.buttonWidth * 2)).clamped(to: lowerBound...1.0)
+        timePositionRatioRangeRelay.accept(lowerBound...ratio)
         relativeCurrentPositionRatioRelay.accept(1.0)
     }
     
     func updateCurrentPositionRatio(_ ratio: CGFloat) {
-        let startRatio = startTimePositionRatioBinderRelay.value
-        let endRatio = endTimePositionRatioBinderRelay.value
+        let startRatio = timePositionRatioRangeBinderRelay.value.lowerBound
+        let endRatio = timePositionRatioRangeBinderRelay.value.upperBound
         guard ratio > endRatio else {
             let width = endRatio - startRatio
             let mediaPlayerRelativeCurrentPositionRatio: CGFloat
@@ -179,6 +177,30 @@ final class TrimControlModel {
             return
         }
         relativeCurrentPositionRatioRelay.accept(.zero)
+    }
+    
+    func shift(deltaX: CGFloat) {
+        guard mediaPlayer.media != nil else { return }
+        if mediaPlayer.canPause {
+            mediaPlayer.pause()
+        }
+        let rect = boundsRelay.value
+        let range = (rect.minX + Constants.buttonWidth)...(rect.maxX - Constants.buttonWidth)
+        let delta = range.interval != .zero ? deltaX / range.interval : .zero
+        var lowerBound = timePositionRatioRangeRelay.value.lowerBound + delta
+        var upperBound = timePositionRatioRangeRelay.value.upperBound + delta
+        let interval = upperBound - lowerBound
+        
+        if lowerBound < .zero {
+            lowerBound = .zero
+            upperBound = lowerBound + interval
+        }
+        
+        if upperBound > 1.0 {
+            upperBound = 1.0
+            lowerBound = upperBound - interval
+        }
+        timePositionRatioRangeRelay.accept(lowerBound...upperBound)
     }
 }
 
@@ -228,22 +250,24 @@ extension TrimControlModel {
     
     var startTimeRatio: Binder<CGFloat?> {
         Binder(self) { target, ratio in
-            if let ratio = ratio {
-                target.startTimePositionRatioBinderRelay.accept(ratio.clamped(to: .zero...1.0))
+            let upperBound = target.timePositionRatioRangeBinderRelay.value.upperBound
+            if let ratio = ratio?.clamped(to: .zero...upperBound) {
+                target.timePositionRatioRangeBinderRelay.accept(ratio...upperBound)
                 target.relativeCurrentPositionRatioRelay.accept(.zero)
             } else {
-                target.startTimePositionRatioBinderRelay.accept(.zero)
+                target.timePositionRatioRangeBinderRelay.accept(.zero...upperBound)
             }
         }
     }
     
     var endTimeRatio: Binder<CGFloat?> {
         Binder(self) { target, ratio in
-            if let ratio = ratio {
-                target.endTimePositionRatioBinderRelay.accept(ratio.clamped(to: .zero...1.0))
+            let lowerBound = target.timePositionRatioRangeBinderRelay.value.lowerBound
+            if let ratio = ratio?.clamped(to: lowerBound...1.0) {
+                target.timePositionRatioRangeBinderRelay.accept(lowerBound...ratio)
                 target.relativeCurrentPositionRatioRelay.accept(1.0)
             } else {
-                target.endTimePositionRatioBinderRelay.accept(1.0)
+                target.timePositionRatioRangeBinderRelay.accept(lowerBound...1.0)
             }
         }
     }
