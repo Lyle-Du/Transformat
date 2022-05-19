@@ -15,7 +15,7 @@ final class MainViewModel {
     let cancelAlert = CancelAlert()
     
     var resize: ControlEvent<()> {
-        ControlEvent(events: resizePlayerView)
+        ControlEvent(events: Observable.merge(resizePlayerView, controlPanelViewModel.mediaReset))
     }
     
     let windowTitle = "TransVidForma"
@@ -90,8 +90,13 @@ final class MainViewModel {
             mediaPlayerDelegator.stateChangedDriver.drive(controlPanelViewModel.stateChanged),
             mediaPlayerDelegator.timeChangedDriver.drive(controlPanelViewModel.timeChanged),
             
-            mediaInfomationBoxModel.timeRatioRange.map(\.lowerBound).drive(controlPanelViewModel.trimControlModel.startTimeRatio),
+            // Note:
+            // When media is set, mediaInfomationBoxModel.timeRatioRange will fire.
+            // We expect playback time should be at beginning of the trim clip in this case.
+            // Due to trimControlModel.startTimeRatio and trimControlModel.endTimeRatio will set playback time indivially,
+            // startTimeRatio should be set later than endTimeRatio to achieve this behavior.
             mediaInfomationBoxModel.timeRatioRange.map(\.upperBound).drive(controlPanelViewModel.trimControlModel.endTimeRatio),
+            mediaInfomationBoxModel.timeRatioRange.map(\.lowerBound).drive(controlPanelViewModel.trimControlModel.startTimeRatio),
 
             controlPanelViewModel.trimControlModel.timePositionRatioRange.drive(mediaInfomationBoxModel.timeRatioRangeBinder),
             
@@ -216,7 +221,6 @@ final class MainViewModel {
     
     private func setMedia(url: URL) {
         guard mediaPlayer.media?.url != url else { return }
-        mediaPlayer.stop()
         resizePlayerView.onNext(())
         let media = VLCMedia(url: url)
         controlPanelViewModel.trimControlModel.loadThumbnails(media)
