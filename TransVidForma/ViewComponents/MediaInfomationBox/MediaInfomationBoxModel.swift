@@ -14,10 +14,10 @@ final class MediaInfomationBoxModel {
     
     let mediaPlayer: VLCMediaPlayer
     
-    let resolutionLabel = "Resolution:"
-    let customResolutionLabel = "Custom Resolution:"
-    let audioTrackLabel = "Audio Track:"
-    let timeLabel = "Duration:"
+    let resolutionLabel = NSLocalizedString("Resolution:", comment: "")
+    let customResolutionLabel = NSLocalizedString("Custom Resolution:", comment: "")
+    let audioTrackLabel = NSLocalizedString("Audio Track:", comment: "")
+    let timeLabel = NSLocalizedString("Duration:", comment: "")
     
     let audioTrackNames: Driver<[String]>
     let resolutionNames: Driver<[String]>
@@ -84,7 +84,8 @@ final class MediaInfomationBoxModel {
         speedSliderRange = speedSliderRangeRelay.asDriver()
         speedRelay = BehaviorRelay(value: 1)
         speedDriver = speedRelay.asDriver()
-        speedTextDriver = speedDriver.map { "Speed \u{2715}\(String(format: Constants.twoDigitsFractionFormat, $0)):" }
+        speedTextDriver = speedDriver.map { String.localizedStringWithFormat(NSLocalizedString("Speed ✕%.2f", comment: ""), $0)
+        }
         
         let selectedResolution = currentResolutionIndexRelay
             .asDriver()

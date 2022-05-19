@@ -14,7 +14,7 @@ final class TrimControlModel {
     
     var canAddClip = false
     
-    let dragHint = "Hold \"command\" + Drag to shift the trimmed clip."
+    let dragHint = NSLocalizedString("Hold \"command\" + Drag to shift the trimmed clip.", comment: "")
     
     let frame: Driver<NSRect>
     

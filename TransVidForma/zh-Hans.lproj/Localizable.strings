@@ -1,0 +1,49 @@
+/* 
+  Localizable.strings
+  TransVidForma
+
+  Created by QIU DU on 19/5/22.
+  Copyright © 2022 Qiu Du. All rights reserved.
+*/
+
+"TransVidForma" = "TransVidForma";
+
+"Confirm" = "确认";
+
+"Cancel" = "取消";
+
+"\nImport\n%s" = "\n导入\n%s";
+
+"\nExport\n%s" = "\n导出\n%s";
+
+"Cancel Exporting" = "取消导出";
+
+"Are you sure to cancel current export task?" = "确认要取消导出任务吗？";
+
+"Resolution:" = "分辨率：";
+
+"Custom Resolution:" = "自定义分辨率：";
+
+"Audio Track:" = "音轨：";
+
+"Duration:" = "时长：";
+
+"Hold \"option\" + Drag from Trimmed clip to here to add multiple clips." = "从主剪辑片段 按住 “option” + 拖拽 到这里来加多段片段。";
+
+"Hold \"command\" + Drag to shift the trimmed clip." = "按住 “command” + 拖拽 去位移剪辑片段。";
+
+"Format:" = "格式：";
+
+"Video Codec:" = "视频编码：";
+
+"Audio Codec:" = "音频编码：";
+
+"Save to:" = "保存到：";
+
+"Speed ✕%.2f" = "速度 ✕%.2f";
+
+"FPS (%.2f):" = "帧数 fps：";
+
+"Start Time:" = "开始时间：";
+
+"End Time:" = "结束时间：";

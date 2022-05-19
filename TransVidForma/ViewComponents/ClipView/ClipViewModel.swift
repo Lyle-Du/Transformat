@@ -13,7 +13,7 @@ import RxSwift
 
 final class ClipViewModel {
     
-    let dragHint = "Hold \"option\" + Drag from Trimmed clip to here to add multiple clips."
+    let dragHint = NSLocalizedString("Hold \"option\" + Drag from Trimmed clip to here to add multiple clips.", comment: "")
     let trimControlModel: TrimControlModel
     
     private let mediaInfomationBoxModel: MediaInfomationBoxModel

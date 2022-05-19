@@ -12,8 +12,8 @@ final class SubClipView: NSView {
     
     var clip: Clip! {
         didSet {
-            starTimeLabel.stringValue = "Start Time:\n" + (clip.start.toTimeString() ?? "")
-            endTimeLabel.stringValue = "End Time:\n" + (clip.end.toTimeString() ?? "")
+            starTimeLabel.stringValue = NSLocalizedString("Start Time:", comment: "") + "\n" + (clip.start.toTimeString() ?? "")
+            endTimeLabel.stringValue = NSLocalizedString("End Time:", comment: "") + "\n" + (clip.end.toTimeString() ?? "")
         }
     }
     

@@ -1,0 +1,27 @@
+
+/* Class = "NSMenuItem"; title = "TransVidForma"; ObjectID = "1Xt-HY-uBw"; */
+"1Xt-HY-uBw.title" = "TransVidForma";
+
+/* Class = "NSMenuItem"; title = "Quit TransVidForma"; ObjectID = "4sb-4s-VLi"; */
+"4sb-4s-VLi.title" = "Quit TransVidForma";
+
+/* Class = "NSMenuItem"; title = "About TransVidForma"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "About TransVidForma";
+
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
+"AYu-sK-qS6.title" = "Main Menu";
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "IQv-IB-iLA"; */
+"IQv-IB-iLA.title" = "Window";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
+"Kd2-mp-pUS.title" = "Show All";
+
+/* Class = "NSMenuItem"; title = "Hide TransVidForma"; ObjectID = "Olw-nP-bQN"; */
+"Olw-nP-bQN.title" = "Hide TransVidForma";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
+"Vdr-fp-XzO.title" = "Hide Others";
+
+/* Class = "NSMenu"; title = "TransVidForma"; ObjectID = "uQy-DD-JDr"; */
+"uQy-DD-JDr.title" = "TransVidForma";

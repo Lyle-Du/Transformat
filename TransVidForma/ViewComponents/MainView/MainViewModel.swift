@@ -18,8 +18,8 @@ final class MainViewModel {
         ControlEvent(events: Observable.merge(resizePlayerView, controlPanelViewModel.mediaReset))
     }
     
-    let windowTitle = "TransVidForma"
-    let cancleButtonTitle = "Cancel"
+    let windowTitle = NSLocalizedString("TransVidForma", comment: "")
+    let cancleButtonTitle = NSLocalizedString("Cancel", comment: "")
     
     let controlPanelViewModel: ControlPanelViewModel
     let clipViewModel: ClipViewModel
@@ -59,7 +59,6 @@ final class MainViewModel {
         self.openPanel = openPanel
         self.mediaPlayer = mediaPlayer
         self.mediaPlayerDelegator = MediaPlayerDelegator(mediaPlayer: self.mediaPlayer)
-        
         openPanel.allowedFileTypes = ContainerFormat.allCases.map(\.rawValue)
         
         importButtonTitle = importButtonTitleRelay.asDriver()
@@ -244,17 +243,17 @@ final class MainViewModel {
 private extension MainViewModel {
     
     struct Constants {
-        static let importTitle = "\nImport\n%s"
-        static let exportTitle = "\nExport\n%s"
+        static let importTitle = NSLocalizedString("\nImport\n%s", comment: "")
+        static let exportTitle = NSLocalizedString("\nExport\n%s", comment: "")
     }
 }
 
 
 struct CancelAlert {
     
-    let messageText = "Cancel Exporting"
-    let informativeText = "Are you sure to cancel current task? "
+    let messageText = NSLocalizedString("Cancel Exporting", comment: "")
+    let informativeText = NSLocalizedString("Are you sure to cancel current export task?", comment: "")
     let alertStyle: NSAlert.Style = .warning
-    let okButtonTitle = "OK"
-    let cancelButtonTitle = "Cancel"
+    let okButtonTitle = NSLocalizedString("Confirm", comment: "")
+    let cancelButtonTitle = NSLocalizedString("Cancel", comment: "")
 }

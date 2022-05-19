@@ -13,10 +13,10 @@ import VLCKit
 
 final class FormatBoxModel {
     
-    let formatLabel = "Format:"
-    let videoCodecLabel = "Video Codec:"
-    let audioCodecLabel = "Audio Codec:"
-    let outputPathLabel = "Save to:"
+    let formatLabel = NSLocalizedString("Format:", comment: "")
+    let videoCodecLabel = NSLocalizedString("Video Codec:", comment: "")
+    let audioCodecLabel = NSLocalizedString("Audio Codec:", comment: "")
+    let outputPathLabel = NSLocalizedString("Save to:", comment: "")
     
     let outputPath: Driver<String>
     let isFramePerSecondHidden: Driver<Bool>
@@ -66,7 +66,7 @@ final class FormatBoxModel {
         framePerSecondSliderRange = framePerSecondSliderRangeRelay.asDriver()
         framePerSecondRelay = BehaviorRelay(value: 24)
         framePerSecondDriver = framePerSecondRelay.asDriver()
-        framePerSecondTextDriver = framePerSecondDriver.map { "FPS (\(String(format: Constants.twoDigitsFractionFormat, $0))):" }
+        framePerSecondTextDriver = framePerSecondDriver.map { String.localizedStringWithFormat(NSLocalizedString("FPS (%.2f):", comment: ""), $0) }
         
         savePanel.allowedFileTypes = ContainerFormat.allCases.map(\.rawValue)
         savePanel.allowsOtherFileTypes = false
