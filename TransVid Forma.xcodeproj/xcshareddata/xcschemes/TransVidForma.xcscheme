@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3E5E5590280C760F000C5435"
-            BuildableName = "TransVidForma.app"
-            BlueprintName = "TransVidForma"
-            ReferencedContainer = "container:TransVidForma.xcodeproj">
+            BuildableName = "TransVid Forma.app"
+            BlueprintName = "TransVid Forma"
+            ReferencedContainer = "container:TransVid Forma.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <MacroExpansion>

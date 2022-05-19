@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0DBD2855DB4DAB74B39FE08A /* Pods_TransVidFormaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B7C9CE3D15C495232736563 /* Pods_TransVidFormaTests.framework */; };
+		28BCFD63F1C16F07851CF1B1 /* Pods_TransVid_Forma_TransVid_FormaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3667B2B2D480F18D96F1F9D1 /* Pods_TransVid_Forma_TransVid_FormaUITests.framework */; };
 		3E02AF9A281704D000BE6FE4 /* ControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E02AF99281704D000BE6FE4 /* ControlPanel.swift */; };
 		3E02AF9C2818089B00BE6FE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */; };
 		3E03868B2827C64100A429F8 /* Rx+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03868A2827C64100A429F8 /* Rx+Extensions.swift */; };
@@ -47,8 +47,8 @@
 		3EEF90952823FEA200039BB1 /* MediaInfomationBoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF90942823FEA200039BB1 /* MediaInfomationBoxModel.swift */; };
 		3EF84002282FCA6A00689AD6 /* TextFieldSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF84001282FCA6A00689AD6 /* TextFieldSlider.swift */; };
 		3EFBBC392812A72E00A0A05C /* TrimControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFBBC382812A72E00A0A05C /* TrimControl.swift */; };
-		95BE421829C3E1997EF345D2 /* Pods_TransVidForma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 989CC43F4441AF6C96AEA182 /* Pods_TransVidForma.framework */; };
-		E11C0DBC7722D2C4623D3A02 /* Pods_TransVidForma_TransVidFormaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A6C7634F842FCE64C7FFB4 /* Pods_TransVidForma_TransVidFormaUITests.framework */; };
+		895505B260EEB28679C6AF8D /* Pods_TransVid_Forma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36AE2DD6F2A3A74CA1A62BCC /* Pods_TransVid_Forma.framework */; };
+		DA322662E4F4BE7398E02296 /* Pods_TransVid_FormaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32557689A69948EF09D8801E /* Pods_TransVid_FormaTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,7 +69,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3D6B1BCAD1889823FB04BE1A /* Pods-TransVidFormaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVidFormaTests.release.xcconfig"; path = "Target Support Files/Pods-TransVidFormaTests/Pods-TransVidFormaTests.release.xcconfig"; sourceTree = "<group>"; };
+		0A7A4963D9600CCAFA818F68 /* Pods-TransVid Forma.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid Forma.release.xcconfig"; path = "Target Support Files/Pods-TransVid Forma/Pods-TransVid Forma.release.xcconfig"; sourceTree = "<group>"; };
+		0B4A6C23E7222F6DFFD70263 /* Pods-TransVid Forma-TransVid FormaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid Forma-TransVid FormaUITests.release.xcconfig"; path = "Target Support Files/Pods-TransVid Forma-TransVid FormaUITests/Pods-TransVid Forma-TransVid FormaUITests.release.xcconfig"; sourceTree = "<group>"; };
+		32557689A69948EF09D8801E /* Pods_TransVid_FormaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVid_FormaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3667B2B2D480F18D96F1F9D1 /* Pods_TransVid_Forma_TransVid_FormaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVid_Forma_TransVid_FormaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		36AE2DD6F2A3A74CA1A62BCC /* Pods_TransVid_Forma.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVid_Forma.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E02AF99281704D000BE6FE4 /* ControlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanel.swift; sourceTree = "<group>"; };
 		3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E03868A2827C64100A429F8 /* Rx+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Extensions.swift"; sourceTree = "<group>"; };
@@ -80,12 +84,12 @@
 		3E1865602832915B0003016E /* DraggableStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableStackView.swift; sourceTree = "<group>"; };
 		3E1865632832D85F0003016E /* SubClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubClipView.swift; sourceTree = "<group>"; };
 		3E226BBB2831395200067778 /* ClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipView.swift; sourceTree = "<group>"; };
-		3E5E5591280C760F000C5435 /* TransVidForma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransVidForma.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E5E5591280C760F000C5435 /* TransVid Forma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TransVid Forma.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E5E5594280C760F000C5435 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E5E5596280C760F000C5435 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		3E5E559B280C7610000C5435 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3E5E55A2280C7610000C5435 /* TransVidFormaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransVidFormaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E5E55AC280C7610000C5435 /* TransVidFormaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransVidFormaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E5E55A2280C7610000C5435 /* TransVid FormaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TransVid FormaTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E5E55AC280C7610000C5435 /* TransVid FormaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TransVid FormaUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E73FD25281DA1AD00143803 /* FFprobe+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FFprobe+Extensions.swift"; sourceTree = "<group>"; };
 		3E73FD27281DAF2000143803 /* MediaResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResolution.swift; sourceTree = "<group>"; };
 		3E73FD2928200C7700143803 /* FormatBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatBox.swift; sourceTree = "<group>"; };
@@ -114,14 +118,10 @@
 		3EEF90942823FEA200039BB1 /* MediaInfomationBoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInfomationBoxModel.swift; sourceTree = "<group>"; };
 		3EF84001282FCA6A00689AD6 /* TextFieldSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSlider.swift; sourceTree = "<group>"; };
 		3EFBBC382812A72E00A0A05C /* TrimControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimControl.swift; sourceTree = "<group>"; };
-		46A6C7634F842FCE64C7FFB4 /* Pods_TransVidForma_TransVidFormaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVidForma_TransVidFormaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A1B0D3449F06132B3518F24 /* Pods-TransVidForma-TransVidFormaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVidForma-TransVidFormaUITests.release.xcconfig"; path = "Target Support Files/Pods-TransVidForma-TransVidFormaUITests/Pods-TransVidForma-TransVidFormaUITests.release.xcconfig"; sourceTree = "<group>"; };
-		989CC43F4441AF6C96AEA182 /* Pods_TransVidForma.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVidForma.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9B7C9CE3D15C495232736563 /* Pods_TransVidFormaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVidFormaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD5DEA6AF01479AD92A3D4F6 /* Pods-TransVidForma.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVidForma.release.xcconfig"; path = "Target Support Files/Pods-TransVidForma/Pods-TransVidForma.release.xcconfig"; sourceTree = "<group>"; };
-		D30DD4F1745D6B655494C774 /* Pods-TransVidForma-TransVidFormaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVidForma-TransVidFormaUITests.debug.xcconfig"; path = "Target Support Files/Pods-TransVidForma-TransVidFormaUITests/Pods-TransVidForma-TransVidFormaUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		D6278F291F7AD70741E3DE6C /* Pods-TransVidFormaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVidFormaTests.debug.xcconfig"; path = "Target Support Files/Pods-TransVidFormaTests/Pods-TransVidFormaTests.debug.xcconfig"; sourceTree = "<group>"; };
-		E591FC4C2D538B153B43990D /* Pods-TransVidForma.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVidForma.debug.xcconfig"; path = "Target Support Files/Pods-TransVidForma/Pods-TransVidForma.debug.xcconfig"; sourceTree = "<group>"; };
+		B1188021BB7AF7F1436FD85D /* Pods-TransVid FormaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid FormaTests.release.xcconfig"; path = "Target Support Files/Pods-TransVid FormaTests/Pods-TransVid FormaTests.release.xcconfig"; sourceTree = "<group>"; };
+		D2FD623AD79AD6979581AE4D /* Pods-TransVid Forma.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid Forma.debug.xcconfig"; path = "Target Support Files/Pods-TransVid Forma/Pods-TransVid Forma.debug.xcconfig"; sourceTree = "<group>"; };
+		E111AF9BB76B89EA887EA3C6 /* Pods-TransVid Forma-TransVid FormaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid Forma-TransVid FormaUITests.debug.xcconfig"; path = "Target Support Files/Pods-TransVid Forma-TransVid FormaUITests/Pods-TransVid Forma-TransVid FormaUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		EE25CF9B4891D3ADBBBCA27E /* Pods-TransVid FormaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid FormaTests.debug.xcconfig"; path = "Target Support Files/Pods-TransVid FormaTests/Pods-TransVid FormaTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95BE421829C3E1997EF345D2 /* Pods_TransVidForma.framework in Frameworks */,
+				895505B260EEB28679C6AF8D /* Pods_TransVid_Forma.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,7 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DBD2855DB4DAB74B39FE08A /* Pods_TransVidFormaTests.framework in Frameworks */,
+				DA322662E4F4BE7398E02296 /* Pods_TransVid_FormaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,7 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E11C0DBC7722D2C4623D3A02 /* Pods_TransVidForma_TransVidFormaUITests.framework in Frameworks */,
+				28BCFD63F1C16F07851CF1B1 /* Pods_TransVid_Forma_TransVid_FormaUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,16 +176,16 @@
 				3E5E5593280C760F000C5435 /* TransVidForma */,
 				3E5E5592280C760F000C5435 /* Products */,
 				7436038F57912ABBED71E86F /* Pods */,
-				7B54FCE2F747D92BBB570383 /* Frameworks */,
+				3FBDBFB086E7878A69A78739 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		3E5E5592280C760F000C5435 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3E5E5591280C760F000C5435 /* TransVidForma.app */,
-				3E5E55A2280C7610000C5435 /* TransVidFormaTests.xctest */,
-				3E5E55AC280C7610000C5435 /* TransVidFormaUITests.xctest */,
+				3E5E5591280C760F000C5435 /* TransVid Forma.app */,
+				3E5E55A2280C7610000C5435 /* TransVid FormaTests.xctest */,
+				3E5E55AC280C7610000C5435 /* TransVid FormaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -315,56 +315,56 @@
 			path = ViewHelpers;
 			sourceTree = "<group>";
 		};
+		3FBDBFB086E7878A69A78739 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				36AE2DD6F2A3A74CA1A62BCC /* Pods_TransVid_Forma.framework */,
+				3667B2B2D480F18D96F1F9D1 /* Pods_TransVid_Forma_TransVid_FormaUITests.framework */,
+				32557689A69948EF09D8801E /* Pods_TransVid_FormaTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7436038F57912ABBED71E86F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E591FC4C2D538B153B43990D /* Pods-TransVidForma.debug.xcconfig */,
-				CD5DEA6AF01479AD92A3D4F6 /* Pods-TransVidForma.release.xcconfig */,
-				D30DD4F1745D6B655494C774 /* Pods-TransVidForma-TransVidFormaUITests.debug.xcconfig */,
-				6A1B0D3449F06132B3518F24 /* Pods-TransVidForma-TransVidFormaUITests.release.xcconfig */,
-				D6278F291F7AD70741E3DE6C /* Pods-TransVidFormaTests.debug.xcconfig */,
-				3D6B1BCAD1889823FB04BE1A /* Pods-TransVidFormaTests.release.xcconfig */,
+				D2FD623AD79AD6979581AE4D /* Pods-TransVid Forma.debug.xcconfig */,
+				0A7A4963D9600CCAFA818F68 /* Pods-TransVid Forma.release.xcconfig */,
+				E111AF9BB76B89EA887EA3C6 /* Pods-TransVid Forma-TransVid FormaUITests.debug.xcconfig */,
+				0B4A6C23E7222F6DFFD70263 /* Pods-TransVid Forma-TransVid FormaUITests.release.xcconfig */,
+				EE25CF9B4891D3ADBBBCA27E /* Pods-TransVid FormaTests.debug.xcconfig */,
+				B1188021BB7AF7F1436FD85D /* Pods-TransVid FormaTests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		7B54FCE2F747D92BBB570383 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				989CC43F4441AF6C96AEA182 /* Pods_TransVidForma.framework */,
-				46A6C7634F842FCE64C7FFB4 /* Pods_TransVidForma_TransVidFormaUITests.framework */,
-				9B7C9CE3D15C495232736563 /* Pods_TransVidFormaTests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3E5E5590280C760F000C5435 /* TransVidForma */ = {
+		3E5E5590280C760F000C5435 /* TransVid Forma */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3E5E55B6280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVidForma" */;
+			buildConfigurationList = 3E5E55B6280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVid Forma" */;
 			buildPhases = (
-				F3745C7C44E5353E51E91EBA /* [CP] Check Pods Manifest.lock */,
+				1028679F052061E669E04845 /* [CP] Check Pods Manifest.lock */,
 				3E5E558D280C760F000C5435 /* Sources */,
 				3E5E558E280C760F000C5435 /* Frameworks */,
 				3E5E558F280C760F000C5435 /* Resources */,
-				A7F9A4E23FD49EB2F7031068 /* [CP] Embed Pods Frameworks */,
+				8C50EE8C5E005E58D7FE47E9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = TransVidForma;
+			name = "TransVid Forma";
 			productName = Transformat;
-			productReference = 3E5E5591280C760F000C5435 /* TransVidForma.app */;
+			productReference = 3E5E5591280C760F000C5435 /* TransVid Forma.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3E5E55A1280C7610000C5435 /* TransVidFormaTests */ = {
+		3E5E55A1280C7610000C5435 /* TransVid FormaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3E5E55B9280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVidFormaTests" */;
+			buildConfigurationList = 3E5E55B9280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVid FormaTests" */;
 			buildPhases = (
-				1116BF51B82E1FAA47159F25 /* [CP] Check Pods Manifest.lock */,
+				B90B6ED1A70DE100D4E7D84C /* [CP] Check Pods Manifest.lock */,
 				3E5E559E280C7610000C5435 /* Sources */,
 				3E5E559F280C7610000C5435 /* Frameworks */,
 				3E5E55A0280C7610000C5435 /* Resources */,
@@ -374,29 +374,29 @@
 			dependencies = (
 				3E5E55A4280C7610000C5435 /* PBXTargetDependency */,
 			);
-			name = TransVidFormaTests;
+			name = "TransVid FormaTests";
 			productName = TransformatTests;
-			productReference = 3E5E55A2280C7610000C5435 /* TransVidFormaTests.xctest */;
+			productReference = 3E5E55A2280C7610000C5435 /* TransVid FormaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3E5E55AB280C7610000C5435 /* TransVidFormaUITests */ = {
+		3E5E55AB280C7610000C5435 /* TransVid FormaUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3E5E55BC280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVidFormaUITests" */;
+			buildConfigurationList = 3E5E55BC280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVid FormaUITests" */;
 			buildPhases = (
-				3095FCD9E38E3506D25EBB13 /* [CP] Check Pods Manifest.lock */,
+				07391AFE9137AE3312EFDF15 /* [CP] Check Pods Manifest.lock */,
 				3E5E55A8280C7610000C5435 /* Sources */,
 				3E5E55A9280C7610000C5435 /* Frameworks */,
 				3E5E55AA280C7610000C5435 /* Resources */,
-				450193CED873514872032E50 /* [CP] Embed Pods Frameworks */,
+				74B9D1CCFF724BA9164C02C1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				3E5E55AE280C7610000C5435 /* PBXTargetDependency */,
 			);
-			name = TransVidFormaUITests;
+			name = "TransVid FormaUITests";
 			productName = TransformatUITests;
-			productReference = 3E5E55AC280C7610000C5435 /* TransVidFormaUITests.xctest */;
+			productReference = 3E5E55AC280C7610000C5435 /* TransVid FormaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -423,7 +423,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3E5E558C280C760F000C5435 /* Build configuration list for PBXProject "TransVidForma" */;
+			buildConfigurationList = 3E5E558C280C760F000C5435 /* Build configuration list for PBXProject "TransVid Forma" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -437,9 +437,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3E5E5590280C760F000C5435 /* TransVidForma */,
-				3E5E55A1280C7610000C5435 /* TransVidFormaTests */,
-				3E5E55AB280C7610000C5435 /* TransVidFormaUITests */,
+				3E5E5590280C760F000C5435 /* TransVid Forma */,
+				3E5E55A1280C7610000C5435 /* TransVid FormaTests */,
+				3E5E55AB280C7610000C5435 /* TransVid FormaUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -472,7 +472,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1116BF51B82E1FAA47159F25 /* [CP] Check Pods Manifest.lock */ = {
+		07391AFE9137AE3312EFDF15 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -487,14 +487,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TransVidFormaTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TransVid Forma-TransVid FormaUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3095FCD9E38E3506D25EBB13 /* [CP] Check Pods Manifest.lock */ = {
+		1028679F052061E669E04845 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -509,48 +509,48 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TransVidForma-TransVidFormaUITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TransVid Forma-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		450193CED873514872032E50 /* [CP] Embed Pods Frameworks */ = {
+		74B9D1CCFF724BA9164C02C1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TransVidForma-TransVidFormaUITests/Pods-TransVidForma-TransVidFormaUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TransVid Forma-TransVid FormaUITests/Pods-TransVid Forma-TransVid FormaUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TransVidForma-TransVidFormaUITests/Pods-TransVidForma-TransVidFormaUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TransVid Forma-TransVid FormaUITests/Pods-TransVid Forma-TransVid FormaUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TransVidForma-TransVidFormaUITests/Pods-TransVidForma-TransVidFormaUITests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TransVid Forma-TransVid FormaUITests/Pods-TransVid Forma-TransVid FormaUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A7F9A4E23FD49EB2F7031068 /* [CP] Embed Pods Frameworks */ = {
+		8C50EE8C5E005E58D7FE47E9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TransVidForma/Pods-TransVidForma-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TransVid Forma/Pods-TransVid Forma-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TransVidForma/Pods-TransVidForma-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TransVid Forma/Pods-TransVid Forma-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TransVidForma/Pods-TransVidForma-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TransVid Forma/Pods-TransVid Forma-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F3745C7C44E5353E51E91EBA /* [CP] Check Pods Manifest.lock */ = {
+		B90B6ED1A70DE100D4E7D84C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -565,7 +565,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TransVidForma-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TransVid FormaTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -637,12 +637,12 @@
 /* Begin PBXTargetDependency section */
 		3E5E55A4280C7610000C5435 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3E5E5590280C760F000C5435 /* TransVidForma */;
+			target = 3E5E5590280C760F000C5435 /* TransVid Forma */;
 			targetProxy = 3E5E55A3280C7610000C5435 /* PBXContainerItemProxy */;
 		};
 		3E5E55AE280C7610000C5435 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3E5E5590280C760F000C5435 /* TransVidForma */;
+			target = 3E5E5590280C760F000C5435 /* TransVid Forma */;
 			targetProxy = 3E5E55AD280C7610000C5435 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -793,7 +793,7 @@
 		};
 		3E5E55B7280C7610000C5435 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E591FC4C2D538B153B43990D /* Pods-TransVidForma.debug.xcconfig */;
+			baseConfigurationReference = D2FD623AD79AD6979581AE4D /* Pods-TransVid Forma.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -825,7 +825,7 @@
 		};
 		3E5E55B8280C7610000C5435 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD5DEA6AF01479AD92A3D4F6 /* Pods-TransVidForma.release.xcconfig */;
+			baseConfigurationReference = 0A7A4963D9600CCAFA818F68 /* Pods-TransVid Forma.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -857,7 +857,7 @@
 		};
 		3E5E55BA280C7610000C5435 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6278F291F7AD70741E3DE6C /* Pods-TransVidFormaTests.debug.xcconfig */;
+			baseConfigurationReference = EE25CF9B4891D3ADBBBCA27E /* Pods-TransVid FormaTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -870,13 +870,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TransVidForma.app/Contents/MacOS/TransVidForma";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TransVid Forma.app/Contents/MacOS/TransVid Forma";
 			};
 			name = Debug;
 		};
 		3E5E55BB280C7610000C5435 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D6B1BCAD1889823FB04BE1A /* Pods-TransVidFormaTests.release.xcconfig */;
+			baseConfigurationReference = B1188021BB7AF7F1436FD85D /* Pods-TransVid FormaTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -889,13 +889,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TransVidForma.app/Contents/MacOS/TransVidForma";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TransVid Forma.app/Contents/MacOS/TransVid Forma";
 			};
 			name = Release;
 		};
 		3E5E55BD280C7610000C5435 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D30DD4F1745D6B655494C774 /* Pods-TransVidForma-TransVidFormaUITests.debug.xcconfig */;
+			baseConfigurationReference = E111AF9BB76B89EA887EA3C6 /* Pods-TransVid Forma-TransVid FormaUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -912,7 +912,7 @@
 		};
 		3E5E55BE280C7610000C5435 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6A1B0D3449F06132B3518F24 /* Pods-TransVidForma-TransVidFormaUITests.release.xcconfig */;
+			baseConfigurationReference = 0B4A6C23E7222F6DFFD70263 /* Pods-TransVid Forma-TransVid FormaUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -930,7 +930,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3E5E558C280C760F000C5435 /* Build configuration list for PBXProject "TransVidForma" */ = {
+		3E5E558C280C760F000C5435 /* Build configuration list for PBXProject "TransVid Forma" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E5E55B4280C7610000C5435 /* Debug */,
@@ -939,7 +939,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3E5E55B6280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVidForma" */ = {
+		3E5E55B6280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVid Forma" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E5E55B7280C7610000C5435 /* Debug */,
@@ -948,7 +948,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3E5E55B9280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVidFormaTests" */ = {
+		3E5E55B9280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVid FormaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E5E55BA280C7610000C5435 /* Debug */,
@@ -957,7 +957,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3E5E55BC280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVidFormaUITests" */ = {
+		3E5E55BC280C7610000C5435 /* Build configuration list for PBXNativeTarget "TransVid FormaUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3E5E55BD280C7610000C5435 /* Debug */,

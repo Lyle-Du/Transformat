@@ -18,7 +18,7 @@ final class MainViewModel {
         ControlEvent(events: Observable.merge(resizePlayerView, controlPanelViewModel.mediaReset))
     }
     
-    let windowTitle = NSLocalizedString("TransVidForma", comment: "")
+    let windowTitle = NSLocalizedString("TransVid Forma", comment: "")
     let cancleButtonTitle = NSLocalizedString("Cancel", comment: "")
     
     let controlPanelViewModel: ControlPanelViewModel
