@@ -46,23 +46,6 @@ final class ClipView: NSControl {
         return label
     }()
     
-    private let playButton: ImageButton = {
-        let button = ImageButton()
-        button.padding = 12
-        button.image = NSImage(named: ControlPanelViewModel.Constants.playImageName)
-        button.title = ""
-        button.image?.isTemplate = true
-        button.image = button.image?.tint(color: NSColor.white)
-        button.imageScaling = .scaleProportionallyDown
-        button.font = .systemFont(ofSize: 24)
-        button.isBordered = false
-        button.wantsLayer = true
-        button.layer?.cornerRadius = 4
-        button.layer?.backgroundColor = NSColor.clear.cgColor
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
     private let addButton: ImageButton = {
         let button = ImageButton()
         button.padding = 12
@@ -103,19 +86,13 @@ final class ClipView: NSControl {
         wantsLayer = true
         layer?.backgroundColor = NSColor(calibratedRed: .zero, green: 0.2, blue: .zero, alpha: 1.0).cgColor
         addSubview(dragHintLabel)
-        addSubview(playButton)
         addSubview(addButton)
         addSubview(scrollView)
         scrollView.documentView = container
         dragHintLabel.pinEdgesTo(view: self)
         let padding = CGFloat(2)
         NSLayoutConstraint.activate([
-            playButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            playButton.heightAnchor.constraint(equalTo: heightAnchor),
-            playButton.widthAnchor.constraint(equalTo: playButton.heightAnchor),
-            playButton.leadingAnchor.constraint(equalTo: leadingAnchor),
-            
-            scrollView.leadingAnchor.constraint(equalTo: playButton.trailingAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
             scrollView.trailingAnchor.constraint(equalTo: addButton.leadingAnchor),
             scrollView.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             scrollView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
