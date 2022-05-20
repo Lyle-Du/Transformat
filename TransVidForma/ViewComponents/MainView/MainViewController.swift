@@ -165,12 +165,6 @@ final class MainViewController: NSViewController {
         view.window?.title = viewModel.windowTitle
     }
 
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
-    
     private func setupViews() {
         view.addSubview(playerBackgroundView)
         view.addSubview(importButton)
@@ -251,6 +245,15 @@ final class MainViewController: NSViewController {
         NSLayoutConstraint.activate([
             mediaInfomationBox.widthAnchor.constraint(equalTo: formatBox.widthAnchor),
         ])
+    }
+    
+    private var isCenteredAtLaunching = false
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        guard !isCenteredAtLaunching else { return }
+        view.window?.center()
+        isCenteredAtLaunching = true
     }
     
     var fixedFirstTimeInvalidSize = false
