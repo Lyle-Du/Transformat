@@ -238,7 +238,7 @@ final class MainViewModel {
         guard mediaPlayer.media?.url != url else { return }
         resizePlayerView.onNext(())
         let media = VLCMedia(url: url)
-        controlPanelViewModel.trimControlModel.loadThumbnails(media)
+        controlPanelViewModel.setMedia(media)
         mediaPlayer.media = media
         mediaInfomationBoxModel.setMedia(media)
         if let size = FFprobeKit.sizeInBytes(media: media) {

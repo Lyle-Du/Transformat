@@ -1,19 +1,19 @@
 //
-//  AudioTracks.swift
-//  Transformat
+//  Subtitle.swift
+//  TransVid Forma
 //
-//  Created by QIU DU on 6/5/22.
+//  Created by QIU DU on 20/5/22.
+//  Copyright © 2022 Qiu Du. All rights reserved.
 //
 
 import Foundation
 
-struct AudioTrack {
+struct Subtitle {
     
     let streamID: Int
     let titleID: Int
     let title: String?
     let language: String?
-    let bitrate: Double?
     
     var name: String {
         guard titleID != Self.disabled.titleID else {
@@ -24,7 +24,7 @@ struct AudioTrack {
     }
 }
 
-extension AudioTrack {
-    static let disabled = AudioTrack(streamID: -1, titleID: 0, title: Self.disabledTitle, language: nil, bitrate: nil)
+extension Subtitle {
+    static let disabled = Subtitle(streamID: -1, titleID: 0, title: disabledTitle, language: nil)
     static let disabledTitle = NSLocalizedString("Disabled", comment: "")
 }

@@ -100,9 +100,10 @@ extension FFprobeKit {
         return TimeInterval(startTime + duration)
     }
      
-    static func audioTracks(media: VLCMedia) -> [AudioTrack] {
+    static func audioTracks(media: VLCMedia, includeDisabled: Bool = false) -> [AudioTrack] {
         var audioTracks = [AudioTrack]()
         let streamInfomationLists = FFprobeKit.streamsInfomation(media: media)
+        var titleID = 1
         for streamInformation in streamInfomationLists where streamInformation.getType().equalsToIgnoreCase("audio") {
             let index = Int(truncating: streamInformation.getIndex())
             let tags = streamInformation.getTags()
@@ -111,11 +112,40 @@ extension FFprobeKit {
                 bitrate = Double(bitrateText)
             }
             audioTracks.append(AudioTrack(
-                index: index,
+                streamID: index,
+                titleID: titleID,
                 title: tags?["title"] as? String,
                 language: tags?["language"] as? String,
                 bitrate: bitrate))
+            titleID += 1
         }
+        
+        if includeDisabled {
+            audioTracks.insert(.disabled, at: 0)
+        }
+        
         return audioTracks
+    }
+    
+    static func subtitles(media: VLCMedia, includeDisabled: Bool = false) -> [Subtitle] {
+        var subtitles = [Subtitle]()
+        let streamInfomationLists = FFprobeKit.streamsInfomation(media: media)
+        var titleID = 1
+        for streamInformation in streamInfomationLists where streamInformation.getType().equalsToIgnoreCase("subtitle") {
+            let index = Int(truncating: streamInformation.getIndex())
+            let tags = streamInformation.getTags()
+            subtitles.append(Subtitle(
+                streamID: index,
+                titleID: titleID,
+                title: tags?["title"] as? String,
+                language: tags?["language"] as? String))
+            titleID += 1
+        }
+        
+        if includeDisabled {
+            subtitles.insert(.disabled, at: 0)
+        }
+        
+        return subtitles
     }
 }

@@ -38,6 +38,7 @@
 		3EAEBDBE282AF9B1004BA81C /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */; };
 		3EAEBDC2282B59BD004BA81C /* FFmpegArgumentsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDC1282B59BD004BA81C /* FFmpegArgumentsBuilder.swift */; };
 		3EAEBDC6282BF7FF004BA81C /* FFmpeg+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDC5282BF7FF004BA81C /* FFmpeg+Extensions.swift */; };
+		3EB87DA92837904500FD0ED1 /* Subtitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB87DA82837904500FD0ED1 /* Subtitle.swift */; };
 		3EDC73D82826451200D5673E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC73D72826451200D5673E /* MainViewModel.swift */; };
 		3EDC73DC28267E9600D5673E /* FormatBoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC73DB28267E9600D5673E /* FormatBoxModel.swift */; };
 		3EDC73DE28267FAA00D5673E /* ContainerFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC73DD28267FAA00D5673E /* ContainerFormat.swift */; };
@@ -108,6 +109,7 @@
 		3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButton.swift; sourceTree = "<group>"; };
 		3EAEBDC1282B59BD004BA81C /* FFmpegArgumentsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFmpegArgumentsBuilder.swift; sourceTree = "<group>"; };
 		3EAEBDC5282BF7FF004BA81C /* FFmpeg+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FFmpeg+Extensions.swift"; sourceTree = "<group>"; };
+		3EB87DA82837904500FD0ED1 /* Subtitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subtitle.swift; sourceTree = "<group>"; };
 		3EC71C9F2830F5BC00B1DFFF /* TransVidForma.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TransVidForma.entitlements; sourceTree = "<group>"; };
 		3EDC73D72826451200D5673E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		3EDC73DB28267E9600D5673E /* FormatBoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatBoxModel.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				3E03869028280E7000A429F8 /* UnitStorage.swift */,
 				3EAEBDC1282B59BD004BA81C /* FFmpegArgumentsBuilder.swift */,
 				3EAEBDC5282BF7FF004BA81C /* FFmpeg+Extensions.swift */,
+				3EB87DA82837904500FD0ED1 /* Subtitle.swift */,
 			);
 			path = FFmpegComponents;
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 				3E5E5597280C760F000C5435 /* MainViewController.swift in Sources */,
 				3E73FD2C28200CCC00143803 /* NSPopUpButton+Rx.swift in Sources */,
 				3E80634528150264005B9B3C /* Extensions.swift in Sources */,
+				3EB87DA92837904500FD0ED1 /* Subtitle.swift in Sources */,
 				3EDC73DC28267E9600D5673E /* FormatBoxModel.swift in Sources */,
 				3EAEBDBE282AF9B1004BA81C /* ProgressButton.swift in Sources */,
 				3EFBBC392812A72E00A0A05C /* TrimControl.swift in Sources */,

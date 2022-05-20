@@ -26,6 +26,8 @@
 
 "Audio Track:" = "音轨：";
 
+"Subtitle:" = "字幕：";
+
 "Duration:" = "时长：";
 
 "Hold \"option\" + Drag from Trimmed clip to here to add multiple clips." = "从主剪辑片段 按住 “option” + 拖拽 到这里来加多段片段。";
@@ -47,3 +49,5 @@
 "Start Time:" = "开始时间：";
 
 "End Time:" = "结束时间：";
+
+"Disabled" = "关闭";

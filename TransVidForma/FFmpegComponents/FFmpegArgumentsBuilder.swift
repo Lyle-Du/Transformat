@@ -72,7 +72,7 @@ final class FFmpegArgumentsBuilder {
     @discardableResult
     func audioBitrate(index: Int = 1) -> Self {
         guard format?.hasAudioCodecs == true else { return self }
-        guard let audioBitrate = FFprobeKit.audioTracks(media: media).first(where: { $0.index == index })?.bitrate else {
+        guard let audioBitrate = FFprobeKit.audioTracks(media: media).first(where: { $0.streamID == index })?.bitrate else {
             return self
         }
         arguments.append(contentsOf: ["-b:a", String(audioBitrate)])

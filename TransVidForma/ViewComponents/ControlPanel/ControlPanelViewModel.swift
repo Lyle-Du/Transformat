@@ -42,6 +42,11 @@ final class ControlPanelViewModel {
             wasPlaying = true
         }
     }
+    
+    func setMedia(_ media: VLCMedia) {
+        trimControlModel.loadThumbnails(media)
+        playButtonImageNameRelay.accept(Constants.playImageName)
+    }
 }
 
 extension ControlPanelViewModel {

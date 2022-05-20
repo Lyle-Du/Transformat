@@ -31,7 +31,6 @@ final class MediaPlayerDelegator: NSObject, VLCMediaPlayerDelegate {
     
     func mediaPlayerStateChanged(_ notification: Notification) {
         guard let mediaPlayer = notification.object as? VLCMediaPlayer else { return }
-        mediaPlayer.currentVideoSubTitleIndex = -1
         stateChanged.onNext(mediaPlayer)
     }
     

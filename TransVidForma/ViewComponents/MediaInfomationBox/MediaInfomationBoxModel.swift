@@ -17,9 +17,11 @@ final class MediaInfomationBoxModel {
     let resolutionLabel = NSLocalizedString("Resolution:", comment: "")
     let customResolutionLabel = NSLocalizedString("Custom Resolution:", comment: "")
     let audioTrackLabel = NSLocalizedString("Audio Track:", comment: "")
+    let subtitleLabel = NSLocalizedString("Subtitle:", comment: "")
     let timeLabel = NSLocalizedString("Duration:", comment: "")
     
     let audioTrackNames: Driver<[String]>
+    let subtitleNames: Driver<[String]>
     let resolutionNames: Driver<[String]>
     
     let customResolutionWidthText: Driver<String>
@@ -35,6 +37,7 @@ final class MediaInfomationBoxModel {
     let endTimeTextDriver: Driver<String?>
     let endTimeTextPlaceholderDriver: Driver<String?>
     let currentAudioTrackIndex: Driver<Int>
+    let currentSubtitleIndex: Driver<Int>
     let currentResolutionIndex: Driver<Int>
     
     let speedTextDriver: Driver<String>
@@ -52,6 +55,7 @@ final class MediaInfomationBoxModel {
     fileprivate let endTimeTextPlaceholder: Driver<String?>
     
     private let currentAudioTrackIndexRelay: BehaviorRelay<Int>
+    private let currentSubtitleIndexRelay: BehaviorRelay<Int>
     private let currentResolutionIndexRelay: BehaviorRelay<Int>
     
     fileprivate let startTimeTextRelay: BehaviorRelay<String?> = BehaviorRelay(value: nil)
@@ -62,6 +66,9 @@ final class MediaInfomationBoxModel {
     private let audioTracksRelay = BehaviorRelay<[AudioTrack]>(value: [])
     private let audioTrackNamesRelay = BehaviorRelay<[String]>(value: [])
     
+    private let subtitlesRelay = BehaviorRelay<[Subtitle]>(value: [])
+    private let subtitleNamesRelay = BehaviorRelay<[String]>(value: [])
+    
     private let resolutionsRelay: BehaviorRelay<[MediaResolution]>
     private let resolutionNamesRelay = BehaviorRelay<[String]>(value: [])
     
@@ -70,14 +77,20 @@ final class MediaInfomationBoxModel {
     init(mediaPlayer: VLCMediaPlayer, mediaPlayerDelegator: MediaPlayerDelegator) {
         self.mediaPlayer = mediaPlayer
         audioTrackNames = audioTrackNamesRelay.asDriver()
+        subtitleNames = subtitleNamesRelay.asDriver()
         resolutionNames = resolutionNamesRelay.asDriver()
         
         let audioTracks = Self.audioTracks(media: mediaPlayer.media)
         audioTracksRelay.accept(audioTracks)
-        currentAudioTrackIndexRelay = BehaviorRelay(value: 0)
+        currentAudioTrackIndexRelay = BehaviorRelay(value: audioTracks.count > 1 ? 1 : 0)
         currentAudioTrackIndex = currentAudioTrackIndexRelay.asDriver()
-        resolutionsRelay = BehaviorRelay(value: Self.resolutions(media: mediaPlayer.media))
         
+        let subtitles = Self.subtitles(media: mediaPlayer.media)
+        subtitlesRelay.accept(subtitles)
+        currentSubtitleIndexRelay = BehaviorRelay(value: subtitles.count > 1 ? 1 : 0)
+        currentSubtitleIndex = currentSubtitleIndexRelay.asDriver()
+        
+        resolutionsRelay = BehaviorRelay(value: Self.resolutions(media: mediaPlayer.media))
         currentResolutionIndexRelay = BehaviorRelay(value: 0)
         currentResolutionIndex = currentResolutionIndexRelay.asDriver()
         
@@ -135,7 +148,7 @@ final class MediaInfomationBoxModel {
             guard index < audioTracks.count && index >= 0 else {
                 return -1
             }
-            return Int32(audioTracks[index].index)
+            return Int32(audioTracks[index].streamID)
         }
         
         let currentAudioTrackIndexUpdater = Driver.combineLatest(
@@ -144,9 +157,26 @@ final class MediaInfomationBoxModel {
             .map { $0.1 }
             .filter { [mediaPlayer] in mediaPlayer.currentAudioTrackIndex != $0 }
         
+        let mappedCurrentSubtitleIndex = currentSubtitleIndex.compactMap { [subtitlesRelay] index -> Int32? in
+            let subtitles = subtitlesRelay.value
+            guard index < subtitles.count && index >= 0 else {
+                return -1
+            }
+            return Int32(subtitles[index].streamID)
+        }
+        
+        let currentSubtitleIndexUpdater = Driver.combineLatest(
+            isPlaying,
+            mappedCurrentSubtitleIndex.distinctUntilChanged())
+            .map { $0.1 }
+            .filter { [mediaPlayer] in mediaPlayer.currentVideoSubTitleIndex != $0 }
+        
         disposeBag.insert([
-            audioTracksRelay.map { $0.sorted(by: { $0.index < $1.index }).map(\.name) }.bind(to: audioTrackNamesRelay),
+            audioTracksRelay.map { $0.sorted(by: { $0.titleID < $1.titleID }).map(\.name) }.bind(to: audioTrackNamesRelay),
             currentAudioTrackIndexUpdater.drive(mediaPlayer.rx.currentAudioTrackIndex),
+            
+            subtitlesRelay.map { $0.sorted(by: { $0.titleID < $1.titleID }).map(\.name) }.bind(to: subtitleNamesRelay),
+            currentSubtitleIndexUpdater.drive(mediaPlayer.rx.currentVideoSubTitleIndex),
             
             startTimeText.drive(startTimeTextRelay),
             startTimeTextPlaceholder.drive(startTimeTextPlaceholderRelay),
@@ -174,7 +204,10 @@ final class MediaInfomationBoxModel {
         
         let audioTracks = Self.audioTracks(media: mediaPlayer.media)
         audioTracksRelay.accept(audioTracks)
-        currentAudioTrackIndexRelay.accept(0)
+        currentAudioTrackIndexRelay.accept(audioTracks.count > 1 ? 1 : 0)
+        let subtitles = Self.subtitles(media: mediaPlayer.media)
+        subtitlesRelay.accept(subtitles)
+        currentSubtitleIndexRelay.accept(subtitles.count > 1 ? 1 : 0)
         resolutionsRelay.accept(Self.resolutions(media: media))
         currentResolutionIndexRelay.accept(1)
     }
@@ -199,7 +232,15 @@ private extension MediaInfomationBoxModel {
             return []
         }
         
-        return FFprobeKit.audioTracks(media: media)
+        return FFprobeKit.audioTracks(media: media, includeDisabled: true)
+    }
+    
+    static func subtitles(media: VLCMedia?) -> [Subtitle] {
+        guard let media = media else {
+            return []
+        }
+        
+        return FFprobeKit.subtitles(media: media, includeDisabled: true)
     }
 }
 
@@ -275,6 +316,12 @@ extension MediaInfomationBoxModel {
     var currentAudioTrackIndexBinder: Binder<Int> {
         Binder(self) { target, index in
             target.currentAudioTrackIndexRelay.accept(index)
+        }
+    }
+    
+    var currentSubtitleIndexBinder: Binder<Int> {
+        Binder(self) { target, index in
+            target.currentSubtitleIndexRelay.accept(index)
         }
     }
     
@@ -356,7 +403,7 @@ extension MediaInfomationBoxModel {
         if index < 0 || index >= audioTracks.count {
             return -1
         }
-        return audioTracks[index].index
+        return audioTracks[index].streamID
     }
     
     var resolution: MediaResolution? {
