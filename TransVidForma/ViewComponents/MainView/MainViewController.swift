@@ -17,6 +17,9 @@ final class MainViewController: NSViewController {
     
     private let disposeBag = DisposeBag()
     
+    private let cursorShouldHideSubject = PublishSubject<()>()
+    private let isCursorHidden = PublishSubject<Bool>()
+    
     private let mainContainer: NSStackView = {
         let stackView = NSStackView()
         stackView.orientation = .vertical
@@ -107,7 +110,6 @@ final class MainViewController: NSViewController {
     private let alert = NSAlert()
     
     override func viewDidLoad() {
-        view.window?.acceptsMouseMovedEvents = true
         setupViews()
         bind()
         NotificationCenter.default.addObserver(
@@ -173,6 +175,34 @@ final class MainViewController: NSViewController {
             
             viewModel.isCancelButtonHidden.drive(cancelButton.rx.isHidden),
             viewModel.isOptionAreaContainerHidden.drive(optionAreaContainer.rx.isHidden),
+            viewModel.isOptionAreaContainerHidden.drive(onNext: { [weak self] isHidden in
+                guard let self = self else { return }
+                self.view.window?.acceptsMouseMovedEvents = isHidden
+                guard isHidden else {
+                    self.isCursorHidden.onNext(false)
+                    return
+                }
+                self.cursorShouldHideSubject.onNext(())
+            }),
+            
+            cursorShouldHideSubject.withLatestFrom(viewModel.isOptionAreaContainerHidden)
+                .subscribe(onNext: { [weak self] isOptionAreaContainerHidden in
+                    guard let self = self, isOptionAreaContainerHidden else { return }
+                    self.isCursorHidden.onNext(false)
+                }),
+            cursorShouldHideSubject.debounce(.seconds(3), scheduler: MainScheduler.instance)
+                .withLatestFrom(viewModel.isOptionAreaContainerHidden)
+                .subscribe(onNext: { [weak self] isOptionAreaContainerHidden in
+                    guard let self = self, isOptionAreaContainerHidden else { return }
+                    self.isCursorHidden.onNext(true)
+                }),
+            
+            isCursorHidden.subscribe(onNext: { [weak self] isHidden in
+                guard let self = self else { return }
+                isHidden ? NSCursor.hide() : NSCursor.unhide()
+                let controlPanelContainerAlpha = CGFloat(isHidden && self.optionAreaContainer.isHidden ? 0.4 : 1)
+                self.controlPanelContainer.alphaValue = controlPanelContainerAlpha
+            }),
             
             // Fix player view size
             viewModel.resize.subscribe(onNext: { [weak self] in
@@ -206,6 +236,7 @@ final class MainViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
+        view.window?.acceptsMouseMovedEvents = true
         guard !isCenteredAtLaunching else { return }
         view.window?.center()
         isCenteredAtLaunching = true
@@ -336,17 +367,21 @@ private extension MainViewController {
     }
 }
 
-
-extension VLCVideoView {
+extension MainViewController {
     
-    open override func mouseUp(with event: NSEvent) {
+    override func mouseUp(with event: NSEvent) {
         super.mouseUp(with: event)
-        if event.clickCount == 2 {
-            NotificationCenter.default.post(name: .playerViewDoubleClicked, object: self)
-        }
+        let point = event.locationInWindow
+        guard playAreaContainer.hitTest(point) != nil, event.clickCount == 2 else { return }
+        NotificationCenter.default.post(name: .playerViewDoubleClicked, object: self)
+    }
+    
+    override func mouseMoved(with event: NSEvent) {
+        super.mouseMoved(with: event)
+        guard isWindowFullScreen, optionAreaContainer.isHidden else { return }
+        cursorShouldHideSubject.onNext(())
     }
 }
-
 
 extension NSNotification.Name {
     static let playerViewDoubleClicked = NSNotification.Name(rawValue: "playerViewDoubleClicked")
