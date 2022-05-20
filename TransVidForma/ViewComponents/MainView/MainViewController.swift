@@ -17,8 +17,18 @@ final class MainViewController: NSViewController {
     
     private let disposeBag = DisposeBag()
     
-    private let playerBackgroundView: NSVisualEffectView = {
-        let view = NSVisualEffectView.makeDarkBlurView()
+    private let mainContainer: NSStackView = {
+        let stackView = NSStackView()
+        stackView.orientation = .vertical
+        stackView.spacing = 0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private let playAreaContainer: NSView = {
+        let view = NSView()
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.black.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -29,8 +39,8 @@ final class MainViewController: NSViewController {
         return view
     }()
     
-    private let controlPanelContainer: NSVisualEffectView = {
-        let view = NSVisualEffectView.makeDarkBlurView()
+    private let controlPanelContainer: NSView = {
+        let view = NSView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -39,6 +49,12 @@ final class MainViewController: NSViewController {
         let panel = ControlPanel()
         panel.translatesAutoresizingMaskIntoConstraints = false
         return panel
+    }()
+    
+    private let optionAreaContainer: NSView = {
+        let view = NSVisualEffectView.makeDarkBlurView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     private let boxContainer: NSStackView = {
@@ -91,8 +107,27 @@ final class MainViewController: NSViewController {
     private let alert = NSAlert()
     
     override func viewDidLoad() {
+        view.window?.acceptsMouseMovedEvents = true
         setupViews()
         bind()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(togglePlayerMode),
+            name: .playerViewDoubleClicked,
+            object: nil)
+    }
+    
+    private func setupViews() {
+        view.addSubview(mainContainer)
+        mainContainer.pinEdgesTo(view: view)
+        addPlayerArea()
+        addOptionArea()
+    }
+    
+    @objc private func togglePlayerMode(_ sender: Any) {
+        viewModel.togglePlayerMode(
+            isWindowFullScreen: isWindowFullScreen,
+            window: view.window)
     }
     
     func bind() {
@@ -137,6 +172,7 @@ final class MainViewController: NSViewController {
             }),
             
             viewModel.isCancelButtonHidden.drive(cancelButton.rx.isHidden),
+            viewModel.isOptionAreaContainerHidden.drive(optionAreaContainer.rx.isHidden),
             
             // Fix player view size
             viewModel.resize.subscribe(onNext: { [weak self] in
@@ -163,88 +199,7 @@ final class MainViewController: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         view.window?.title = viewModel.windowTitle
-    }
-
-    private func setupViews() {
-        view.addSubview(playerBackgroundView)
-        view.addSubview(importButton)
-        view.addSubview(exportButton)
-        exportButton.addSubview(cancelButton)
-        view.addSubview(playerView)
-        
-        view.addSubview(controlPanelContainer)
-        controlPanelContainer.addSubview(controlPanel)
-        controlPanel.pinEdgesTo(view: controlPanelContainer, padding: 8)
-        
-        view.addSubview(clipView)
-        
-        view.addSubview(boxContainer)
-        view.addSubview(mediaInfomationBox)
-        view.addSubview(formatBox)
-        boxContainer.addArrangedSubview(mediaInfomationBox)
-        boxContainer.addArrangedSubview(formatBox)
-        
-        NSLayoutConstraint.activate([
-            playerBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            playerBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            playerBackgroundView.topAnchor.constraint(equalTo: playerView.topAnchor),
-            playerBackgroundView.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            importButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
-            importButton.topAnchor.constraint(equalTo: clipView.topAnchor),
-            importButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
-            importButton.widthAnchor.constraint(equalToConstant: 120),
-        ])
-        
-        NSLayoutConstraint.activate([
-            exportButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
-            exportButton.topAnchor.constraint(equalTo: clipView.topAnchor),
-            exportButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
-            exportButton.widthAnchor.constraint(equalToConstant: 120),
-        ])
-        
-        NSLayoutConstraint.activate([
-            cancelButton.leadingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: 4),
-            cancelButton.trailingAnchor.constraint(equalTo: exportButton.trailingAnchor, constant: -4),
-            cancelButton.heightAnchor.constraint(lessThanOrEqualToConstant: 30),
-            cancelButton.bottomAnchor.constraint(equalTo: exportButton.bottomAnchor, constant: -4),
-        ])
-        
-        NSLayoutConstraint.activate([
-            playerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            playerView.topAnchor.constraint(equalTo: view.topAnchor),
-            playerView.widthAnchor.constraint(equalTo: playerView.heightAnchor, multiplier: 4 / 3),
-            playerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 400),
-            playerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 600),
-        ])
-        
-        NSLayoutConstraint.activate([
-            controlPanelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            controlPanelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            controlPanelContainer.topAnchor.constraint(equalTo: playerView.bottomAnchor),
-            controlPanelContainer.heightAnchor.constraint(equalToConstant: 60),
-        ])
-        
-        NSLayoutConstraint.activate([
-            clipView.leadingAnchor.constraint(equalTo: importButton.trailingAnchor, constant: 12),
-            clipView.trailingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: -12),
-            clipView.topAnchor.constraint(equalTo: controlPanelContainer.bottomAnchor, constant: 12),
-            clipView.heightAnchor.constraint(equalToConstant: 50),
-        ])
-        
-        NSLayoutConstraint.activate([
-            boxContainer.leadingAnchor.constraint(equalTo: importButton.trailingAnchor, constant: 12),
-            boxContainer.trailingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: -12),
-            boxContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            boxContainer.topAnchor.constraint(equalTo: clipView.bottomAnchor, constant: 4),
-            boxContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12),
-        ])
-        
-        NSLayoutConstraint.activate([
-            mediaInfomationBox.widthAnchor.constraint(equalTo: formatBox.widthAnchor),
-        ])
+        view.window?.delegate = self
     }
     
     private var isCenteredAtLaunching = false
@@ -256,6 +211,11 @@ final class MainViewController: NSViewController {
         isCenteredAtLaunching = true
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .playerViewDoubleClicked, object: nil)
+    }
+    
+    //Mark: Fix vlc player size
     var fixedFirstTimeInvalidSize = false
     
     func fixFirstTimeInvalidSize(view: NSView) {
@@ -278,5 +238,123 @@ final class MainViewController: NSViewController {
             view.setFrameSize(frame.size)
             self.fixedFirstTimeInvalidSize = true
         }
+    }
+}
+
+private extension MainViewController {
+    
+    var isWindowFullScreen: Bool {
+        guard let window = view.window else {
+            return false
+        }
+        return window.styleMask.contains(.fullScreen)
+    }
+}
+
+private extension MainViewController {
+    
+    func addPlayerArea() {
+        mainContainer.addArrangedSubview(playAreaContainer)
+        playAreaContainer.addSubview(playerView)
+        NSLayoutConstraint.activate([
+            playAreaContainer.widthAnchor.constraint(equalTo: mainContainer.widthAnchor),
+        ])
+        controlPanelContainer.addSubview(controlPanel)
+        controlPanel.pinEdgesTo(view: controlPanelContainer, padding: 8)
+        playAreaContainer.addSubview(controlPanelContainer)
+        NSLayoutConstraint.activate([
+            playerView.centerXAnchor.constraint(equalTo: playAreaContainer.centerXAnchor),
+            playerView.topAnchor.constraint(equalTo: playAreaContainer.topAnchor),
+            playerView.leadingAnchor.constraint(equalTo: playAreaContainer.leadingAnchor),
+            playerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 400),
+            playerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 600),
+        ])
+        
+        NSLayoutConstraint.activate([
+            controlPanelContainer.leadingAnchor.constraint(equalTo: playAreaContainer.leadingAnchor),
+            controlPanelContainer.trailingAnchor.constraint(equalTo: playAreaContainer.trailingAnchor),
+            controlPanelContainer.topAnchor.constraint(equalTo: playerView.bottomAnchor),
+            controlPanelContainer.heightAnchor.constraint(equalToConstant: 60),
+            controlPanelContainer.bottomAnchor.constraint(equalTo: playAreaContainer.bottomAnchor),
+        ])
+    }
+    
+    func addOptionArea() {
+        mainContainer.addArrangedSubview(optionAreaContainer)
+        
+        NSLayoutConstraint.activate([
+            optionAreaContainer.widthAnchor.constraint(equalTo: mainContainer.widthAnchor)
+        ])
+        
+        exportButton.addSubview(cancelButton)
+        NSLayoutConstraint.activate([
+            cancelButton.leadingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: 4),
+            cancelButton.trailingAnchor.constraint(equalTo: exportButton.trailingAnchor, constant: -4),
+            cancelButton.heightAnchor.constraint(lessThanOrEqualToConstant: 30),
+            cancelButton.bottomAnchor.constraint(equalTo: exportButton.bottomAnchor, constant: -4),
+        ])
+        
+        boxContainer.addArrangedSubview(mediaInfomationBox)
+        boxContainer.addArrangedSubview(formatBox)
+        optionAreaContainer.addSubview(importButton)
+        optionAreaContainer.addSubview(exportButton)
+        optionAreaContainer.addSubview(clipView)
+        optionAreaContainer.addSubview(boxContainer)
+        
+        NSLayoutConstraint.activate([
+            importButton.leadingAnchor.constraint(equalTo: optionAreaContainer.leadingAnchor, constant: 12),
+            importButton.topAnchor.constraint(equalTo: clipView.topAnchor),
+            importButton.bottomAnchor.constraint(equalTo: optionAreaContainer.bottomAnchor, constant: -12),
+            importButton.widthAnchor.constraint(equalToConstant: 120),
+        ])
+        
+        NSLayoutConstraint.activate([
+            exportButton.trailingAnchor.constraint(equalTo: optionAreaContainer.trailingAnchor, constant: -12),
+            exportButton.topAnchor.constraint(equalTo: clipView.topAnchor),
+            exportButton.bottomAnchor.constraint(equalTo: optionAreaContainer.bottomAnchor, constant: -12),
+            exportButton.widthAnchor.constraint(equalToConstant: 120),
+        ])
+        
+        NSLayoutConstraint.activate([
+            clipView.leadingAnchor.constraint(equalTo: importButton.trailingAnchor, constant: 12),
+            clipView.trailingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: -12),
+            clipView.topAnchor.constraint(equalTo: controlPanelContainer.bottomAnchor, constant: 12),
+            clipView.heightAnchor.constraint(equalToConstant: 50),
+        ])
+        
+        NSLayoutConstraint.activate([
+            boxContainer.leadingAnchor.constraint(equalTo: importButton.trailingAnchor, constant: 12),
+            boxContainer.trailingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: -12),
+            boxContainer.centerXAnchor.constraint(equalTo: optionAreaContainer.centerXAnchor),
+            boxContainer.topAnchor.constraint(equalTo: clipView.bottomAnchor, constant: 4),
+            boxContainer.bottomAnchor.constraint(equalTo: optionAreaContainer.bottomAnchor, constant: -12),
+        ])
+        
+        NSLayoutConstraint.activate([
+            mediaInfomationBox.widthAnchor.constraint(equalTo: formatBox.widthAnchor),
+        ])
+    }
+}
+
+
+extension VLCVideoView {
+    
+    open override func mouseUp(with event: NSEvent) {
+        super.mouseUp(with: event)
+        if event.clickCount == 2 {
+            NotificationCenter.default.post(name: .playerViewDoubleClicked, object: self)
+        }
+    }
+}
+
+
+extension NSNotification.Name {
+    static let playerViewDoubleClicked = NSNotification.Name(rawValue: "playerViewDoubleClicked")
+}
+
+extension MainViewController: NSWindowDelegate {
+    
+    func windowDidExitFullScreen(_ notification: Notification) {
+        viewModel.setPlayerMode(false)
     }
 }

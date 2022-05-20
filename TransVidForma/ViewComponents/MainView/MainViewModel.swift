@@ -37,6 +37,7 @@ final class MainViewModel {
     let isImportExportDisabled: Driver<Bool>
     let isExportDisabled: Driver<Bool>
     let isCancelButtonHidden: Driver<Bool>
+    let isOptionAreaContainerHidden: Driver<Bool>
     
     private let disposeBag = DisposeBag()
     private let importButtonTitleRelay = BehaviorRelay<String>(value: Constants.importTitle.formatCString(""))
@@ -44,6 +45,7 @@ final class MainViewModel {
     private let progressPercentageRelay = BehaviorRelay<Double?>(value: nil)
     private let isImportExportDisabledRelay = BehaviorRelay<Bool>(value: false)
     private let isExportDisabledRelay = BehaviorRelay<Bool>(value: true)
+    private let isOptionAreaContainerHiddenRelay = BehaviorRelay<Bool>(value: false)
     
     private let resizePlayerView = PublishSubject<()>()
     
@@ -66,6 +68,7 @@ final class MainViewModel {
         isImportExportDisabled = isImportExportDisabledRelay.asDriver()
         isExportDisabled = isExportDisabledRelay.asDriver()
         isCancelButtonHidden = progressPercentageRelay.asDriver().map { $0 == nil }
+        isOptionAreaContainerHidden = isOptionAreaContainerHiddenRelay.asDriver()
         
         controlPanelViewModel = ControlPanelViewModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
         mediaInfomationBoxModel = MediaInfomationBoxModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
@@ -111,6 +114,19 @@ final class MainViewModel {
                 self.updateExportAvailability(self.mediaPlayer.media)
             }),
         ])
+    }
+    
+    func setPlayerMode(_ isPlayerMode: Bool) {
+        isOptionAreaContainerHiddenRelay.accept(isPlayerMode)
+    }
+    
+    func togglePlayerMode(isWindowFullScreen: Bool, window: NSWindow?) {
+        guard let window = window else { return }
+        let isPlayerMode = isOptionAreaContainerHiddenRelay.value
+        if !isPlayerMode && !isWindowFullScreen {
+            window.toggleFullScreen(nil)
+        }
+        isOptionAreaContainerHiddenRelay.accept(!isPlayerMode)
     }
     
     func importButtonClicked() {

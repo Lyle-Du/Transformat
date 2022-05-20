@@ -32,24 +32,11 @@ final class ProgressButton: NSButton {
         return layer
     }()
     
-    private let foregroundLayer: CAShapeLayer = {
-        let layer = CAShapeLayer()
-        return layer
-    }()
-    
     private let animation: CABasicAnimation = {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.duration = 0.5
         animation.timingFunction = CAMediaTimingFunction(name: .linear)
         return animation
-    }()
-    
-    private let label: NSTextField = {
-        let textView = NSTextField.makeLabel()
-        textView.isSelectable = false
-        textView.alignment = .center
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        return textView
     }()
     
     override init(frame frameRect: NSRect) {
@@ -63,25 +50,12 @@ final class ProgressButton: NSButton {
     }
     
     private func commonInit() {
-        isBordered = false
-        wantsLayer = true
-        layer?.backgroundColor = .clear
         progressLayer.cornerRadius = cornerRadius
         progressLayer.lineWidth = cornerRadius
-        foregroundLayer.cornerRadius = cornerRadius
         layer?.addSublayer(progressLayer)
-        layer?.addSublayer(foregroundLayer)
         layer?.cornerRadius = cornerRadius
         layer?.masksToBounds = false
         translatesAutoresizingMaskIntoConstraints = false
-        addSubview(label)
-        
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: centerYAnchor),
-            label.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
-            label.topAnchor.constraint(greaterThanOrEqualTo: topAnchor),
-        ])
         
         DistributedNotificationCenter.default.addObserver(
             self,
@@ -94,22 +68,20 @@ final class ProgressButton: NSButton {
         needsDisplay = true
     }
     
+    var foregroundEnabledFillColor: NSColor = NSColor(white: 10 / 255.0, alpha: 1)
+    var foregroundDisabledFillColor: NSColor = NSColor(white: 45 / 255.0, alpha: 1)
     
+    var foregroundEnabledStrokeColor: NSColor = NSColor(white: 100 / 255.0, alpha: 1)
+    var foregroundDisabledStrokeColor: NSColor = NSColor(white: 50 / 255.0, alpha: 1)
+    
+    var foregroundEnabledDarkFillColor: NSColor = NSColor(white: 110 / 255.0, alpha: 1)
+    var foregroundDisabledDarkFillColor: NSColor = NSColor(white: 45 / 255.0, alpha: 1)
+    
+    var foregroundEnabledDarkStrokeColor: NSColor = NSColor(white: 130 / 255.0, alpha: 1)
+    var foregroundDisabledDarkStrokeColor: NSColor = NSColor(white: 50 / 255.0, alpha: 1)
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        
-        let foregroundEnabledColor = isDarkMode ? NSColor(white: 90 / 255, alpha: 1) : NSColor.white
-        let foregroundDisabledColor = isDarkMode ? NSColor(white: 45 / 255, alpha: 1) : NSColor(white: 250 / 255, alpha: 1)
-        if self.isEnabled {
-            foregroundLayer.strokeColor = (isDarkMode ? NSColor(white: 100 / 255, alpha: 1) : NSColor(white: 222 / 255, alpha: 1)).cgColor
-            foregroundLayer.fillColor = foregroundEnabledColor.shadow(withLevel: isHighlighted ? 0.2 : .zero)?.cgColor
-        } else {
-            foregroundLayer.strokeColor = (isDarkMode ? NSColor(white: 50 / 255, alpha: 1) : NSColor(white: 222 / 255, alpha: 1)).cgColor
-            foregroundLayer.fillColor = foregroundDisabledColor.cgColor
-        }
-        
-        foregroundLayer.frame = dirtyRect
         progressLayer.strokeColor = progressColor.cgColor
         progressLayer.fillColor = .clear
         progressLayer.strokeEnd = progress
@@ -117,9 +89,6 @@ final class ProgressButton: NSButton {
         animation.fromValue = animation.toValue ?? 0
         animation.toValue = NSNumber(value: progress)
         progressLayer.add(animation, forKey: nil)
-        label.stringValue = title
-        label.font = font
-        label.isEnabled = isEnabled
     }
     
     override func layout() {
@@ -152,7 +121,6 @@ final class ProgressButton: NSButton {
             delta: .pi / 2)
         cgPath.closeSubpath()
         progressLayer.path = cgPath.copy()
-        foregroundLayer.path = cgPath.copy()
     }
 }
 
@@ -167,14 +135,4 @@ extension Reactive where Base: ProgressButton {
 
 extension Notification.Name {
     static let AppleInterfaceThemeChangedNotification = Notification.Name("AppleInterfaceThemeChangedNotification")
-}
-
-
-extension NSView {
-    
-    var isDarkMode: Bool {
-        let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle")
-        let isDarkMode = mode == "Dark"
-        return isDarkMode
-    }
 }
