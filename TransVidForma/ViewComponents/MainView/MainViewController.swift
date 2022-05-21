@@ -396,6 +396,10 @@ extension NSNotification.Name {
 extension MainViewController: NSWindowDelegate {
     
     func windowDidExitFullScreen(_ notification: Notification) {
-        viewModel.setPlayerMode(false)
+        viewModel.windowDidExitFullScreen()
+    }
+    
+    func windowDidEnterFullScreen(_ notification: Notification) {
+        viewModel.windowDidEnterFullScreen()
     }
 }

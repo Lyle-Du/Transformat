@@ -56,36 +56,14 @@ final class ProgressButton: NSButton {
         layer?.addSublayer(progressLayer)
         layer?.masksToBounds = false
         translatesAutoresizingMaskIntoConstraints = false
-        
-        DistributedNotificationCenter.default.addObserver(
-            self,
-            selector: #selector(interfaceModeChanged(sender:)),
-            name: .AppleInterfaceThemeChangedNotification,
-            object: nil)
     }
-    
-    @objc func interfaceModeChanged(sender: NSNotification) {
-        needsDisplay = true
-    }
-    
-    var foregroundEnabledFillColor: NSColor = NSColor(white: 10 / 255.0, alpha: 1)
-    var foregroundDisabledFillColor: NSColor = NSColor(white: 45 / 255.0, alpha: 1)
-    
-    var foregroundEnabledStrokeColor: NSColor = NSColor(white: 100 / 255.0, alpha: 1)
-    var foregroundDisabledStrokeColor: NSColor = NSColor(white: 50 / 255.0, alpha: 1)
-    
-    var foregroundEnabledDarkFillColor: NSColor = NSColor(white: 110 / 255.0, alpha: 1)
-    var foregroundDisabledDarkFillColor: NSColor = NSColor(white: 45 / 255.0, alpha: 1)
-    
-    var foregroundEnabledDarkStrokeColor: NSColor = NSColor(white: 130 / 255.0, alpha: 1)
-    var foregroundDisabledDarkStrokeColor: NSColor = NSColor(white: 50 / 255.0, alpha: 1)
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        progressLayer.strokeColor = progressColor.cgColor
         progressLayer.fillColor = .clear
-        progressLayer.strokeEnd = progress
         progressLayer.shadowColor = progressColor.cgColor
+        progressLayer.strokeColor = progressColor.cgColor
+        progressLayer.strokeEnd = progress
         animation.fromValue = animation.toValue ?? 0
         animation.toValue = NSNumber(value: progress)
         progressLayer.add(animation, forKey: nil)

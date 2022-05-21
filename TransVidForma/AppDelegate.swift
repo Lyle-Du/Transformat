@@ -16,6 +16,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         windowController.viewModel = MainWindowViewModel()
         mainViewController.viewModel = MainViewModel()
+        mainViewController.viewModel.windowDidEnterFullScreenHandler = windowController.viewModel.windowDidEnterFullScreen
+        mainViewController.viewModel.windowDidExitFullScreenHandler = windowController.viewModel.windowDidExitFullScreen
         windowController.loadWindow(contentViewController: mainViewController)
         windowController.window?.makeKeyAndOrderFront(nil)
     }

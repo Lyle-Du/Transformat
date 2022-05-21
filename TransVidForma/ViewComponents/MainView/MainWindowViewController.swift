@@ -32,6 +32,7 @@ final class MainWindowViewController: NSWindowController {
 
     func loadWindow(contentViewController: NSViewController) {
         window = NSWindow(contentViewController: contentViewController)
+        
         guard
             let window = window,
             let titleBarView = window.standardWindowButton(.closeButton)?.superview else
@@ -64,6 +65,8 @@ final class MainWindowViewController: NSWindowController {
                 self.pinButton.image = image
                 self.window?.level = isPinned ? .floating : .normal
             }),
+            
+            viewModel.isPinButtonHidden.drive(pinButton.rx.isHidden),
         ])
     }
 }

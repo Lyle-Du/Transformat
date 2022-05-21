@@ -12,6 +12,9 @@ import VLCKit
 
 final class MainViewModel {
     
+    var windowDidExitFullScreenHandler: (() -> Void)?
+    var windowDidEnterFullScreenHandler: (() -> Void)?
+    
     let cancelAlert = CancelAlert()
     
     var resize: ControlEvent<()> {
@@ -122,10 +125,6 @@ final class MainViewModel {
     func updateSize(_ view: NSView) {
         mediaPlayer.drawable = nil
         mediaPlayer.drawable = view
-    }
-    
-    func setPlayerMode(_ isPlayerMode: Bool) {
-        isOptionAreaContainerHiddenRelay.accept(isPlayerMode)
     }
     
     func togglePlayerMode(isWindowFullScreen: Bool, window: NSWindow?) {
@@ -261,6 +260,18 @@ final class MainViewModel {
         } else {
             isExportDisabledRelay.accept(isImportExportDisabledRelay.value)
         }
+    }
+}
+
+extension MainViewModel {
+    
+    func windowDidExitFullScreen() {
+        isOptionAreaContainerHiddenRelay.accept(false)
+        windowDidExitFullScreenHandler?()
+    }
+    
+    func windowDidEnterFullScreen() {
+        windowDidEnterFullScreenHandler?()
     }
 }
 
