@@ -29,8 +29,6 @@ final class MainViewModel {
     let importButtonTitle: Driver<String>
     let exportButtonTitle: Driver<String>
     
-    let mediaPlayer: VLCMediaPlayer
-    
     let stateChangedDriver: Driver<VLCMediaPlayer>
     let progressPercentage: Driver<Double?>
     let progressPercentageText: Driver<String>
@@ -50,6 +48,7 @@ final class MainViewModel {
     private let resizePlayerView = PublishSubject<()>()
     
     private let openPanel: NSOpenPanel
+    private let mediaPlayer: VLCMediaPlayer
     private let mediaPlayerDelegator: MediaPlayerDelegator
     
     private var ffmpegSession: FFmpegSession?
@@ -114,6 +113,15 @@ final class MainViewModel {
                 self.updateExportAvailability(self.mediaPlayer.media)
             }),
         ])
+    }
+    
+    func viewDidDisappear(_ didDisappear: Bool) {
+        mediaPlayerDelegator.shouldPause = didDisappear
+    }
+    
+    func updateSize(_ view: NSView) {
+        mediaPlayer.drawable = nil
+        mediaPlayer.drawable = view
     }
     
     func setPlayerMode(_ isPlayerMode: Bool) {
@@ -253,6 +261,13 @@ final class MainViewModel {
         } else {
             isExportDisabledRelay.accept(isImportExportDisabledRelay.value)
         }
+    }
+}
+
+extension MainViewModel {
+    
+    var hasVideoOut: Bool {
+        mediaPlayer.hasVideoOut
     }
 }
 

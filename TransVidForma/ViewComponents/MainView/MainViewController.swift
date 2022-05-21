@@ -214,8 +214,7 @@ final class MainViewController: NSViewController {
             // Fix player view size
             viewModel.resize.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                self.viewModel.mediaPlayer.drawable = nil
-                self.viewModel.mediaPlayer.drawable = self.playerView
+                self.viewModel.updateSize(self.playerView)
                 self.fixedFirstTimeInvalidSize = false
                 self.fixFirstTimeInvalidSize(view: self.playerView)
             }),
@@ -224,13 +223,12 @@ final class MainViewController: NSViewController {
     
     override func viewDidLayout() {
         super.viewDidLayout()
-        viewModel.mediaPlayer.drawable = nil
-        viewModel.mediaPlayer.drawable = playerView
+        self.viewModel.updateSize(playerView)
     }
     
     override func viewDidDisappear() {
         super.viewDidDisappear()
-        viewModel.mediaPlayer.pause()
+        viewModel.viewDidDisappear(true)
     }
     
     override func viewWillAppear() {
@@ -243,6 +241,7 @@ final class MainViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
+        viewModel.viewDidDisappear(false)
         view.window?.acceptsMouseMovedEvents = true
         guard !isCenteredAtLaunching else { return }
         view.window?.center()
@@ -266,7 +265,7 @@ final class MainViewController: NSViewController {
             }
             
             guard
-                self.viewModel.mediaPlayer.hasVideoOut,
+                self.viewModel.hasVideoOut,
                 let frame = view.window?.frame else
             {
                 self.fixFirstTimeInvalidSize(view: view) // delay

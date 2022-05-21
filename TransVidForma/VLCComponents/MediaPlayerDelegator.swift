@@ -15,6 +15,8 @@ import VLCKit
 
 final class MediaPlayerDelegator: NSObject, VLCMediaPlayerDelegate {
     
+    var shouldPause = false
+    
     let stateChangedDriver: Driver<VLCMediaPlayer>
     let timeChangedDriver: Driver<VLCMediaPlayer>
     
@@ -54,10 +56,19 @@ final class MediaPlayerDelegator: NSObject, VLCMediaPlayerDelegate {
         }
         
         stateChanged.onNext(mediaPlayer)
+        handleViewDidDisappear(mediaPlayer)
     }
     
     func mediaPlayerTimeChanged(_ notification: Notification) {
         guard let mediaPlayer = notification.object as? VLCMediaPlayer else { return }
         timeChanged.onNext(mediaPlayer)
+        handleViewDidDisappear(mediaPlayer)
+    }
+    
+    private func handleViewDidDisappear(_ mediaPlayer: VLCMediaPlayer) {
+        guard shouldPause && mediaPlayer.isPlaying else {
+            return
+        }
+        mediaPlayer.pause()
     }
 }
