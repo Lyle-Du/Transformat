@@ -5,6 +5,8 @@
 //  Created by QIU DU on 28/4/22.
 //
 
+import IOKit.pwr_mgt
+
 import Foundation
 
 import RxCocoa
@@ -21,6 +23,11 @@ final class MediaPlayerDelegator: NSObject, VLCMediaPlayerDelegate {
     
     private weak var mediaPlayer: VLCMediaPlayer!
     
+    private var assertionID = IOPMAssertionID(0)
+    private let reasonForActivity = "Video is playing" as CFString
+    private let kIOPMAssertPreventUserIdleDisplaySleep = "PreventUserIdleDisplaySleep" as CFString
+    private var preventUserIdleDisplaySleepSuccess: IOReturn?
+    
     init(mediaPlayer: VLCMediaPlayer) {
         self.mediaPlayer = mediaPlayer
         stateChangedDriver = stateChanged.asDriver(onErrorJustReturn: self.mediaPlayer)
@@ -31,6 +38,21 @@ final class MediaPlayerDelegator: NSObject, VLCMediaPlayerDelegate {
     
     func mediaPlayerStateChanged(_ notification: Notification) {
         guard let mediaPlayer = notification.object as? VLCMediaPlayer else { return }
+        
+        if mediaPlayer.isPlaying {
+            if preventUserIdleDisplaySleepSuccess != kIOReturnSuccess {
+                preventUserIdleDisplaySleepSuccess = IOPMAssertionCreateWithName(
+                    kIOPMAssertPreventUserIdleDisplaySleep,
+                    IOPMAssertionLevel(kIOPMAssertionLevelOn),
+                    reasonForActivity,
+                    &assertionID)
+            }
+        } else {
+            if preventUserIdleDisplaySleepSuccess == kIOReturnSuccess {
+                IOPMAssertionRelease(assertionID)
+            }
+        }
+        
         stateChanged.onNext(mediaPlayer)
     }
     
