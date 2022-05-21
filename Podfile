@@ -12,8 +12,9 @@ target 'TransVid Forma' do
   pod 'RxCocoa', '~> 6.5.0'
 
   target 'TransVid FormaTests' do
-    inherit! :search_paths
+    inherit! :complete
     # Pods for testing
+    pod 'RxTest', '~> 6.5.0'
   end
 
   target 'TransVid FormaUITests' do

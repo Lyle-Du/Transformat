@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		28BCFD63F1C16F07851CF1B1 /* Pods_TransVid_Forma_TransVid_FormaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3667B2B2D480F18D96F1F9D1 /* Pods_TransVid_Forma_TransVid_FormaUITests.framework */; };
 		3E02AF9A281704D000BE6FE4 /* ControlPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E02AF99281704D000BE6FE4 /* ControlPanel.swift */; };
 		3E02AF9C2818089B00BE6FE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */; };
 		3E03868B2827C64100A429F8 /* Rx+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03868A2827C64100A429F8 /* Rx+Extensions.swift */; };
@@ -15,6 +14,7 @@
 		3E03869128280E7000A429F8 /* UnitStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03869028280E7000A429F8 /* UnitStorage.swift */; };
 		3E08DF4D2838BC8A0065B53E /* MainWindowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E08DF4C2838BC8A0065B53E /* MainWindowViewController.swift */; };
 		3E08DF4F2838C3B20065B53E /* MainWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E08DF4E2838C3B20065B53E /* MainWindowViewModel.swift */; };
+		3E08DF5B2838E4F40065B53E /* MainWindowViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E08DF5A2838E4F40065B53E /* MainWindowViewModelTests.swift */; };
 		3E18655B283240620003016E /* ClosedRange+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E18655A283240620003016E /* ClosedRange+Extensions.swift */; };
 		3E18655D283252640003016E /* ClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E18655C283252640003016E /* ClipViewModel.swift */; };
 		3E1865612832915B0003016E /* DraggableStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1865602832915B0003016E /* DraggableStackView.swift */; };
@@ -50,8 +50,9 @@
 		3EEF90952823FEA200039BB1 /* MediaInfomationBoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF90942823FEA200039BB1 /* MediaInfomationBoxModel.swift */; };
 		3EF84002282FCA6A00689AD6 /* TextFieldSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF84001282FCA6A00689AD6 /* TextFieldSlider.swift */; };
 		3EFBBC392812A72E00A0A05C /* TrimControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFBBC382812A72E00A0A05C /* TrimControl.swift */; };
-		895505B260EEB28679C6AF8D /* Pods_TransVid_Forma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36AE2DD6F2A3A74CA1A62BCC /* Pods_TransVid_Forma.framework */; };
-		DA322662E4F4BE7398E02296 /* Pods_TransVid_FormaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32557689A69948EF09D8801E /* Pods_TransVid_FormaTests.framework */; };
+		4A707FFA427D34B334EEB281 /* Pods_TransVid_Forma_TransVid_FormaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A388D1F287F920A14270FCEA /* Pods_TransVid_Forma_TransVid_FormaTests.framework */; };
+		93C1119E601C83E8622CC565 /* Pods_TransVid_Forma_TransVid_FormaUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D7AD39F088D87E61BAEA5E /* Pods_TransVid_Forma_TransVid_FormaUITests.framework */; };
+		B64C7D9F4F3386AB45BDFE4D /* Pods_TransVid_Forma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B7E46B2E7CD406F2FD24104 /* Pods_TransVid_Forma.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,11 +73,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02D7AD39F088D87E61BAEA5E /* Pods_TransVid_Forma_TransVid_FormaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVid_Forma_TransVid_FormaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A7A4963D9600CCAFA818F68 /* Pods-TransVid Forma.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid Forma.release.xcconfig"; path = "Target Support Files/Pods-TransVid Forma/Pods-TransVid Forma.release.xcconfig"; sourceTree = "<group>"; };
 		0B4A6C23E7222F6DFFD70263 /* Pods-TransVid Forma-TransVid FormaUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid Forma-TransVid FormaUITests.release.xcconfig"; path = "Target Support Files/Pods-TransVid Forma-TransVid FormaUITests/Pods-TransVid Forma-TransVid FormaUITests.release.xcconfig"; sourceTree = "<group>"; };
-		32557689A69948EF09D8801E /* Pods_TransVid_FormaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVid_FormaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3667B2B2D480F18D96F1F9D1 /* Pods_TransVid_Forma_TransVid_FormaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVid_Forma_TransVid_FormaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		36AE2DD6F2A3A74CA1A62BCC /* Pods_TransVid_Forma.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVid_Forma.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		207C16285A5FADEFE11F125D /* Pods-TransVid Forma-TransVid FormaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid Forma-TransVid FormaTests.release.xcconfig"; path = "Target Support Files/Pods-TransVid Forma-TransVid FormaTests/Pods-TransVid Forma-TransVid FormaTests.release.xcconfig"; sourceTree = "<group>"; };
 		3E02AF99281704D000BE6FE4 /* ControlPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanel.swift; sourceTree = "<group>"; };
 		3E02AF9B2818089B00BE6FE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E03868A2827C64100A429F8 /* Rx+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Extensions.swift"; sourceTree = "<group>"; };
@@ -84,6 +84,8 @@
 		3E03869028280E7000A429F8 /* UnitStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitStorage.swift; sourceTree = "<group>"; };
 		3E08DF4C2838BC8A0065B53E /* MainWindowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowViewController.swift; sourceTree = "<group>"; };
 		3E08DF4E2838C3B20065B53E /* MainWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowViewModel.swift; sourceTree = "<group>"; };
+		3E08DF592838E4F30065B53E /* TransVid FormaTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TransVid FormaTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		3E08DF5A2838E4F40065B53E /* MainWindowViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowViewModelTests.swift; sourceTree = "<group>"; };
 		3E18655A283240620003016E /* ClosedRange+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClosedRange+Extensions.swift"; sourceTree = "<group>"; };
 		3E18655C283252640003016E /* ClipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipViewModel.swift; sourceTree = "<group>"; };
 		3E1865602832915B0003016E /* DraggableStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableStackView.swift; sourceTree = "<group>"; };
@@ -124,6 +126,9 @@
 		3EEF90942823FEA200039BB1 /* MediaInfomationBoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInfomationBoxModel.swift; sourceTree = "<group>"; };
 		3EF84001282FCA6A00689AD6 /* TextFieldSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSlider.swift; sourceTree = "<group>"; };
 		3EFBBC382812A72E00A0A05C /* TrimControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimControl.swift; sourceTree = "<group>"; };
+		7B7E46B2E7CD406F2FD24104 /* Pods_TransVid_Forma.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVid_Forma.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A388D1F287F920A14270FCEA /* Pods_TransVid_Forma_TransVid_FormaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TransVid_Forma_TransVid_FormaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEA4AB43D27760B052D85142 /* Pods-TransVid Forma-TransVid FormaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid Forma-TransVid FormaTests.debug.xcconfig"; path = "Target Support Files/Pods-TransVid Forma-TransVid FormaTests/Pods-TransVid Forma-TransVid FormaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B1188021BB7AF7F1436FD85D /* Pods-TransVid FormaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid FormaTests.release.xcconfig"; path = "Target Support Files/Pods-TransVid FormaTests/Pods-TransVid FormaTests.release.xcconfig"; sourceTree = "<group>"; };
 		D2FD623AD79AD6979581AE4D /* Pods-TransVid Forma.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid Forma.debug.xcconfig"; path = "Target Support Files/Pods-TransVid Forma/Pods-TransVid Forma.debug.xcconfig"; sourceTree = "<group>"; };
 		E111AF9BB76B89EA887EA3C6 /* Pods-TransVid Forma-TransVid FormaUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TransVid Forma-TransVid FormaUITests.debug.xcconfig"; path = "Target Support Files/Pods-TransVid Forma-TransVid FormaUITests/Pods-TransVid Forma-TransVid FormaUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -135,7 +140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				895505B260EEB28679C6AF8D /* Pods_TransVid_Forma.framework in Frameworks */,
+				B64C7D9F4F3386AB45BDFE4D /* Pods_TransVid_Forma.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,7 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA322662E4F4BE7398E02296 /* Pods_TransVid_FormaTests.framework in Frameworks */,
+				4A707FFA427D34B334EEB281 /* Pods_TransVid_Forma_TransVid_FormaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,13 +156,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28BCFD63F1C16F07851CF1B1 /* Pods_TransVid_Forma_TransVid_FormaUITests.framework in Frameworks */,
+				93C1119E601C83E8622CC565 /* Pods_TransVid_Forma_TransVid_FormaUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E08DF582838E4650065B53E /* TransVidFormaTests */ = {
+			isa = PBXGroup;
+			children = (
+				3E08DF5A2838E4F40065B53E /* MainWindowViewModelTests.swift */,
+				3E08DF592838E4F30065B53E /* TransVid FormaTests-Bridging-Header.h */,
+			);
+			path = TransVidFormaTests;
+			sourceTree = "<group>";
+		};
 		3E1865622832D8510003016E /* SubClipView */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +193,7 @@
 		3E5E5588280C760F000C5435 = {
 			isa = PBXGroup;
 			children = (
+				3E08DF582838E4650065B53E /* TransVidFormaTests */,
 				3E5E5593280C760F000C5435 /* TransVidForma */,
 				3E5E5592280C760F000C5435 /* Products */,
 				7436038F57912ABBED71E86F /* Pods */,
@@ -327,9 +342,9 @@
 		3FBDBFB086E7878A69A78739 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				36AE2DD6F2A3A74CA1A62BCC /* Pods_TransVid_Forma.framework */,
-				3667B2B2D480F18D96F1F9D1 /* Pods_TransVid_Forma_TransVid_FormaUITests.framework */,
-				32557689A69948EF09D8801E /* Pods_TransVid_FormaTests.framework */,
+				7B7E46B2E7CD406F2FD24104 /* Pods_TransVid_Forma.framework */,
+				02D7AD39F088D87E61BAEA5E /* Pods_TransVid_Forma_TransVid_FormaUITests.framework */,
+				A388D1F287F920A14270FCEA /* Pods_TransVid_Forma_TransVid_FormaTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -343,6 +358,8 @@
 				0B4A6C23E7222F6DFFD70263 /* Pods-TransVid Forma-TransVid FormaUITests.release.xcconfig */,
 				EE25CF9B4891D3ADBBBCA27E /* Pods-TransVid FormaTests.debug.xcconfig */,
 				B1188021BB7AF7F1436FD85D /* Pods-TransVid FormaTests.release.xcconfig */,
+				AEA4AB43D27760B052D85142 /* Pods-TransVid Forma-TransVid FormaTests.debug.xcconfig */,
+				207C16285A5FADEFE11F125D /* Pods-TransVid Forma-TransVid FormaTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -377,6 +394,7 @@
 				3E5E559E280C7610000C5435 /* Sources */,
 				3E5E559F280C7610000C5435 /* Frameworks */,
 				3E5E55A0280C7610000C5435 /* Resources */,
+				1224963078CD99556D65156A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -424,6 +442,7 @@
 					};
 					3E5E55A1280C7610000C5435 = {
 						CreatedOnToolsVersion = 13.3.1;
+						LastSwiftMigration = 1340;
 						TestTargetID = 3E5E5590280C760F000C5435;
 					};
 					3E5E55AB280C7610000C5435 = {
@@ -525,6 +544,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		1224963078CD99556D65156A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TransVid Forma-TransVid FormaTests/Pods-TransVid Forma-TransVid FormaTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TransVid Forma-TransVid FormaTests/Pods-TransVid Forma-TransVid FormaTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TransVid Forma-TransVid FormaTests/Pods-TransVid Forma-TransVid FormaTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		74B9D1CCFF724BA9164C02C1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -574,7 +610,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TransVid FormaTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TransVid Forma-TransVid FormaTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -634,6 +670,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E08DF5B2838E4F40065B53E /* MainWindowViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -869,18 +906,26 @@
 		};
 		3E5E55BA280C7610000C5435 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE25CF9B4891D3ADBBBCA27E /* Pods-TransVid FormaTests.debug.xcconfig */;
+			baseConfigurationReference = AEA4AB43D27760B052D85142 /* Pods-TransVid Forma-TransVid FormaTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P45J34CJYG;
 				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lyledu.TransformatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "TransVidFormaTests/TransVid FormaTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TransVid Forma.app/Contents/MacOS/TransVid Forma";
 			};
@@ -888,18 +933,25 @@
 		};
 		3E5E55BB280C7610000C5435 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B1188021BB7AF7F1436FD85D /* Pods-TransVid FormaTests.release.xcconfig */;
+			baseConfigurationReference = 207C16285A5FADEFE11F125D /* Pods-TransVid Forma-TransVid FormaTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P45J34CJYG;
 				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lyledu.TransformatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "TransVidFormaTests/TransVid FormaTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TransVid Forma.app/Contents/MacOS/TransVid Forma";
 			};

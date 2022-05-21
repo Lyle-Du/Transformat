@@ -6,12 +6,15 @@ PODS:
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
+  - RxTest (6.5.0):
+    - RxSwift (= 6.5.0)
   - VLCKit (3.4.1b9)
 
 DEPENDENCIES:
   - ffmpeg-kit-macos-full (~> 4.5.1)
   - RxCocoa (~> 6.5.0)
   - RxSwift (~> 6.5.0)
+  - RxTest (~> 6.5.0)
   - VLCKit (~> 3.4.1b9)
 
 SPEC REPOS:
@@ -20,6 +23,7 @@ SPEC REPOS:
     - RxCocoa
     - RxRelay
     - RxSwift
+    - RxTest
     - VLCKit
 
 SPEC CHECKSUMS:
@@ -27,8 +31,9 @@ SPEC CHECKSUMS:
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  RxTest: eb2d23adefc5a5ebf5779c7792fa3edfe6ebcc17
   VLCKit: 51fbe9c2ed0575547a7cbd48c9fb9f231b1e881e
 
-PODFILE CHECKSUM: 0604b9709202ba6c61e729a0f83976f07a48f9b8
+PODFILE CHECKSUM: 74b034111808d7072394998f595450936a2317fd
 
 COCOAPODS: 1.11.3
