@@ -11,6 +11,7 @@ import RxCocoa
 
 final class MainWindowViewModel {
     
+    let title = NSLocalizedString("TransVid Forma", comment: "")
     let isPinned: Driver<Bool>
     
     private let isPinnedRelay: BehaviorRelay<Bool>

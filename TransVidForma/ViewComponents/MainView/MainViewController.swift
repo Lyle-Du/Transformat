@@ -13,10 +13,17 @@ import VLCKit
 
 final class MainViewController: NSViewController {
     
-    private let viewModel: MainViewModel = MainViewModel()
+    override func loadView() {
+        view = NSView()
+    }
+    
+    var viewModel: MainViewModel! {
+        didSet {
+            bind()
+        }
+    }
     
     private let disposeBag = DisposeBag()
-    
     private let cursorShouldHideSubject = PublishSubject<()>()
     private let isCursorHidden = PublishSubject<Bool>()
     
@@ -111,7 +118,7 @@ final class MainViewController: NSViewController {
     
     override func viewDidLoad() {
         setupViews()
-        bind()
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(togglePlayerMode),

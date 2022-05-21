@@ -13,7 +13,11 @@ import RxSwift
 
 final class MainWindowViewController: NSWindowController {
     
-    private let viewModel = MainWindowViewModel()
+    var viewModel: MainWindowViewModel! {
+        didSet {
+            bind()
+        }
+    }
     
     private let disposeBag = DisposeBag()
     
@@ -26,8 +30,8 @@ final class MainWindowViewController: NSWindowController {
         return button
     }()
 
-    override func windowDidLoad() {
-        super.windowDidLoad()
+    func loadWindow(contentViewController: NSViewController) {
+        window = NSWindow(contentViewController: contentViewController)
         guard
             let window = window,
             let titleBarView = window.standardWindowButton(.closeButton)?.superview else
@@ -35,19 +39,19 @@ final class MainWindowViewController: NSWindowController {
             return
         }
         
+        window.styleMask = [.miniaturizable, .closable, .resizable, .titled]
+        
         titleBarView.addSubview(pinButton)
         NSLayoutConstraint.activate([
             pinButton.widthAnchor.constraint(equalToConstant: 24),
             pinButton.widthAnchor.constraint(equalTo: pinButton.heightAnchor),
-            pinButton.topAnchor.constraint(equalTo: titleBarView.topAnchor),
             pinButton.centerYAnchor.constraint(equalTo: titleBarView.centerYAnchor),
             pinButton.trailingAnchor.constraint(equalTo: titleBarView.trailingAnchor, constant: -4),
         ])
-        
-        bind()
     }
     
     private func bind() {
+        window?.title = viewModel.title
         disposeBag.insert([
             pinButton.rx.tap.subscribe(onNext: { [weak self] _ in
                 self?.viewModel.togglePinButton()
