@@ -10,14 +10,14 @@ import RxSwift
 
 final class ProgressButton: NSButton {
     
+    var cornerRadius = CGFloat(4)
+    var lineWidth = CGFloat(4)
     var progressColor: NSColor = .systemBlue
     
     var progress: Double {
         get { _progress }
         set { _progress = newValue.clamped(to: .zero...1) }
     }
-    
-    private let cornerRadius = CGFloat(4)
     
     private var _progress: Double = .zero {
         didSet {
@@ -51,9 +51,9 @@ final class ProgressButton: NSButton {
     
     private func commonInit() {
         progressLayer.cornerRadius = cornerRadius
-        progressLayer.lineWidth = cornerRadius
+        progressLayer.lineWidth = lineWidth
+        wantsLayer = true
         layer?.addSublayer(progressLayer)
-        layer?.cornerRadius = cornerRadius
         layer?.masksToBounds = false
         translatesAutoresizingMaskIntoConstraints = false
         
