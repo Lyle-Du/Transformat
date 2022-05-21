@@ -55,7 +55,9 @@ final class MainWindowViewController: NSWindowController {
             
             viewModel.isPinned.drive(onNext: { [weak self] isPinned in
                 guard let self = self else { return }
-                self.pinButton.image = NSImage(named: isPinned ? Constants.pinImageName : Constants.unpinImageName)
+                let image = NSImage(named: isPinned ? Constants.pinImageName : Constants.unpinImageName)
+                image?.isTemplate = true
+                self.pinButton.image = image
                 self.window?.level = isPinned ? .floating : .normal
             }),
         ])
