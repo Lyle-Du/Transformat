@@ -22,4 +22,22 @@ final class ImageButton: NSButton {
         super.draw(dirtyRect)
         bounds = dirtyRect
     }
+    
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        title = ""
+        imageScaling = .scaleProportionallyUpOrDown
+        font = .systemFont(ofSize: 24)
+        isBordered = false
+        wantsLayer = true
+    }
 }

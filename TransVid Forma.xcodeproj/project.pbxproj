@@ -13,6 +13,8 @@
 		3E03868B2827C64100A429F8 /* Rx+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03868A2827C64100A429F8 /* Rx+Extensions.swift */; };
 		3E03868D2827C6F000A429F8 /* NSTextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03868C2827C6F000A429F8 /* NSTextField+Rx.swift */; };
 		3E03869128280E7000A429F8 /* UnitStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E03869028280E7000A429F8 /* UnitStorage.swift */; };
+		3E08DF4D2838BC8A0065B53E /* MainWindowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E08DF4C2838BC8A0065B53E /* MainWindowViewController.swift */; };
+		3E08DF4F2838C3B20065B53E /* MainWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E08DF4E2838C3B20065B53E /* MainWindowViewModel.swift */; };
 		3E18655B283240620003016E /* ClosedRange+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E18655A283240620003016E /* ClosedRange+Extensions.swift */; };
 		3E18655D283252640003016E /* ClipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E18655C283252640003016E /* ClipViewModel.swift */; };
 		3E1865612832915B0003016E /* DraggableStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1865602832915B0003016E /* DraggableStackView.swift */; };
@@ -80,6 +82,8 @@
 		3E03868A2827C64100A429F8 /* Rx+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+Extensions.swift"; sourceTree = "<group>"; };
 		3E03868C2827C6F000A429F8 /* NSTextField+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Rx.swift"; sourceTree = "<group>"; };
 		3E03869028280E7000A429F8 /* UnitStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitStorage.swift; sourceTree = "<group>"; };
+		3E08DF4C2838BC8A0065B53E /* MainWindowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowViewController.swift; sourceTree = "<group>"; };
+		3E08DF4E2838C3B20065B53E /* MainWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowViewModel.swift; sourceTree = "<group>"; };
 		3E18655A283240620003016E /* ClosedRange+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClosedRange+Extensions.swift"; sourceTree = "<group>"; };
 		3E18655C283252640003016E /* ClipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipViewModel.swift; sourceTree = "<group>"; };
 		3E1865602832915B0003016E /* DraggableStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableStackView.swift; sourceTree = "<group>"; };
@@ -261,6 +265,8 @@
 			children = (
 				3E5E5596280C760F000C5435 /* MainViewController.swift */,
 				3EDC73D72826451200D5673E /* MainViewModel.swift */,
+				3E08DF4C2838BC8A0065B53E /* MainWindowViewController.swift */,
+				3E08DF4E2838C3B20065B53E /* MainWindowViewModel.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -582,6 +588,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E08DF4F2838C3B20065B53E /* MainWindowViewModel.swift in Sources */,
 				3E73FD28281DAF2000143803 /* MediaResolution.swift in Sources */,
 				3EA1E848281AD56500CCCA5F /* MediaPlayerDelegator.swift in Sources */,
 				3E73FD2A28200C7700143803 /* FormatBox.swift in Sources */,
@@ -589,6 +596,7 @@
 				3EED6EF228211E3D00DDFAEA /* TrimButton.swift in Sources */,
 				3EDC73DE28267FAA00D5673E /* ContainerFormat.swift in Sources */,
 				3E02AF9A281704D000BE6FE4 /* ControlPanel.swift in Sources */,
+				3E08DF4D2838BC8A0065B53E /* MainWindowViewController.swift in Sources */,
 				3E03869128280E7000A429F8 /* UnitStorage.swift in Sources */,
 				3E1865642832D85F0003016E /* SubClipView.swift in Sources */,
 				3EDDC453282552BD00086041 /* AudioTracks.swift in Sources */,

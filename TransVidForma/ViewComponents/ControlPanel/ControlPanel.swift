@@ -31,13 +31,8 @@ final class ControlPanel: NSView {
         let button = ImageButton()
         button.padding = 12
         button.image = NSImage(named: ControlPanelViewModel.Constants.playImageName)
-        button.title = ""
         button.image?.isTemplate = true
         button.image = button.image?.tint(color: NSColor.white)
-        button.imageScaling = .scaleProportionallyDown
-        button.font = .systemFont(ofSize: 24)
-        button.isBordered = false
-        button.wantsLayer = true
         button.layer?.cornerRadius = 4
         button.layer?.backgroundColor = NSColor(white: 0.2, alpha: 1).cgColor
         button.translatesAutoresizingMaskIntoConstraints = false
