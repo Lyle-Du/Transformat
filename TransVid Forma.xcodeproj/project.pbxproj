@@ -37,6 +37,7 @@
 		3EA1E848281AD56500CCCA5F /* MediaPlayerDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */; };
 		3EA2B7E8283A417600AC3C9E /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2B7E7283A417600AC3C9E /* MainViewModelTests.swift */; };
 		3EA2B7EB283A41CC00AC3C9E /* RxTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2B7EA283A41CC00AC3C9E /* RxTestCase.swift */; };
+		3EA2B7EE283A4A5800AC3C9E /* MediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2B7EC283A4A1600AC3C9E /* MediaPlayer.swift */; };
 		3EA46AA1283611FB00B0819E /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA46AA0283611FB00B0819E /* TextFieldCell.swift */; };
 		3EA46AB32836885C00B0819E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3EA46AB52836885C00B0819E /* Localizable.strings */; };
 		3EAEBDBE282AF9B1004BA81C /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */; };
@@ -113,6 +114,7 @@
 		3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerDelegator.swift; sourceTree = "<group>"; };
 		3EA2B7E7283A417600AC3C9E /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
 		3EA2B7EA283A41CC00AC3C9E /* RxTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxTestCase.swift; sourceTree = "<group>"; };
+		3EA2B7EC283A4A1600AC3C9E /* MediaPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayer.swift; sourceTree = "<group>"; };
 		3EA46AA0283611FB00B0819E /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		3EA46AA2283685A400B0819E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		3EA46AB82836888000B0819E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */,
+				3EA2B7EC283A4A1600AC3C9E /* MediaPlayer.swift */,
 			);
 			path = VLCComponents;
 			sourceTree = "<group>";
@@ -647,6 +650,7 @@
 				3EDC73DE28267FAA00D5673E /* ContainerFormat.swift in Sources */,
 				3E02AF9A281704D000BE6FE4 /* ControlPanel.swift in Sources */,
 				3E08DF4D2838BC8A0065B53E /* MainWindowViewController.swift in Sources */,
+				3EA2B7EE283A4A5800AC3C9E /* MediaPlayer.swift in Sources */,
 				3E03869128280E7000A429F8 /* UnitStorage.swift in Sources */,
 				3E1865642832D85F0003016E /* SubClipView.swift in Sources */,
 				3EDDC453282552BD00086041 /* AudioTracks.swift in Sources */,

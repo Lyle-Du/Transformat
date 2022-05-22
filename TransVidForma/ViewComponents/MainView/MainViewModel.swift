@@ -31,7 +31,7 @@ final class MainViewModel {
     let importButtonTitle: Driver<String>
     let exportButtonTitle: Driver<String>
     
-    let stateChangedDriver: Driver<VLCMediaPlayer>
+    let stateChangedDriver: Driver<MediaPlayer>
     let progressPercentage: Driver<Double?>
     let progressPercentageText: Driver<String>
     let isImportExportDisabled: Driver<Bool>
@@ -50,14 +50,14 @@ final class MainViewModel {
     private let resizePlayerView = PublishSubject<()>()
     
     private let openPanel: NSOpenPanel
-    private let mediaPlayer: VLCMediaPlayer
+    private let mediaPlayer: MediaPlayer
     private let mediaPlayerDelegator: MediaPlayerDelegator
     
     private var ffmpegSession: FFmpegSession?
     
     init(
         openPanel: NSOpenPanel = NSOpenPanel(),
-        mediaPlayer: VLCMediaPlayer = VLCMediaPlayer())
+        mediaPlayer: MediaPlayer = VLCMediaPlayer())
     {
         self.openPanel = openPanel
         self.mediaPlayer = mediaPlayer

@@ -24,7 +24,7 @@ final class TrimControlModel {
     
     let images: Driver<[Int: NSImage]>
     
-    private let mediaPlayer: VLCMediaPlayer
+    private let mediaPlayer: MediaPlayer
     
     private let mediaPlayerRelativeCurrentPositionRelay = BehaviorRelay<CGFloat>(value: Constants.buttonWidth)
     private let relativeCurrentPositionRatioRelay = BehaviorRelay<CGFloat>(value: .zero)
@@ -39,7 +39,7 @@ final class TrimControlModel {
     
     private let disposeBag = DisposeBag()
     
-    init(mediaPlayer: VLCMediaPlayer, mediaPlayerDelegator: MediaPlayerDelegator, scheduler: MainScheduler = .instance) {
+    init(mediaPlayer: MediaPlayer, mediaPlayerDelegator: MediaPlayerDelegator, scheduler: MainScheduler = .instance) {
         self.mediaPlayer = mediaPlayer
         
         frame = Driver.combineLatest(
@@ -98,7 +98,9 @@ final class TrimControlModel {
         disposeBag.insert([
             boundsRelay.bind(to: frameRelay),
             timePositionRatioRangeRelay.bind(to: timePositionRatioRangeBinderRelay),
-            absoluteCurrentPositionRatio.drive(mediaPlayer.rx.position),
+            absoluteCurrentPositionRatio.drive(onNext: { position in
+                mediaPlayer.position = position
+            }),
         ])
     }
     

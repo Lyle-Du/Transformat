@@ -40,7 +40,7 @@ final class FormatBoxModel {
     private let framePerSecondSliderRangeRelay = BehaviorRelay<ClosedRange<Double>>(value: 1...60)
     private let framePerSecondRelay: BehaviorRelay<Double>
     
-    private let mediaPlayer: VLCMediaPlayer
+    private let mediaPlayer: MediaPlayer
     private let fileManager: FileManager
     private let savePanel: NSSavePanel
     private let userDefaults: UserDefaults
@@ -50,7 +50,7 @@ final class FormatBoxModel {
     private let selectedFormatRelay: BehaviorRelay<ContainerFormat>
     
     init(
-        mediaPlayer: VLCMediaPlayer,
+        mediaPlayer: MediaPlayer,
         fileManager: FileManager = .default,
         savePanel: NSSavePanel = NSSavePanel(),
         userDefaults: UserDefaults = .standard)

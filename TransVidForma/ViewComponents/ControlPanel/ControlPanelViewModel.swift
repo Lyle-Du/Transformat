@@ -20,9 +20,9 @@ final class ControlPanelViewModel {
     private let playButtonImageNameRelay = BehaviorRelay<String>(value: Constants.playImageName)
     private let mediaResetSubject = PublishSubject<()>()
     
-    private let mediaPlayer: VLCMediaPlayer
+    private let mediaPlayer: MediaPlayer
     
-    init(mediaPlayer: VLCMediaPlayer, mediaPlayerDelegator: MediaPlayerDelegator) {
+    init(mediaPlayer: MediaPlayer, mediaPlayerDelegator: MediaPlayerDelegator) {
         self.mediaPlayer = mediaPlayer
         mediaReset = mediaResetSubject.asObserver()
         trimControlModel = TrimControlModel(mediaPlayer: mediaPlayer, mediaPlayerDelegator: mediaPlayerDelegator)
@@ -54,7 +54,7 @@ extension ControlPanelViewModel {
 
 extension ControlPanelViewModel {
     
-    var stateChanged: Binder<VLCMediaPlayer> {
+    var stateChanged: Binder<MediaPlayer> {
         Binder(self) { target, mediaPlayer in
             let imageName: String
             if mediaPlayer.isPlaying {
@@ -79,7 +79,7 @@ extension ControlPanelViewModel {
         }
     }
     
-    var timeChanged: Binder<VLCMediaPlayer> {
+    var timeChanged: Binder<MediaPlayer> {
         Binder(self) { target, mediaPlayer in
             target.trimControlModel.updateCurrentPositionRatio(CGFloat(mediaPlayer.position))
         }

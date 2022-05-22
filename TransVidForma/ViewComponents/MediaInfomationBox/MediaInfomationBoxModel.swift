@@ -12,7 +12,7 @@ import VLCKit
 
 final class MediaInfomationBoxModel {
     
-    let mediaPlayer: VLCMediaPlayer
+    let mediaPlayer: MediaPlayer
     
     let resolutionLabel = NSLocalizedString("Resolution:", comment: "")
     let customResolutionLabel = NSLocalizedString("Custom Resolution:", comment: "")
@@ -74,7 +74,7 @@ final class MediaInfomationBoxModel {
     
     private let disposeBag = DisposeBag()
     
-    init(mediaPlayer: VLCMediaPlayer, mediaPlayerDelegator: MediaPlayerDelegator) {
+    init(mediaPlayer: MediaPlayer, mediaPlayerDelegator: MediaPlayerDelegator) {
         self.mediaPlayer = mediaPlayer
         audioTrackNames = audioTrackNamesRelay.asDriver()
         subtitleNames = subtitleNamesRelay.asDriver()
@@ -173,10 +173,14 @@ final class MediaInfomationBoxModel {
         
         disposeBag.insert([
             audioTracksRelay.map { $0.sorted(by: { $0.titleID < $1.titleID }).map(\.name) }.bind(to: audioTrackNamesRelay),
-            currentAudioTrackIndexUpdater.drive(mediaPlayer.rx.currentAudioTrackIndex),
+            currentAudioTrackIndexUpdater.drive(onNext: { [mediaPlayer] currentAudioTrackIndex in
+                mediaPlayer.currentAudioTrackIndex = currentAudioTrackIndex
+            }),
             
             subtitlesRelay.map { $0.sorted(by: { $0.titleID < $1.titleID }).map(\.name) }.bind(to: subtitleNamesRelay),
-            currentSubtitleIndexUpdater.drive(mediaPlayer.rx.currentVideoSubTitleIndex),
+            currentSubtitleIndexUpdater.drive(onNext: { [mediaPlayer] currentVideoSubTitleIndex in
+                mediaPlayer.currentVideoSubTitleIndex = currentVideoSubTitleIndex
+            }),
             
             startTimeText.drive(startTimeTextRelay),
             startTimeTextPlaceholder.drive(startTimeTextPlaceholderRelay),

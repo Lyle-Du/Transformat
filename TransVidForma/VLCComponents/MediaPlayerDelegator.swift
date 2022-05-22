@@ -17,20 +17,20 @@ final class MediaPlayerDelegator: NSObject, VLCMediaPlayerDelegate {
     
     var shouldPause = false
     
-    let stateChangedDriver: Driver<VLCMediaPlayer>
-    let timeChangedDriver: Driver<VLCMediaPlayer>
+    let stateChangedDriver: Driver<MediaPlayer>
+    let timeChangedDriver: Driver<MediaPlayer>
     
-    private let stateChanged = PublishSubject<VLCMediaPlayer>()
-    private let timeChanged = PublishSubject<VLCMediaPlayer>()
+    private let stateChanged = PublishSubject<MediaPlayer>()
+    private let timeChanged = PublishSubject<MediaPlayer>()
     
-    private weak var mediaPlayer: VLCMediaPlayer!
+    private weak var mediaPlayer: MediaPlayer!
     
     private var assertionID = IOPMAssertionID(0)
     private let reasonForActivity = "Video is playing" as CFString
     private let kIOPMAssertPreventUserIdleDisplaySleep = "PreventUserIdleDisplaySleep" as CFString
     private var preventUserIdleDisplaySleepSuccess: IOReturn?
     
-    init(mediaPlayer: VLCMediaPlayer) {
+    init(mediaPlayer: MediaPlayer) {
         self.mediaPlayer = mediaPlayer
         stateChangedDriver = stateChanged.asDriver(onErrorJustReturn: self.mediaPlayer)
         timeChangedDriver = timeChanged.asDriver(onErrorJustReturn: self.mediaPlayer)
@@ -65,7 +65,7 @@ final class MediaPlayerDelegator: NSObject, VLCMediaPlayerDelegate {
         handleViewDidDisappear(mediaPlayer)
     }
     
-    private func handleViewDidDisappear(_ mediaPlayer: VLCMediaPlayer) {
+    private func handleViewDidDisappear(_ mediaPlayer: MediaPlayer) {
         guard shouldPause && mediaPlayer.isPlaying else {
             return
         }
