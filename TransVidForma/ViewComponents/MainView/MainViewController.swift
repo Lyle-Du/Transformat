@@ -214,7 +214,7 @@ final class MainViewController: NSViewController {
             // Fix player view size
             viewModel.resize.subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
-                self.viewModel.updateSize(self.playerView)
+                self.viewModel.updateDrawable(self.playerView)
                 self.fixedFirstTimeInvalidSize = false
                 self.fixFirstTimeInvalidSize(view: self.playerView)
             }),
@@ -223,7 +223,7 @@ final class MainViewController: NSViewController {
     
     override func viewDidLayout() {
         super.viewDidLayout()
-        self.viewModel.updateSize(playerView)
+        self.viewModel.updateDrawable(playerView)
     }
     
     override func viewDidDisappear() {

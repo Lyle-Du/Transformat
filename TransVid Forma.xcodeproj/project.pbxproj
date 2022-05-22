@@ -38,6 +38,9 @@
 		3EA2B7E8283A417600AC3C9E /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2B7E7283A417600AC3C9E /* MainViewModelTests.swift */; };
 		3EA2B7EB283A41CC00AC3C9E /* RxTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2B7EA283A41CC00AC3C9E /* RxTestCase.swift */; };
 		3EA2B7EE283A4A5800AC3C9E /* MediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2B7EC283A4A1600AC3C9E /* MediaPlayer.swift */; };
+		3EA2B7F1283A8B0F00AC3C9E /* MockMediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2B7F0283A8B0F00AC3C9E /* MockMediaPlayer.swift */; };
+		3EA2B7F4283A8D2F00AC3C9E /* OpenPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2B7F2283A8CED00AC3C9E /* OpenPanel.swift */; };
+		3EA2B7F6283A8E0F00AC3C9E /* MockOpenPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2B7F5283A8E0F00AC3C9E /* MockOpenPanel.swift */; };
 		3EA46AA1283611FB00B0819E /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA46AA0283611FB00B0819E /* TextFieldCell.swift */; };
 		3EA46AB32836885C00B0819E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3EA46AB52836885C00B0819E /* Localizable.strings */; };
 		3EAEBDBE282AF9B1004BA81C /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */; };
@@ -115,6 +118,9 @@
 		3EA2B7E7283A417600AC3C9E /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
 		3EA2B7EA283A41CC00AC3C9E /* RxTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxTestCase.swift; sourceTree = "<group>"; };
 		3EA2B7EC283A4A1600AC3C9E /* MediaPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayer.swift; sourceTree = "<group>"; };
+		3EA2B7F0283A8B0F00AC3C9E /* MockMediaPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMediaPlayer.swift; sourceTree = "<group>"; };
+		3EA2B7F2283A8CED00AC3C9E /* OpenPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenPanel.swift; sourceTree = "<group>"; };
+		3EA2B7F5283A8E0F00AC3C9E /* MockOpenPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOpenPanel.swift; sourceTree = "<group>"; };
 		3EA46AA0283611FB00B0819E /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		3EA46AA2283685A400B0819E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		3EA46AB82836888000B0819E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -172,6 +178,7 @@
 		3E08DF582838E4650065B53E /* TransVidFormaTests */ = {
 			isa = PBXGroup;
 			children = (
+				3EA2B7EF283A8AF500AC3C9E /* Mocked */,
 				3EA2B7E9283A41A400AC3C9E /* Helpers */,
 				3E08DF5A2838E4F40065B53E /* MainWindowViewModelTests.swift */,
 				3E08DF592838E4F30065B53E /* TransVid FormaTests-Bridging-Header.h */,
@@ -292,6 +299,15 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		3EA2B7EF283A8AF500AC3C9E /* Mocked */ = {
+			isa = PBXGroup;
+			children = (
+				3EA2B7F0283A8B0F00AC3C9E /* MockMediaPlayer.swift */,
+				3EA2B7F5283A8E0F00AC3C9E /* MockOpenPanel.swift */,
+			);
+			path = Mocked;
+			sourceTree = "<group>";
+		};
 		3EDC73D928264C7800D5673E /* MainView */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,6 +368,7 @@
 				3EF84001282FCA6A00689AD6 /* TextFieldSlider.swift */,
 				3E1865602832915B0003016E /* DraggableStackView.swift */,
 				3EA46AA0283611FB00B0819E /* TextFieldCell.swift */,
+				3EA2B7F2283A8CED00AC3C9E /* OpenPanel.swift */,
 			);
 			path = ViewHelpers;
 			sourceTree = "<group>";
@@ -675,6 +692,7 @@
 				3E03868D2827C6F000A429F8 /* NSTextField+Rx.swift in Sources */,
 				3E18655B283240620003016E /* ClosedRange+Extensions.swift in Sources */,
 				3EAEBDC6282BF7FF004BA81C /* FFmpeg+Extensions.swift in Sources */,
+				3EA2B7F4283A8D2F00AC3C9E /* OpenPanel.swift in Sources */,
 				3E73FD372820CF4100143803 /* Comparable+Extensions.swift in Sources */,
 				3E18655D283252640003016E /* ClipViewModel.swift in Sources */,
 				3EF84002282FCA6A00689AD6 /* TextFieldSlider.swift in Sources */,
@@ -691,6 +709,8 @@
 				3E08DF5B2838E4F40065B53E /* MainWindowViewModelTests.swift in Sources */,
 				3EA2B7E8283A417600AC3C9E /* MainViewModelTests.swift in Sources */,
 				3EA2B7EB283A41CC00AC3C9E /* RxTestCase.swift in Sources */,
+				3EA2B7F1283A8B0F00AC3C9E /* MockMediaPlayer.swift in Sources */,
+				3EA2B7F6283A8E0F00AC3C9E /* MockOpenPanel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

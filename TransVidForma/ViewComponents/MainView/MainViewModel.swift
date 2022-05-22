@@ -49,20 +49,20 @@ final class MainViewModel {
     
     private let resizePlayerView = PublishSubject<()>()
     
-    private let openPanel: NSOpenPanel
+    private let openPanel: OpenPanel
     private let mediaPlayer: MediaPlayer
     private let mediaPlayerDelegator: MediaPlayerDelegator
     
     private var ffmpegSession: FFmpegSession?
     
     init(
-        openPanel: NSOpenPanel = NSOpenPanel(),
+        openPanel: OpenPanel = NSOpenPanel(),
         mediaPlayer: MediaPlayer = VLCMediaPlayer())
     {
         self.openPanel = openPanel
         self.mediaPlayer = mediaPlayer
         self.mediaPlayerDelegator = MediaPlayerDelegator(mediaPlayer: self.mediaPlayer)
-        openPanel.allowedFileTypes = ContainerFormat.allCases.map(\.rawValue)
+        openPanel.allowedFileTypes = ContainerFormat.allCases.filter { $0 != .gif }.map(\.rawValue)
         
         importButtonTitle = importButtonTitleRelay.asDriver()
         exportButtonTitle = exportButtonTitleRelay.asDriver()
@@ -121,7 +121,7 @@ final class MainViewModel {
         mediaPlayerDelegator.shouldPause = didDisappear
     }
     
-    func updateSize(_ view: NSView) {
+    func updateDrawable(_ view: NSView) {
         mediaPlayer.drawable = nil
         mediaPlayer.drawable = view
     }

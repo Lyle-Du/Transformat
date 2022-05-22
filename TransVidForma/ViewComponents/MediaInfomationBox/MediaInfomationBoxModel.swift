@@ -104,6 +104,9 @@ final class MediaInfomationBoxModel {
             .asDriver()
             .filter { $0 > 0 }
             .compactMap { [resolutionsRelay] index -> MediaResolution? in
+                guard index < resolutionsRelay.value.count else {
+                    return nil
+                }
                 return resolutionsRelay.value[index]
             }
         
