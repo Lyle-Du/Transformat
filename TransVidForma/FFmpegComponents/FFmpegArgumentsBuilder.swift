@@ -63,6 +63,7 @@ final class FFmpegArgumentsBuilder {
     @discardableResult
     func videoBitrate() -> Self {
         guard let videoBitrate = FFprobeKit.videoBitrate(media: media) else {
+            arguments.append(contentsOf: ["-preset", "medium"])
             return self
         }
         arguments.append(contentsOf: ["-b:v", String(videoBitrate)])
