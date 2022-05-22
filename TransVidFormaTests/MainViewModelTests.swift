@@ -91,7 +91,7 @@ final class MainViewModelTests: RxTestCase {
     func testIsImportExportDisabledIsFalseByDefault() throws {
         let viewModel = makeViewModel()
         let observer = createObserver(Bool.self)
-        viewModel.isImportExportDisabled.drive(observer).disposed(by: disposeBag)
+        viewModel.isImportDisabled.drive(observer).disposed(by: disposeBag)
         XCTAssertEqual(observer.events, [.next(0, false)])
     }
     

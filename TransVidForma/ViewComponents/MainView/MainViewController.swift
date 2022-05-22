@@ -164,8 +164,7 @@ final class MainViewController: NSViewController {
             }),
             
             viewModel.isExportDisabled.map { !$0 }.drive(exportButton.rx.isEnabled),
-            viewModel.isImportExportDisabled.map { !$0 }.drive(exportButton.rx.isEnabled),
-            viewModel.isImportExportDisabled.map { !$0 }.drive(importButton.rx.isEnabled),
+            viewModel.isImportDisabled.map { !$0 }.drive(importButton.rx.isEnabled),
             
             viewModel.progressPercentage.drive(exportButton.rx.progressBinder),
             

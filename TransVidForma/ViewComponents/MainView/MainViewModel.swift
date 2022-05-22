@@ -34,7 +34,7 @@ final class MainViewModel {
     let stateChangedDriver: Driver<MediaPlayer>
     let progressPercentage: Driver<Double?>
     let progressPercentageText: Driver<String>
-    let isImportExportDisabled: Driver<Bool>
+    let isImportDisabled: Driver<Bool>
     let isExportDisabled: Driver<Bool>
     let isCancelButtonHidden: Driver<Bool>
     let isOptionAreaContainerHidden: Driver<Bool>
@@ -43,7 +43,7 @@ final class MainViewModel {
     private let importButtonTitleRelay = BehaviorRelay<String>(value: Constants.importTitle.formatCString(""))
     private let exportButtonTitleRelay = BehaviorRelay<String>(value: Constants.exportTitle.formatCString(""))
     private let progressPercentageRelay = BehaviorRelay<Double?>(value: nil)
-    private let isImportExportDisabledRelay = BehaviorRelay<Bool>(value: false)
+    private let isImportDisabledRelay = BehaviorRelay<Bool>(value: false)
     private let isExportDisabledRelay = BehaviorRelay<Bool>(value: true)
     private let isOptionAreaContainerHiddenRelay = BehaviorRelay<Bool>(value: false)
     
@@ -66,7 +66,7 @@ final class MainViewModel {
         
         importButtonTitle = importButtonTitleRelay.asDriver()
         exportButtonTitle = exportButtonTitleRelay.asDriver()
-        isImportExportDisabled = isImportExportDisabledRelay.asDriver()
+        isImportDisabled = isImportDisabledRelay.asDriver()
         isExportDisabled = isExportDisabledRelay.asDriver()
         isCancelButtonHidden = progressPercentageRelay.asDriver().map { $0 == nil }
         isOptionAreaContainerHidden = isOptionAreaContainerHiddenRelay.asDriver()
@@ -104,8 +104,8 @@ final class MainViewModel {
             controlPanelViewModel.trimControlModel.timePositionRatioRange.drive(mediaInfomationBoxModel.timeRatioRangeBinder),
             
             progressPercentageText.map { Constants.exportTitle.formatCString($0) }.drive(exportButtonTitleRelay),
-            Driver.zip(isImportExportDisabled, isImportExportDisabled.skip(1))
-                .filter { previous, current in return !current && previous }
+            Driver.zip(isExportDisabled, isExportDisabled.skip(1))
+                .filter { previous, current in return previous && !current}
                 .map { _, _ in return nil }
                 .delay(.seconds(1))
                 .drive(progressPercentageRelay),
@@ -202,19 +202,21 @@ final class MainViewModel {
         #if DEBUG
         print(arguments.joined(separator: " "))
         #endif
-        isImportExportDisabledRelay.accept(true)
+        isImportDisabledRelay.accept(true)
+        isExportDisabledRelay.accept(true)
         progressPercentageRelay.accept(nil)
         
         ffmpegSession = FFmpegKit.execute(
             withArgumentsAsync: arguments,
             withCompleteCallback: { [weak self] session in
+                guard let self = self else { return }
+                self.isImportDisabledRelay.accept(false)
+                self.isExportDisabledRelay.accept(false)
                 guard session?.getReturnCode()?.isValueSuccess() == true else {
-                    self?.isImportExportDisabledRelay.accept(false)
-                    self?.progressPercentageRelay.accept(nil)
+                    self.progressPercentageRelay.accept(nil)
                     return
                 }
-                self?.isImportExportDisabledRelay.accept(false)
-                self?.progressPercentageRelay.accept(1)
+                self.progressPercentageRelay.accept(1)
             },
             withLogCallback: { session in
                 #if DEBUG
@@ -235,9 +237,10 @@ final class MainViewModel {
     }
     
     func cancel() {
-        self.ffmpegSession?.cancel()
-        self.isImportExportDisabledRelay.accept(false)
-        self.progressPercentageRelay.accept(nil)
+        ffmpegSession?.cancel()
+        isImportDisabledRelay.accept(false)
+        isExportDisabledRelay.accept(false)
+        progressPercentageRelay.accept(nil)
     }
     
     private func setMedia(url: URL) {
@@ -255,9 +258,9 @@ final class MainViewModel {
     
     private func updateExportAvailability(_ media: VLCMedia?) {
         if formatBoxModel.fileURL == nil || media?.url?.path == nil || media?.url?.path == formatBoxModel.fileURL?.path {
-            isExportDisabledRelay.accept(true || isImportExportDisabledRelay.value)
+            isExportDisabledRelay.accept(true || isImportDisabledRelay.value)
         } else {
-            isExportDisabledRelay.accept(isImportExportDisabledRelay.value)
+            isExportDisabledRelay.accept(isImportDisabledRelay.value)
         }
     }
 }
