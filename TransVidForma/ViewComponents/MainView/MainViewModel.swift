@@ -21,7 +21,6 @@ final class MainViewModel {
         ControlEvent(events: Observable.merge(resizePlayerView, controlPanelViewModel.mediaReset))
     }
     
-    let windowTitle = NSLocalizedString("TransVid Forma", comment: "")
     let cancleButtonTitle = NSLocalizedString("Cancel", comment: "")
     
     let controlPanelViewModel: ControlPanelViewModel
@@ -290,9 +289,7 @@ private extension MainViewModel {
     }
 }
 
-
 struct CancelAlert {
-    
     let messageText = NSLocalizedString("Cancel Exporting", comment: "")
     let informativeText = NSLocalizedString("Are you sure to cancel current export task?", comment: "")
     let alertStyle: NSAlert.Style = .warning

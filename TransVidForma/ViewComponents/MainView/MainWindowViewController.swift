@@ -13,11 +13,7 @@ import RxSwift
 
 final class MainWindowViewController: NSWindowController {
     
-    var viewModel: MainWindowViewModel! {
-        didSet {
-            bind()
-        }
-    }
+    var viewModel: MainWindowViewModel!
     
     private let disposeBag = DisposeBag()
     
@@ -49,6 +45,8 @@ final class MainWindowViewController: NSWindowController {
             pinButton.centerYAnchor.constraint(equalTo: titleBarView.centerYAnchor),
             pinButton.trailingAnchor.constraint(equalTo: titleBarView.trailingAnchor, constant: -4),
         ])
+        
+        bind()
     }
     
     private func bind() {

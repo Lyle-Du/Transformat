@@ -13,11 +13,9 @@ import RxTest
 
 @testable import TransVid_Forma
 
-final class MainWindowViewModelTests: XCTestCase {
+final class MainWindowViewModelTests: RxTestCase {
     
     private var userDefaults: UserDefaults!
-    private let scheduler = TestScheduler(initialClock: .zero)
-    private let disposeBag = DisposeBag()
 
     override func setUpWithError() throws {
         userDefaults = UserDefaults(suiteName: #file)
@@ -26,35 +24,77 @@ final class MainWindowViewModelTests: XCTestCase {
     override func tearDownWithError() throws {
         userDefaults.removeSuite(named: #file)
     }
-
-    func testExample1() throws {
+    
+    func testStaticContents() throws {
         let viewModel = MainWindowViewModel(userDefaults: userDefaults)
-        let observer = scheduler.createObserver(Bool.self)
+        XCTAssertEqual(viewModel.title, NSLocalizedString("TransVid Forma", comment: ""))
+    }
+
+    func testIsPinnedIsFalseByDefault() throws {
+        let viewModel = MainWindowViewModel(userDefaults: userDefaults)
+        let observer = createObserver(Bool.self)
         viewModel.isPinned.drive(observer).disposed(by: disposeBag)
         XCTAssertEqual(observer.events, [.next(0, false)])
     }
     
-    func testExample2() throws {
+    func testIsPinnedIsTrue_givenStoredIsPinnedAsTrue() throws {
         userDefaults.set(true, forKey: "isPinned")
         let viewModel = MainWindowViewModel(userDefaults: userDefaults)
-        let observer = scheduler.createObserver(Bool.self)
+        let observer = createObserver(Bool.self)
         viewModel.isPinned.drive(observer).disposed(by: disposeBag)
         XCTAssertEqual(observer.events, [.next(0, true)])
     }
-
-    func testPerformanceExample() throws {
+    
+    func testIsPinnedIsStored_whenTogglePinButtonCalled() throws {
         let viewModel = MainWindowViewModel(userDefaults: userDefaults)
-        let observer = scheduler.createObserver(Bool.self)
+        XCTAssertFalse(userDefaults.bool(forKey: "isPinned"))
+        viewModel.togglePinButton()
+        XCTAssertTrue(userDefaults.bool(forKey: "isPinned"))
+        viewModel.togglePinButton()
+        XCTAssertFalse(userDefaults.bool(forKey: "isPinned"))
+    }
+
+    func testIsPinnedChanged_whenTogglePinButtonCalled() throws {
+        let viewModel = MainWindowViewModel(userDefaults: userDefaults)
+        let observer = createObserver(Bool.self)
         viewModel.isPinned.drive(observer).disposed(by: disposeBag)
         
-        scheduler.scheduleAt(1) { viewModel.togglePinButton() }
-        scheduler.scheduleAt(2) { viewModel.togglePinButton() }
-        scheduler.start()
+        scheduleAt(1) { viewModel.togglePinButton() }
+        scheduleAt(2) { viewModel.togglePinButton() }
+        start()
         
         XCTAssertEqual(observer.events, [
             .next(0, false),
             .next(1, true),
             .next(2, false),
+        ])
+    }
+    
+    func testIsPinButtonHiddenIsFalse_whenWindowDidExitFullScreenCalled() throws {
+        let viewModel = MainWindowViewModel(userDefaults: userDefaults)
+        let observer = createObserver(Bool.self)
+        viewModel.isPinButtonHidden.drive(observer).disposed(by: disposeBag)
+        
+        scheduleAt(1) { viewModel.windowDidExitFullScreen() }
+        start()
+        
+        XCTAssertEqual(observer.events, [
+            .next(0, false),
+            .next(1, false),
+        ])
+    }
+    
+    func testIsPinButtonHiddenIsTrue_whenWindowDidEnterFullScreenCalled() throws {
+        let viewModel = MainWindowViewModel(userDefaults: userDefaults)
+        let observer = createObserver(Bool.self)
+        viewModel.isPinButtonHidden.drive(observer).disposed(by: disposeBag)
+        
+        scheduleAt(1) { viewModel.windowDidEnterFullScreen() }
+        start()
+        
+        XCTAssertEqual(observer.events, [
+            .next(0, false),
+            .next(1, true),
         ])
     }
 }

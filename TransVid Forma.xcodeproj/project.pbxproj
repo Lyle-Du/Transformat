@@ -35,6 +35,8 @@
 		3EA1E83D281855E400CCCA5F /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E83C281855E400CCCA5F /* ImageButton.swift */; };
 		3EA1E846281AD19100CCCA5F /* MediaInfomationBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E845281AD19100CCCA5F /* MediaInfomationBox.swift */; };
 		3EA1E848281AD56500CCCA5F /* MediaPlayerDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */; };
+		3EA2B7E8283A417600AC3C9E /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2B7E7283A417600AC3C9E /* MainViewModelTests.swift */; };
+		3EA2B7EB283A41CC00AC3C9E /* RxTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2B7EA283A41CC00AC3C9E /* RxTestCase.swift */; };
 		3EA46AA1283611FB00B0819E /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA46AA0283611FB00B0819E /* TextFieldCell.swift */; };
 		3EA46AB32836885C00B0819E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3EA46AB52836885C00B0819E /* Localizable.strings */; };
 		3EAEBDBE282AF9B1004BA81C /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBDBD282AF9B1004BA81C /* ProgressButton.swift */; };
@@ -109,6 +111,8 @@
 		3EA1E83C281855E400CCCA5F /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		3EA1E845281AD19100CCCA5F /* MediaInfomationBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInfomationBox.swift; sourceTree = "<group>"; };
 		3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerDelegator.swift; sourceTree = "<group>"; };
+		3EA2B7E7283A417600AC3C9E /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
+		3EA2B7EA283A41CC00AC3C9E /* RxTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxTestCase.swift; sourceTree = "<group>"; };
 		3EA46AA0283611FB00B0819E /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		3EA46AA2283685A400B0819E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		3EA46AB82836888000B0819E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -166,8 +170,10 @@
 		3E08DF582838E4650065B53E /* TransVidFormaTests */ = {
 			isa = PBXGroup;
 			children = (
+				3EA2B7E9283A41A400AC3C9E /* Helpers */,
 				3E08DF5A2838E4F40065B53E /* MainWindowViewModelTests.swift */,
 				3E08DF592838E4F30065B53E /* TransVid FormaTests-Bridging-Header.h */,
+				3EA2B7E7283A417600AC3C9E /* MainViewModelTests.swift */,
 			);
 			path = TransVidFormaTests;
 			sourceTree = "<group>";
@@ -273,6 +279,14 @@
 				3EA1E847281AD56500CCCA5F /* MediaPlayerDelegator.swift */,
 			);
 			path = VLCComponents;
+			sourceTree = "<group>";
+		};
+		3EA2B7E9283A41A400AC3C9E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3EA2B7EA283A41CC00AC3C9E /* RxTestCase.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		3EDC73D928264C7800D5673E /* MainView */ = {
@@ -671,6 +685,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E08DF5B2838E4F40065B53E /* MainWindowViewModelTests.swift in Sources */,
+				3EA2B7E8283A417600AC3C9E /* MainViewModelTests.swift in Sources */,
+				3EA2B7EB283A41CC00AC3C9E /* RxTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

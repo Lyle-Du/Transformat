@@ -233,7 +233,6 @@ final class MainViewController: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        view.window?.title = viewModel.windowTitle
         view.window?.delegate = self
     }
     
