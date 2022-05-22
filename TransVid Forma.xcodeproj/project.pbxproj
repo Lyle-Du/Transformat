@@ -208,8 +208,8 @@
 		3E5E5588280C760F000C5435 = {
 			isa = PBXGroup;
 			children = (
-				3E08DF582838E4650065B53E /* TransVidFormaTests */,
 				3E5E5593280C760F000C5435 /* TransVidForma */,
+				3E08DF582838E4650065B53E /* TransVidFormaTests */,
 				3E5E5592280C760F000C5435 /* Products */,
 				7436038F57912ABBED71E86F /* Pods */,
 				3FBDBFB086E7878A69A78739 /* Frameworks */,

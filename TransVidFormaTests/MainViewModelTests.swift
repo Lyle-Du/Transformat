@@ -101,6 +101,31 @@ final class MainViewModelTests: RxTestCase {
         viewModel.isExportDisabled.drive(observer).disposed(by: disposeBag)
         XCTAssertEqual(observer.events, [.next(0, true)])
     }
+    
+    func testHasVideoOutIsSameAsMediaPlayerHasVideoOut() throws {
+        let viewModel = makeViewModel()
+        mediaPlayer.hasVideoOut = false
+        XCTAssertEqual(viewModel.hasVideoOut, false)
+        mediaPlayer.hasVideoOut = true
+        XCTAssertEqual(viewModel.hasVideoOut, true)
+    }
+    
+    func testIsOptionAreaContainerHiddenUpdated_whenTogglePlayerModeCalled_givenValidWindowAndIsWindowFullScreen() throws {
+        let window = NSWindow()
+        let viewModel = makeViewModel()
+        let observer = createObserver(Bool.self)
+        viewModel.isOptionAreaContainerHidden.drive(observer).disposed(by: disposeBag)
+        scheduleAt(10) { viewModel.togglePlayerMode(isWindowFullScreen: true, window: nil) }
+        scheduleAt(20) { viewModel.togglePlayerMode(isWindowFullScreen: false, window: nil) }
+        scheduleAt(30) { viewModel.togglePlayerMode(isWindowFullScreen: true, window: window) }
+        scheduleAt(40) { viewModel.togglePlayerMode(isWindowFullScreen: false, window: window) }
+        start()
+        XCTAssertEqual(observer.events, [
+            .next(0, false),
+            .next(30, true),
+            .next(40, false),
+        ])
+    }
 }
 
 private extension MainViewModelTests {
