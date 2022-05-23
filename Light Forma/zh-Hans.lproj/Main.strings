@@ -1,0 +1,27 @@
+
+/* Class = "NSMenuItem"; title = "Light Forma"; ObjectID = "1Xt-HY-uBw"; */
+"1Xt-HY-uBw.title" = "Light Forma";
+
+/* Class = "NSMenuItem"; title = "Quit Light Forma"; ObjectID = "4sb-4s-VLi"; */
+"4sb-4s-VLi.title" = "退出 Light Forma";
+
+/* Class = "NSMenuItem"; title = "About Light Forma"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "关于 Light Forma";
+
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
+"AYu-sK-qS6.title" = "主菜单";
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "IQv-IB-iLA"; */
+"IQv-IB-iLA.title" = "窗口";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
+"Kd2-mp-pUS.title" = "显示所有";
+
+/* Class = "NSMenuItem"; title = "Hide Light Forma"; ObjectID = "Olw-nP-bQN"; */
+"Olw-nP-bQN.title" = "隐藏 TransVidForma";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
+"Vdr-fp-XzO.title" = "隐藏其他";
+
+/* Class = "NSMenu"; title = "Light Forma"; ObjectID = "uQy-DD-JDr"; */
+"uQy-DD-JDr.title" = "TransVidForma";

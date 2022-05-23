@@ -11,7 +11,7 @@ import RxCocoa
 
 final class MainWindowViewModel {
     
-    let title = NSLocalizedString("TransVid Forma", comment: "")
+    let title = NSLocalizedString("Light Forma", comment: "")
     let isPinButtonHidden: Driver<Bool>
     let isPinned: Driver<Bool>
     

@@ -17,9 +17,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3E5E5590280C760F000C5435"
-            BuildableName = "TransVid Forma.app"
-            BlueprintName = "TransVid Forma"
-            ReferencedContainer = "container:TransVid Forma.xcodeproj">
+            BuildableName = "Light Forma.app"
+            BlueprintName = "Light Forma"
+            ReferencedContainer = "container:Light Forma.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
@@ -28,9 +28,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3E5E55A1280C7610000C5435"
-               BuildableName = "TransVid FormaTests.xctest"
-               BlueprintName = "TransVid FormaTests"
-               ReferencedContainer = "container:TransVid Forma.xcodeproj">
+               BuildableName = "Light FormaTests.xctest"
+               BlueprintName = "Light FormaTests"
+               ReferencedContainer = "container:Light Forma.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

@@ -27,7 +27,7 @@ final class MainWindowViewModelTests: RxTestCase {
     
     func testStaticContents() throws {
         let viewModel = MainWindowViewModel(userDefaults: userDefaults)
-        XCTAssertEqual(viewModel.title, NSLocalizedString("TransVid Forma", comment: ""))
+        XCTAssertEqual(viewModel.title, NSLocalizedString("Light Forma", comment: ""))
     }
 
     func testIsPinnedIsFalseByDefault() throws {
