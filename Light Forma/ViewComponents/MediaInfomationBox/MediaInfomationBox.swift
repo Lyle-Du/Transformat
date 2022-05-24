@@ -71,34 +71,6 @@ final class MediaInfomationBox: NSBox {
         return stackView
     }()
     
-    private let audioTrackLabel: NSTextField = {
-        let field = NSTextField.makeLabel()
-        field.translatesAutoresizingMaskIntoConstraints = false
-        return field
-    }()
-    
-    private let audioTrackPopUpButton: NSPopUpButton = {
-        let button = NSPopUpButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
-        button.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
-        return button
-    }()
-    
-    private let subtitleLabel: NSTextField = {
-        let field = NSTextField.makeLabel()
-        field.translatesAutoresizingMaskIntoConstraints = false
-        return field
-    }()
-    
-    private let subtitlePopUpButton: NSPopUpButton = {
-        let button = NSPopUpButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
-        button.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
-        return button
-    }()
-    
     private let timeLabel: NSTextField = {
         let field = NSTextField.makeLabel()
         field.translatesAutoresizingMaskIntoConstraints = false
@@ -165,8 +137,6 @@ final class MediaInfomationBox: NSBox {
         
         gridView.addRow(with: [resolutionLabel, resolutionPopUpButton])
         gridView.addRow(with: [customResolutionLabel, customResolutionFieldsContainer])
-        gridView.addRow(with: [audioTrackLabel, audioTrackPopUpButton])
-        gridView.addRow(with: [subtitleLabel, subtitlePopUpButton])
         gridView.addRow(with: [timeLabel, timeFieldsContainer])
         gridView.addRow(with: [speedLabel, speedSlider])
         
@@ -188,24 +158,10 @@ final class MediaInfomationBox: NSBox {
     private func bind() {
         resolutionLabel.stringValue = viewModel.resolutionLabel
         customResolutionLabel.stringValue = viewModel.customResolutionLabel
-        audioTrackLabel.stringValue = viewModel.audioTrackLabel
-        subtitleLabel.stringValue = viewModel.subtitleLabel
+        
         timeLabel.stringValue = viewModel.timeLabel
         
-        
-        
         disposeBag.insert([
-            
-            viewModel.audioTrackNames.drive(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.setupPopupButtoon(self.audioTrackPopUpButton, $0)
-            }),
-            
-            viewModel.subtitleNames.drive(onNext: { [weak self] in
-                guard let self = self else { return }
-                self.setupPopupButtoon(self.subtitlePopUpButton, $0)
-            }),
-            
             viewModel.resolutionNames.drive(onNext: { [weak self] in
                 guard let self = self else { return }
                 self.setupPopupButtoon(self.resolutionPopUpButton, $0)
@@ -225,12 +181,6 @@ final class MediaInfomationBox: NSBox {
             
             startTimeTextField.rx.didEndEditingText.subscribe(viewModel.startTimeTextBinder),
             endTimeTextField.rx.didEndEditingText.subscribe(viewModel.endTimeTextBinder),
-            
-            viewModel.currentAudioTrackIndex.drive(audioTrackPopUpButton.rx.selectedIndex),
-            audioTrackPopUpButton.rx.selectedIndex.bind(to: viewModel.currentAudioTrackIndexBinder),
-            
-            viewModel.currentSubtitleIndex.drive(subtitlePopUpButton.rx.selectedIndex),
-            subtitlePopUpButton.rx.selectedIndex.bind(to: viewModel.currentSubtitleIndexBinder),
             
             viewModel.currentResolutionIndex.drive(resolutionPopUpButton.rx.selectedIndex),
             resolutionPopUpButton.rx.selectedIndex.bind(to: viewModel.currentResolutionIndexBinder),

@@ -45,6 +45,45 @@ final class ControlPanel: NSView {
         return view
     }()
     
+    private let audioTrackLabel: NSTextField = {
+        let field = NSTextField.makeLabel()
+        field.alignment = .right
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    private let audioTrackPopUpButton: NSPopUpButton = {
+        let button = NSPopUpButton()
+        button.bezelStyle = .roundRect
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+        button.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        return button
+    }()
+    
+    private let subtitleLabel: NSTextField = {
+        let field = NSTextField.makeLabel()
+        field.alignment = .right
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    private let subtitlePopUpButton: NSPopUpButton = {
+        let button = NSPopUpButton()
+        button.bezelStyle = .roundRect
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setContentCompressionResistancePriority(.fittingSizeCompression, for: .horizontal)
+        button.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        return button
+    }()
+    
+    private let audioSubtitleOptionsContainer: NSStackView = {
+        let view = NSStackView()
+        view.distribution = .equalCentering
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         commonInit()
@@ -56,10 +95,28 @@ final class ControlPanel: NSView {
     }
     
     private func commonInit() {
+        
         addSubview(container)
         container.addSubview(playButton)
         container.addSubview(trimControl)
-        container.pinEdgesTo(view: self)
+        
+        addSubview(audioSubtitleOptionsContainer)
+        audioSubtitleOptionsContainer.addArrangedSubview(audioTrackLabel)
+        audioSubtitleOptionsContainer.addArrangedSubview(audioTrackPopUpButton)
+        audioSubtitleOptionsContainer.addArrangedSubview(subtitleLabel)
+        audioSubtitleOptionsContainer.addArrangedSubview(subtitlePopUpButton)
+        
+        NSLayoutConstraint.activate([
+            container.topAnchor.constraint(equalTo: topAnchor),
+            container.leadingAnchor.constraint(equalTo: leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            audioSubtitleOptionsContainer.topAnchor.constraint(equalTo: container.bottomAnchor),
+            audioSubtitleOptionsContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            audioSubtitleOptionsContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
+            audioSubtitleOptionsContainer.heightAnchor.constraint(equalToConstant: 24),
+            audioSubtitleOptionsContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+        ])
         
         NSLayoutConstraint.activate([
             playButton.topAnchor.constraint(equalTo: container.topAnchor),
@@ -76,6 +133,8 @@ final class ControlPanel: NSView {
     
     private func bind() {
         trimControl.viewModel = viewModel.trimControlModel
+        audioTrackLabel.stringValue = viewModel.audioTrackLabel
+        subtitleLabel.stringValue = viewModel.subtitleLabel
         
         playButton.rx.tap
             .subscribe(onNext: { [weak self] in
@@ -87,5 +146,40 @@ final class ControlPanel: NSView {
             .map { NSImage(named: $0)?.tint(color: .white) }
             .drive(playButton.rx.image)
             .disposed(by: disposeBag)
+        
+        viewModel.currentAudioTrackIndex
+            .drive(audioTrackPopUpButton.rx.selectedIndex)
+            .disposed(by: disposeBag)
+        
+        audioTrackPopUpButton.rx.selectedIndex
+            .bind(to: viewModel.currentAudioTrackIndexBinder)
+            .disposed(by: disposeBag)
+        
+        viewModel.currentSubtitleIndex
+            .drive(subtitlePopUpButton.rx.selectedIndex)
+            .disposed(by: disposeBag)
+        
+        subtitlePopUpButton.rx.selectedIndex
+            .bind(to: viewModel.currentSubtitleIndexBinder)
+            .disposed(by: disposeBag)
+        
+        viewModel.audioTrackNames
+            .drive(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.setupPopupButtoon(self.audioTrackPopUpButton, $0)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.subtitleNames
+            .drive(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.setupPopupButtoon(self.subtitlePopUpButton, $0)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setupPopupButtoon(_ button: NSPopUpButton, _ names: [String]) {
+        button.removeAllItems()
+        button.addItems(withTitles: names)
     }
 }

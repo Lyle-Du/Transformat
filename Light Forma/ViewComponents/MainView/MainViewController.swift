@@ -295,7 +295,14 @@ private extension MainViewController {
             playAreaContainer.widthAnchor.constraint(equalTo: mainContainer.widthAnchor),
         ])
         controlPanelContainer.addSubview(controlPanel)
-        controlPanel.pinEdgesTo(view: controlPanelContainer, padding: 8)
+        
+        NSLayoutConstraint.activate([
+            controlPanel.leadingAnchor.constraint(equalTo: controlPanelContainer.leadingAnchor, constant: 12),
+            controlPanel.trailingAnchor.constraint(equalTo: controlPanelContainer.trailingAnchor, constant: -12),
+            controlPanel.topAnchor.constraint(equalTo: controlPanelContainer.topAnchor),
+            controlPanel.bottomAnchor.constraint(equalTo: controlPanelContainer.bottomAnchor),
+        ])
+        
         playAreaContainer.addSubview(controlPanelContainer)
         NSLayoutConstraint.activate([
             playerView.centerXAnchor.constraint(equalTo: playAreaContainer.centerXAnchor),
@@ -309,7 +316,7 @@ private extension MainViewController {
             controlPanelContainer.leadingAnchor.constraint(equalTo: playAreaContainer.leadingAnchor),
             controlPanelContainer.trailingAnchor.constraint(equalTo: playAreaContainer.trailingAnchor),
             controlPanelContainer.topAnchor.constraint(equalTo: playerView.bottomAnchor),
-            controlPanelContainer.heightAnchor.constraint(equalToConstant: 60),
+            controlPanelContainer.heightAnchor.constraint(equalToConstant: 64),
             controlPanelContainer.bottomAnchor.constraint(equalTo: playAreaContainer.bottomAnchor),
         ])
     }
@@ -353,7 +360,7 @@ private extension MainViewController {
         NSLayoutConstraint.activate([
             clipView.leadingAnchor.constraint(equalTo: importButton.trailingAnchor, constant: 12),
             clipView.trailingAnchor.constraint(equalTo: exportButton.leadingAnchor, constant: -12),
-            clipView.topAnchor.constraint(equalTo: controlPanelContainer.bottomAnchor, constant: 12),
+            clipView.topAnchor.constraint(equalTo: controlPanelContainer.bottomAnchor, constant: 4),
             clipView.heightAnchor.constraint(equalToConstant: 50),
         ])
         
